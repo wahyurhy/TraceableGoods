@@ -3,11 +3,10 @@ package com.wahyurhy.traceablegoods.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.Item
+import com.wahyurhy.traceablegoods.model.datainfo.Item
 
 class DataInfoAdapter(private val mDataInfo: List<Item>) : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
 

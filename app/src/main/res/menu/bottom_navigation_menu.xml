@@ -4,18 +4,18 @@
     <item
         android:id="@+id/master_data_fragment"
         android:enabled="true"
-        android:icon="@drawable/ic_master_data"
+        android:icon="@drawable/ic_master_data_state"
         android:title="@string/master_data"/>
     <item
         android:id="@+id/transaksi_fragment"
         android:enabled="true"
-        android:icon="@drawable/ic_transaksi"
+        android:icon="@drawable/ic_transaksi_state"
         android:title="@string/transaksi"/>
 
     <item
         android:id="@+id/profile_fragment"
         android:enabled="true"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_profile_state"
         android:title="@string/profile"/>
 
 </menu>

@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.model
+package com.wahyurhy.traceablegoods.model.datainfo
 
 
 import com.google.gson.annotations.SerializedName

@@ -10,4 +10,6 @@
     <string name="profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tambah_transaksi">Tambah Transaksi</string>
+    <string name="filter_data">filter data</string>
 </resources>
