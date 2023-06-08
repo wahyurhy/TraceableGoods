@@ -1,0 +1,55 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Data Informasi",
+      "items": [
+        {
+          "id": 0,
+          "data_count": "75",
+          "data_name": "Produk"
+        },
+        {
+          "id": 1,
+          "data_count": "65",
+          "data_name": "Produsen"
+        },
+        {
+          "id": 2,
+          "data_count": "55",
+          "data_name": "Distributor"
+        },
+        {
+          "id": 3,
+          "data_count": "45",
+          "data_name": "Penerima"
+        },
+        {
+          "id": 4,
+          "data_count": "47",
+          "data_name": "Penggling"
+        },
+        {
+          "id": 5,
+          "data_count": "48",
+          "data_name": "Pengepul"
+        },
+        {
+          "id": 6,
+          "data_count": "95",
+          "data_name": "Gudang"
+        },
+        {
+          "id": 7,
+          "data_count": "28",
+          "data_name": "Tengkulak"
+        },
+        {
+          "id": 8,
+          "data_count": "63",
+          "data_name": "Pabrik Pengolahan"
+        }
+      ]
+    }
+  ]
+}

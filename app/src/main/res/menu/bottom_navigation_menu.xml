@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/master_data_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_master_data"
+        android:title="@string/master_data"/>
+    <item
+        android:id="@+id/transaksi_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_transaksi"
+        android:title="@string/transaksi"/>
+
+    <item
+        android:id="@+id/profile_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile"/>
+
+</menu>
