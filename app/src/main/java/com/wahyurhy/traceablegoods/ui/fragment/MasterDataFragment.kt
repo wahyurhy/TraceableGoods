@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
@@ -34,10 +35,9 @@ class MasterDataFragment : Fragment() {
     }
 
     private fun hideFloatingActionButton() {
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-            val scrollY = binding.scrollView.scrollY
-            scrollListener?.onScrollChanged(scrollY)
-        }
+        binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            scrollListener?.onScrollChanged(scrollY = scrollY, oldScrollY = oldScrollY)
+        })
     }
 
     private fun rawListInit() {
@@ -56,14 +56,15 @@ class MasterDataFragment : Fragment() {
             adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val dataName = result.items[position].dataName
-                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
         }
     }
 
     interface ScrollListener {
-        fun onScrollChanged(scrollY: Int)
+        fun onScrollChanged(scrollY: Int, oldScrollY: Int)
     }
 
     private var scrollListener: ScrollListener? = null

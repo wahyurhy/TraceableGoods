@@ -12,8 +12,8 @@ import com.wahyurhy.traceablegoods.ui.fragment.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.TransaksiFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class MainActivity : AppCompatActivity(), MasterDataFragment.ScrollListener,
-    TransaksiFragment.ScrollListener {
+class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
+    MasterDataFragment.ScrollListener {
 
     private lateinit var binding: ActivityMainBinding
     private var isMasterData = true
@@ -106,28 +106,38 @@ class MainActivity : AppCompatActivity(), MasterDataFragment.ScrollListener,
         Utils.setSystemBarFitWindow(this)
     }
 
-    override fun onScrollChanged(scrollY: Int) {
-        if (isMasterData) {
-            if (scrollY > 0 && binding.fbTambahData.isShown) {
-                binding.fbTambahData.hide()
-            } else if (scrollY == 0 && !binding.fbTambahData.isShown) {
-                binding.fbTambahData.show()
+    override fun onScrollChanged(scrollY: Int, recyclerView: RecyclerView) {
+        if (!isMasterData) {
+            if (scrollY > 10 && binding.fbTambahTransaksi.isShown) {
+                binding.fbTambahTransaksi.shrink()
+            }
+
+            if (scrollY < -10 && !binding.fbTambahTransaksi.isShown) {
+                binding.fbTambahTransaksi.extend()
+            }
+
+            if (!recyclerView.canScrollVertically(-1)) {
+                binding.fbTambahTransaksi.extend()
             }
         }
     }
 
-    override fun onScrollChanged(scrollY: Int, recyclerView: RecyclerView) {
-        if (!isMasterData) {
-            if (scrollY > 10 && binding.fbTambahTransaksi.isShown) {
-                binding.fbTambahTransaksi.hide()
+    override fun onScrollChanged(scrollY: Int, oldScrollY: Int) {
+        if (isMasterData) {
+            // the delay of the extension of the FAB is set for 12 items
+            if (scrollY > oldScrollY + 12 && binding.fbTambahData.isExtended) {
+                binding.fbTambahData.shrink();
             }
 
-            if (scrollY < -10 && !binding.fbTambahTransaksi.isShown) {
-                binding.fbTambahTransaksi.show()
+            // the delay of the extension of the FAB is set for 12 items
+            if (scrollY < oldScrollY - 12 && !binding.fbTambahData.isExtended) {
+                binding.fbTambahData.extend();
             }
 
-            if (!recyclerView.canScrollVertically(-1)) {
-                binding.fbTambahTransaksi.show()
+            // if the nestedScrollView is at the first item of the list then the
+            // extended floating action should be in extended state
+            if (scrollY == 0) {
+                binding.fbTambahData.extend();
             }
         }
     }
