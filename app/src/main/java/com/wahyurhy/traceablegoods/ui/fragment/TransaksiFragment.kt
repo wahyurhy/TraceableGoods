@@ -6,7 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
+import com.wahyurhy.traceablegoods.model.transaksi.TransaksiModel
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class TransaksiFragment : Fragment() {
 
@@ -23,8 +29,19 @@ class TransaksiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initClickListener()
-//        rawListInit()
+        rawListInit()
+        hideFloatingActionButton()
+    }
+
+    private fun hideFloatingActionButton() {
+        binding.rvTransaksi.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                scrollListener?.onScrollChanged(dy, recyclerView)
+            }
+        })
     }
 
     private fun initClickListener() {
@@ -33,26 +50,36 @@ class TransaksiFragment : Fragment() {
         }
     }
 
-//    private fun rawListInit() {
-//        val gson = Gson()
-//        val i = requireContext().assets.open("data_info.json")
-//        val br = BufferedReader(InputStreamReader(i))
-//        val dataList = gson.fromJson(br, DataInfoModel::class.java)
-//
-//        bindData(dataList)
-//    }
+    private fun rawListInit() {
+        val gson = Gson()
+        val i = requireContext().assets.open("transaksi.json")
+        val br = BufferedReader(InputStreamReader(i))
+        val dataList = gson.fromJson(br, TransaksiModel::class.java)
 
-//    private fun bindData(dataList: DataInfoModel) {
-//        dataList.result.forEach { result ->
-//            val adapter = DataInfoAdapter(result.items)
-//            binding.rvDataInfo.adapter = adapter
-//            adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
-//                override fun onItemClick(itemView: View?, position: Int) {
-//                    val dataName = result.items[position].dataName
-//                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT).show()
-//                }
-//            })
-//        }
-//    }
+        bindData(dataList)
+    }
+
+    private fun bindData(dataList: TransaksiModel) {
+        dataList.result.forEach { result ->
+            val adapter = TransaksiAdapter(result.items)
+            binding.rvTransaksi.adapter = adapter
+            adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val produkBatch = result.items[position].produkBatch
+                    Toast.makeText(requireContext(), "$produkBatch was clicked!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
+    interface ScrollListener {
+        fun onScrollChanged(scrollY: Int, recyclerView: RecyclerView)
+    }
+
+    private var scrollListener: ScrollListener? = null
+
+    fun setScrollListener(listener: ScrollListener) {
+        scrollListener = listener
+    }
 
 }

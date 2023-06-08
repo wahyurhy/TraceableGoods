@@ -28,7 +28,16 @@ class MasterDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         rawListInit()
+        hideFloatingActionButton()
+    }
+
+    private fun hideFloatingActionButton() {
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
+            val scrollY = binding.scrollView.scrollY
+            scrollListener?.onScrollChanged(scrollY)
+        }
     }
 
     private fun rawListInit() {
@@ -51,6 +60,16 @@ class MasterDataFragment : Fragment() {
                 }
             })
         }
+    }
+
+    interface ScrollListener {
+        fun onScrollChanged(scrollY: Int)
+    }
+
+    private var scrollListener: ScrollListener? = null
+
+    fun setScrollListener(listener: ScrollListener) {
+        scrollListener = listener
     }
 
 }

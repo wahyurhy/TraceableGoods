@@ -1,0 +1,106 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Transaksi",
+      "items": [
+        {
+          "batch_id": "ki54gi6",
+          "jenis_produk": "bijian",
+          "produk": "Beras",
+          "produk_batch": "Beras - Batch_ki54gi6",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 08:56 WIB"
+        },
+        {
+          "batch_id": "go32ra4",
+          "jenis_produk": "bijian",
+          "produk": "Jagung",
+          "produk_batch": "Jagung - Batch_go32ra4",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 09:24 WIB"
+        },
+        {
+          "batch_id": "ki54gi6",
+          "jenis_produk": "bijian",
+          "produk": "Gandum",
+          "produk_batch": "Gandum - Batch_re74ko3",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 10:56 WIB"
+        },
+        {
+          "batch_id": "ji74ge8",
+          "jenis_produk": "buahan",
+          "produk": "Apel",
+          "produk_batch": "Apel - Batch_ji74ge8",
+          "penerima": "Pasar Induk Cibitung",
+          "date": "7 Juni 2023 - 06:36 WIB"
+        },
+        {
+          "batch_id": "to73ra2",
+          "jenis_produk": "sayuran",
+          "produk": "Bayam",
+          "produk_batch": "Bayam - Batch_to73ra2",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 09:24 WIB"
+        },
+        {
+          "batch_id": "vi43yo6",
+          "jenis_produk": "daging",
+          "produk": "Daging Sapi",
+          "produk_batch": "Daging Sapi - Batch_vi43yo6",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 12:24 WIB"
+        },
+        {
+          "batch_id": "ki54gi6",
+          "jenis_produk": "bijian",
+          "produk": "Beras",
+          "produk_batch": "Beras - Batch_ki54gi6",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 08:56 WIB"
+        },
+        {
+          "batch_id": "go32ra4",
+          "jenis_produk": "bijian",
+          "produk": "Jagung",
+          "produk_batch": "Jagung - Batch_go32ra4",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 09:24 WIB"
+        },
+        {
+          "batch_id": "ki54gi6",
+          "jenis_produk": "bijian",
+          "produk": "Gandum",
+          "produk_batch": "Gandum - Batch_re74ko3",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 10:56 WIB"
+        },
+        {
+          "batch_id": "ji74ge8",
+          "jenis_produk": "buahan",
+          "produk": "Apel",
+          "produk_batch": "Apel - Batch_ji74ge8",
+          "penerima": "Pasar Induk Cibitung",
+          "date": "7 Juni 2023 - 06:36 WIB"
+        },
+        {
+          "batch_id": "to73ra2",
+          "jenis_produk": "sayuran",
+          "produk": "Bayam",
+          "produk_batch": "Bayam - Batch_to73ra2",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 09:24 WIB"
+        },
+        {
+          "batch_id": "vi43yo6",
+          "jenis_produk": "daging",
+          "produk": "Daging Sapi",
+          "produk_batch": "Daging Sapi - Batch_vi43yo6",
+          "penerima": "Pasar Induk Brebes",
+          "date": "7 Juni 2023 - 12:24 WIB"
+        }
+      ]
+    }
+  ]
+}
