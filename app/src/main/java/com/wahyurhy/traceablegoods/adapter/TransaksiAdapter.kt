@@ -3,8 +3,12 @@ package com.wahyurhy.traceablegoods.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager.LayoutParams
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.transaksi.Item
@@ -33,7 +37,7 @@ class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapte
         val penerima = holder.penerima
         penerima.text  = transaksi.penerima
         val date = holder.date
-        date.text = transaksi.penerima
+        date.text = transaksi.date
 
         val image = holder.image
         when (transaksi.jenisProduk) {
@@ -41,6 +45,11 @@ class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapte
             "buahan" -> image.setImageResource(R.drawable.ic_buahan)
             "sayuran" -> image.setImageResource(R.drawable.ic_sayuran)
             "daging" -> image.setImageResource(R.drawable.ic_daging)
+        }
+
+        holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {
+            val height = holder.cardView.height
+            holder.image.minimumHeight = height
         }
     }
 
@@ -54,7 +63,9 @@ class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapte
         val date = itemView.findViewById<TextView>(R.id.tv_date)
         val image = itemView.findViewById<ImageView>(R.id.image_icon)
 
-        init {
+        val cardView = itemView.findViewById<CardView>(R.id.card_view)
+
+            init {
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
