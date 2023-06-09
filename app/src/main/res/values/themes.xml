@@ -19,4 +19,16 @@
     <style name="Widget.BottomNavigationView" parent="ThemeOverlay.Material3.NavigationView">
         <item name="fontFamily">@font/poppins_regular</item>
     </style>
+
+    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox" parent="Base.Widget.MaterialComponents.TextInputLayout">
+        <item name="materialThemeOverlay">
+            @style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox
+        </item>
+        <item name="boxCollapsedPaddingTop">0dp</item>
+        <item name="boxStrokeColor">@color/primary_color</item>
+    </style>
 </resources>

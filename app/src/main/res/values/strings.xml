@@ -13,4 +13,21 @@
     <string name="tambah_transaksi">Tambah Transaksi</string>
     <string name="filter_data">filter data</string>
     <string name="logout">Logout</string>
+    <string name="masuk_aplikasi">Masuk Aplikasi</string>
+    <string name="email">Email</string>
+    <string name="kata_sandi">Kata sandi</string>
+    <string name="lupa_kata_sandi">Lupa kata sandi?</string>
+    <string name="masuk">Masuk</string>
+    <string name="belum_memiliki_akun">Belum memiliki akun?</string>
+    <string name="daftar_sekarang">Daftar Sekarang</string>
+    <string name="daftar_akun">Daftar Akun</string>
+    <string name="silahkan_masukan_email_dan_nkata_sandi_anda">Silahkan masukan email dan\nkata sandi Anda</string>
+    <string name="silahkan_daftarkan_email_dan_npassword_anda">Silahkan daftarkan email dan\npassword Anda</string>
+    <string name="ulangi_kata_sandi_sebelumnya">Ulangi kata sandi sebelumnya</string>
+    <string name="daftar">Daftar</string>
+    <string name="sudah_memiliki_akun">Sudah memiliki akun?</string>
+    <string name="masuk_sekarang">Masuk Sekarang</string>
+    <string name="lupa_kata_sandi_capital_each_sentence">Lupa Kata Sandi?</string>
+    <string name="jangan_khawatir_anda_dapat_nmemulihkannya_melalui_email_anda">Jangan khawatir, Anda dapat\nmemulihkannya melalui email Anda</string>
+    <string name="kirimkan">Kirimkan</string>
 </resources>
