@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.wahyurhy.traceablegoods.MainObserverActivity
 import com.wahyurhy.traceablegoods.databinding.ActivityLoginBinding
 import com.wahyurhy.traceablegoods.utils.Utils
 
@@ -42,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.btnLogin.setOnClickListener {
             Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MainObserverActivity::class.java))
         }
         binding.btnRegister.setOnClickListener {
             Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show()
