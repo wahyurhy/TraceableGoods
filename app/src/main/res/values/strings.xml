@@ -30,4 +30,9 @@
     <string name="lupa_kata_sandi_capital_each_sentence">Lupa Kata Sandi?</string>
     <string name="jangan_khawatir_anda_dapat_nmemulihkannya_melalui_email_anda">Jangan khawatir, Anda dapat\nmemulihkannya melalui email Anda</string>
     <string name="kirimkan">Kirimkan</string>
+    <string name="list_title">Daftar %1$s</string>
+    <string name="cari_apa">Cari %1$s…</string>
+    <string name="no_lot">No. Lot : %1$s</string>
+    <string name="no_npwp">No. NPWP: %1$s</string>
+    <string name="kontak">Kontak : %1$s</string>
 </resources>

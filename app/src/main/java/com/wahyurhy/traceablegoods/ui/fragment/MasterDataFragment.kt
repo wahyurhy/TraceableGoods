@@ -1,5 +1,6 @@
 package com.wahyurhy.traceablegoods.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.model.datainfo.DataInfoModel
+import com.wahyurhy.traceablegoods.ui.activity.ListActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -58,6 +60,10 @@ class MasterDataFragment : Fragment() {
                     val dataName = result.items[position].dataName
                     Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
                         .show()
+                    Intent(requireContext(), ListActivity::class.java).apply {
+                        putExtra(NAME_LIST, dataName)
+                        startActivity(this)
+                    }
                 }
             })
         }
@@ -71,6 +77,10 @@ class MasterDataFragment : Fragment() {
 
     fun setScrollListener(listener: ScrollListener) {
         scrollListener = listener
+    }
+
+    companion object {
+        const val NAME_LIST = "name"
     }
 
 }
