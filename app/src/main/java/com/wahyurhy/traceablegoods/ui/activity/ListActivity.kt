@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.adapter.DistributorAdapter
-import com.wahyurhy.traceablegoods.adapter.ProdukAdapter
-import com.wahyurhy.traceablegoods.adapter.ProdusenAdapter
+import com.wahyurhy.traceablegoods.adapter.*
 import com.wahyurhy.traceablegoods.databinding.ActivityListProductBinding
 import com.wahyurhy.traceablegoods.model.distributor.DistributorModel
+import com.wahyurhy.traceablegoods.model.penerima.PenerimaModel
+import com.wahyurhy.traceablegoods.model.penggiling.PenggilingModel
 import com.wahyurhy.traceablegoods.model.produk.ProdukModel
 import com.wahyurhy.traceablegoods.model.produsen.ProdusenModel
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
@@ -36,6 +36,8 @@ class ListActivity : AppCompatActivity() {
             "produk" -> rawListProduk()
             "produsen" -> rawListProdusen()
             "distributor" -> rawListDistributor()
+            "penerima" -> rawListPenerima()
+            "penggiling" -> rawListPenggiling()
         }
     }
 
@@ -45,7 +47,7 @@ class ListActivity : AppCompatActivity() {
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, ProdukModel::class.java)
 
-        bindDataProduk(dataList)
+        bindData(dataList)
     }
 
     private fun rawListProdusen() {
@@ -54,7 +56,7 @@ class ListActivity : AppCompatActivity() {
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, ProdusenModel::class.java)
 
-        bindDataProdusen(dataList)
+        bindData(dataList)
     }
 
     private fun rawListDistributor() {
@@ -63,10 +65,28 @@ class ListActivity : AppCompatActivity() {
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, DistributorModel::class.java)
 
-        bindDataDistributor(dataList)
+        bindData(dataList)
     }
 
-    private fun bindDataProduk(dataList: ProdukModel) {
+    private fun rawListPenerima() {
+        val gson = Gson()
+        val i = assets.open("penerima.json")
+        val br = BufferedReader(InputStreamReader(i))
+        val dataList = gson.fromJson(br, PenerimaModel::class.java)
+
+        bindData(dataList)
+    }
+
+    private fun rawListPenggiling() {
+        val gson = Gson()
+        val i = assets.open("penggiling.json")
+        val br = BufferedReader(InputStreamReader(i))
+        val dataList = gson.fromJson(br, PenggilingModel::class.java)
+
+        bindData(dataList)
+    }
+
+    private fun bindData(dataList: ProdukModel) {
         dataList.result.forEach { result ->
             val adapter = ProdukAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -79,27 +99,53 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindDataProdusen(dataList: ProdusenModel) {
+    private fun bindData(dataList: ProdusenModel) {
         dataList.result.forEach { result ->
             val adapter = ProdusenAdapter(result.items)
             binding.rvList.adapter = adapter
             adapter.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
-                    val produk = result.items[position].namaProdusen
-                    Toast.makeText(this@ListActivity, "$produk was clicked!", Toast.LENGTH_SHORT).show()
+                    val produsen = result.items[position].namaProdusen
+                    Toast.makeText(this@ListActivity, "$produsen was clicked!", Toast.LENGTH_SHORT).show()
                 }
             })
         }
     }
 
-    private fun bindDataDistributor(dataList: DistributorModel) {
+    private fun bindData(dataList: DistributorModel) {
         dataList.result.forEach { result ->
             val adapter = DistributorAdapter(result.items)
             binding.rvList.adapter = adapter
             adapter.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
-                    val produk = result.items[position].namaDistributor
-                    Toast.makeText(this@ListActivity, "$produk was clicked!", Toast.LENGTH_SHORT).show()
+                    val distributor = result.items[position].namaDistributor
+                    Toast.makeText(this@ListActivity, "$distributor was clicked!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
+    private fun bindData(dataList: PenggilingModel) {
+        dataList.result.forEach { result ->
+            val adapter = PenggilingAdapter(result.items)
+            binding.rvList.adapter = adapter
+            adapter.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val penggiling = result.items[position].namaPenggiling
+                    Toast.makeText(this@ListActivity, "$penggiling was clicked!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
+    private fun bindData(dataList: PenerimaModel) {
+        dataList.result.forEach { result ->
+            val adapter = PenerimaAdapter(result.items)
+            binding.rvList.adapter = adapter
+            adapter.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val penerima = result.items[position].namaPenerima
+                    Toast.makeText(this@ListActivity, "$penerima was clicked!", Toast.LENGTH_SHORT).show()
                 }
             })
         }

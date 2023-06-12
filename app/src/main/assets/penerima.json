@@ -1,0 +1,45 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Penerima",
+      "items": [
+        {
+          "penerima_id": 1,
+          "nama_penerima": "Wahyu Rahayu",
+          "kategori_penerima": "Toko / Pengecer",
+          "alamat_penerima": "Bekasi",
+          "kontak_penerima": "08951412234"
+        },
+        {
+          "penerima_id": 2,
+          "nama_penerima": "Dandy Sijabat",
+          "kategori_penerima": "Toko Grosir",
+          "alamat_penerima": "Bekasi",
+          "kontak_penerima": "08951412234"
+        },
+        {
+          "penerima_id": 3,
+          "nama_penerima": "Rio Syahputra",
+          "kategori_penerima": "Pasar Induk",
+          "alamat_penerima": "Cibitung",
+          "kontak_penerima": "08951412234"
+        },
+        {
+          "penerima_id": 4,
+          "nama_penerima": "Duril Luthfi",
+          "kategori_penerima": "Konsumen Akhir",
+          "alamat_penerima": "Bekasi",
+          "kontak_penerima": "08951412234"
+        },
+        {
+          "penerima_id": 5,
+          "nama_penerima": "Ramly Febriansyah",
+          "kategori_penerima": "Restoran / Rumah Makan",
+          "alamat_penerima": "Bekasi",
+          "kontak_penerima": "08951412234"
+        }
+      ]
+    }
+  ]
+}

@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.distributor.Item
+import com.wahyurhy.traceablegoods.model.penggiling.Item
 
-class DistributorAdapter(private val mDistributor: List<Item>) : RecyclerView.Adapter<DistributorAdapter.ViewHolder>() {
+class PenggilingAdapter(private val mPenggiling: List<Item>) : RecyclerView.Adapter<PenggilingAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)
@@ -21,20 +21,20 @@ class DistributorAdapter(private val mDistributor: List<Item>) : RecyclerView.Ad
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val distributorView = inflater.inflate(R.layout.item_distributor, parent, false)
-        return ViewHolder(distributorView)
+        val penggilingView = inflater.inflate(R.layout.item_penggiling, parent, false)
+        return ViewHolder(penggilingView)
     }
 
-    override fun getItemCount(): Int = mDistributor.size
+    override fun getItemCount(): Int = mPenggiling.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val distributorModel = mDistributor[position]
-        val distributor = holder.distributor
-        distributor.text = distributorModel.namaDistributor
+        val penggilingModel = mPenggiling[position]
+        val penggiling = holder.penggiling
+        penggiling.text = penggilingModel.namaPenggiling
         val alamat = holder.alamat
-        alamat.text  = distributorModel.alamatDistributor
+        alamat.text  = penggilingModel.alamatPenggiling
         val kontak = holder.kontak
-        kontak.text = holder.itemView.context.getString(R.string.kontak, distributorModel.kontakDistributor)
+        kontak.text = holder.itemView.context.getString(R.string.kontak, penggilingModel.kontakPenggiling)
 
         holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {
             val height = holder.cardView.height
@@ -47,7 +47,7 @@ class DistributorAdapter(private val mDistributor: List<Item>) : RecyclerView.Ad
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val distributor = itemView.findViewById<TextView>(R.id.tv_distributor_name)
+        val penggiling = itemView.findViewById<TextView>(R.id.tv_penggiling_name)
         val alamat = itemView.findViewById<TextView>(R.id.tv_alamat)
         val kontak = itemView.findViewById<TextView>(R.id.tv_kontak)
         val image = itemView.findViewById<ImageView>(R.id.image_icon)
