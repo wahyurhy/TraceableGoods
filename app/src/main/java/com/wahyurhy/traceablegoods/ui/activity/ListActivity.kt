@@ -43,7 +43,7 @@ class ListActivity : AppCompatActivity() {
     private fun initRawList(nameList: String) {
         when (nameList.lowercase()) {
             PRODUK -> rawListProduk(nameList)
-            PRODUSEN -> rawListProdusen()
+            PRODUSEN -> rawListProdusen(nameList)
             DISTRIBUTOR -> rawListDistributor()
             PENERIMA -> rawListPenerima()
             PENGGILING -> rawListPenggiling()
@@ -63,13 +63,13 @@ class ListActivity : AppCompatActivity() {
         bindData(dataList, nameList)
     }
 
-    private fun rawListProdusen() {
+    private fun rawListProdusen(nameList: String) {
         val gson = Gson()
         val i = assets.open(PRODUSEN_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, ProdusenModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
     private fun rawListDistributor() {
@@ -151,7 +151,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindData(dataList: ProdusenModel) {
+    private fun bindData(dataList: ProdusenModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = ProdusenAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -159,6 +159,9 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val produsen = result.items[position].namaProdusen
                     Toast.makeText(this@ListActivity, "$produsen was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
+                    intentDetailProdusen.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailProdusen)
                 }
             })
         }

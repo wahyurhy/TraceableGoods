@@ -35,6 +35,7 @@
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.ForgotActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.MainObserverActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailProdusenActivity" />
     </application>
 
 </manifest>

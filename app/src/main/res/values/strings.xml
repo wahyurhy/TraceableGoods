@@ -38,6 +38,7 @@
     <string name="kontak">Kontak : %1$s</string>
     <string name="jenis_produk">Jenis Produk</string>
     <string name="id_produk">ID Produk : %1$d</string>
+    <string name="id_produsen">ID Produsen : %1$d</string>
     <string name="nama_produk">Nama Produk</string>
     <string name="merek">Merek</string>
     <string name="masukan_nama_produk">Masukan nama produk</string>
@@ -49,14 +50,25 @@
     <string name="tanggal_kadaluarsa">Tanggal Kadaluarsa</string>
     <string name="masukan_tanggal_kadaluarsa">Masukan tanggal kadaluarsa</string>
     <string name="deskripsi_produk">Deskripsi Produk</string>
+    <string name="alamat_produsen">Alamat Produsen</string>
     <string name="masukan_deskripsi_produk">Masukan deskripsi produk</string>
     <string name="ubah">Ubah</string>
     <string name="hapus">Hapus</string>
+    <string name="kategori_produsen">Kategori Produsen</string>
+    <string name="nama_produsen">Nama Produsen</string>
+    <string name="masukan_nama_produsen">Masukan nama produsen</string>
+    <string name="masukan_alamat_produsen">Masukan alamat produsen</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
         <item>Buahan</item>
         <item>Sayuran</item>
         <item>Daging</item>
+    </string-array>
+
+    <string-array name="jenis_produsen_spinner">
+        <item>Petani</item>
+        <item>Peternak</item>
+        <item>Nelayan</item>
     </string-array>
 </resources>
