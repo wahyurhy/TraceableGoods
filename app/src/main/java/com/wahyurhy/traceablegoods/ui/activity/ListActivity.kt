@@ -1,5 +1,6 @@
 package com.wahyurhy.traceablegoods.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -30,14 +31,18 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val nameList = intent.getStringExtra(NAME_LIST) ?: ""
 
         fitStatusBar()
-        initExtras()
+        initExtras(nameList)
         initClickListener()
 
-        val nameList = intent.getStringExtra(NAME_LIST) ?: ""
+        initRawList(nameList)
+    }
+
+    private fun initRawList(nameList: String) {
         when (nameList.lowercase()) {
-            PRODUK -> rawListProduk()
+            PRODUK -> rawListProduk(nameList)
             PRODUSEN -> rawListProdusen()
             DISTRIBUTOR -> rawListDistributor()
             PENERIMA -> rawListPenerima()
@@ -49,13 +54,13 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun rawListProduk() {
+    private fun rawListProduk(nameList: String) {
         val gson = Gson()
         val i = assets.open(PRODUK_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, ProdukModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
     private fun rawListProdusen() {
@@ -130,7 +135,7 @@ class ListActivity : AppCompatActivity() {
         bindData(dataList)
     }
 
-    private fun bindData(dataList: ProdukModel) {
+    private fun bindData(dataList: ProdukModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = ProdukAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -138,6 +143,9 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val produk = result.items[position].namaProduk
                     Toast.makeText(this@ListActivity, "$produk was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
+                    intentDetailProduk.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailProduk)
                 }
             })
         }
@@ -253,8 +261,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun initExtras() {
-        val nameList = intent.getStringExtra(NAME_LIST) ?: ""
+    private fun initExtras(nameList: String) {
         binding.tvListTitle.text = getString(R.string.list_title, nameList)
         binding.searchView.queryHint = getString(R.string.cari_apa, nameList)
     }

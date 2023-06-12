@@ -31,4 +31,6 @@
         <item name="boxCollapsedPaddingTop">0dp</item>
         <item name="boxStrokeColor">@color/primary_color</item>
     </style>
+
+    <style name="Button.OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 </resources>

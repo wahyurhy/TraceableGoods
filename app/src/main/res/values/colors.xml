@@ -11,4 +11,5 @@
     <color name="primary_color_variant">#138085</color>
     <color name="gray">#C1C1C1</color>
     <color name="gradient">#edd7a4</color>
+    <color name="red">#CD2A2A</color>
 </resources>

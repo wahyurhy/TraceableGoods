@@ -31,8 +31,32 @@
     <string name="jangan_khawatir_anda_dapat_nmemulihkannya_melalui_email_anda">Jangan khawatir, Anda dapat\nmemulihkannya melalui email Anda</string>
     <string name="kirimkan">Kirimkan</string>
     <string name="list_title">Daftar %1$s</string>
+    <string name="detail_title">Detail %1$s</string>
     <string name="cari_apa">Cari %1$s…</string>
     <string name="no_lot">No. Lot : %1$s</string>
     <string name="no_npwp">No. NPWP: %1$s</string>
     <string name="kontak">Kontak : %1$s</string>
+    <string name="jenis_produk">Jenis Produk</string>
+    <string name="id_produk">ID Produk : %1$d</string>
+    <string name="nama_produk">Nama Produk</string>
+    <string name="merek">Merek</string>
+    <string name="masukan_nama_produk">Masukan nama produk</string>
+    <string name="masukan_merek_produk">Masukan merek produk</string>
+    <string name="kode_produk_atau_no_lot">Kode Produk atau No. Lot</string>
+    <string name="masukan_kode_produk_atau_no_lot">Masukan kode produk atau No. Lot</string>
+    <string name="tanggal_produksi">Tanggal Produksi</string>
+    <string name="masukan_tanggal_produksi">Masukan tanggal produksi</string>
+    <string name="tanggal_kadaluarsa">Tanggal Kadaluarsa</string>
+    <string name="masukan_tanggal_kadaluarsa">Masukan tanggal kadaluarsa</string>
+    <string name="deskripsi_produk">Deskripsi Produk</string>
+    <string name="masukan_deskripsi_produk">Masukan deskripsi produk</string>
+    <string name="ubah">Ubah</string>
+    <string name="hapus">Hapus</string>
+
+    <string-array name="jenis_produk_spinner">
+        <item>Bijian</item>
+        <item>Buahan</item>
+        <item>Sayuran</item>
+        <item>Daging</item>
+    </string-array>
 </resources>
