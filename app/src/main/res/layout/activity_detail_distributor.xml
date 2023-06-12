@@ -128,7 +128,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_distributor"
+                    android:text="@string/kontak_whatsapp_telepon_email_dll"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 

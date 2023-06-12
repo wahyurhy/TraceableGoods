@@ -45,7 +45,7 @@ class ListActivity : AppCompatActivity() {
             PRODUK -> rawListProduk(nameList)
             PRODUSEN -> rawListProdusen(nameList)
             DISTRIBUTOR -> rawListDistributor(nameList)
-            PENERIMA -> rawListPenerima()
+            PENERIMA -> rawListPenerima(nameList)
             PENGGILING -> rawListPenggiling()
             PENGEPUL -> rawListPengepul()
             GUDANG -> rawListGudang()
@@ -81,13 +81,13 @@ class ListActivity : AppCompatActivity() {
         bindData(dataList, nameList)
     }
 
-    private fun rawListPenerima() {
+    private fun rawListPenerima(nameList: String) {
         val gson = Gson()
         val i = assets.open(PENERIMA_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, PenerimaModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
     private fun rawListPenggiling() {
@@ -196,7 +196,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindData(dataList: PenerimaModel) {
+    private fun bindData(dataList: PenerimaModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = PenerimaAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -204,6 +204,9 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val penerima = result.items[position].namaPenerima
                     Toast.makeText(this@ListActivity, "$penerima was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
+                    intentDetailPenerima.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailPenerima)
                 }
             })
         }

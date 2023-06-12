@@ -40,6 +40,12 @@
     <string name="id_produk">ID Produk : %1$d</string>
     <string name="id_produsen">ID Produsen : %1$d</string>
     <string name="id_distributor">ID Distributor : %1$d</string>
+    <string name="id_penerima">ID Penerima : %1$d</string>
+    <string name="id_penggiling">ID Penggiling : %1$d</string>
+    <string name="id_pengepul">ID Pengepul : %1$d</string>
+    <string name="id_gudang">ID Gudang : %1$d</string>
+    <string name="id_tengkulak">ID Tengkulak : %1$d</string>
+    <string name="id_pabrik_pengolahan">ID Pabrik : %1$d</string>
     <string name="nama_produk">Nama Produk</string>
     <string name="merek">Merek</string>
     <string name="masukan_nama_produk">Masukan nama produk</string>
@@ -64,6 +70,16 @@
     <string name="masukan_kontak_distributor">Masukan kontak distributor</string>
     <string name="alamat_distributor">Alamat Distributor</string>
     <string name="masukan_alamat_distributor">Masukan alamat distributor</string>
+    <string name="masukan_nama_penerima">Masukan nama penerima</string>
+    <string name="nama_penerima">Nama Penerima</string>
+    <string name="kategori_penerima">Kategori Penerima</string>
+    <string name="alamat_penerima">Alamat Penerima</string>
+    <string name="masukan_alamat_penerima">Masukan alamat penerima</string>
+    <string name="masukan_kontak_penerima">Masukan kontak penerima</string>
+    <string name="npwp_nomor_pokok_wajib_pajak">NPWP (Nomor Pokok Wajib Pajak)</string>
+    <string name="masukan_npwp_produsen">Masukan NPWP produsen</string>
+    <string name="kontak_whatsapp_telepon_email_dll">Kontak (WhatsApp, telepon, email, dll.)</string>
+    <string name="masukan_kontak_produsen">Masukan kontak produsen</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
@@ -72,9 +88,20 @@
         <item>Daging</item>
     </string-array>
 
-    <string-array name="jenis_produsen_spinner">
+    <string-array name="kategori_produsen_spinner">
         <item>Petani</item>
         <item>Peternak</item>
         <item>Nelayan</item>
+    </string-array>
+
+    <string-array name="kategori_penerima_spinner">
+        <item>Pasar Induk</item>
+        <item>Toko Grosir</item>
+        <item>Toko / Pengecer</item>
+        <item>Konsumen Akhir</item>
+        <item>Restoran / Rumah Makan</item>
+        <item>Instansi Pemerintah</item>
+        <item>Rumah Sakit / Fasilitas Kesehatan</item>
+        <item>Organisasi Kemanusiaan / Proyek Bantuan</item>
     </string-array>
 </resources>
