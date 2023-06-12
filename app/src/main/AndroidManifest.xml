@@ -38,6 +38,11 @@
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailProdusenActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailDistributorActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPenerimaActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPenggilingActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPengepulActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailGudangActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailTengkulakActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPabrikPengolahanActivity" />
     </application>
 
 </manifest>

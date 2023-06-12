@@ -46,11 +46,11 @@ class ListActivity : AppCompatActivity() {
             PRODUSEN -> rawListProdusen(nameList)
             DISTRIBUTOR -> rawListDistributor(nameList)
             PENERIMA -> rawListPenerima(nameList)
-            PENGGILING -> rawListPenggiling()
-            PENGEPUL -> rawListPengepul()
-            GUDANG -> rawListGudang()
-            TENGKULAK -> rawListTengkulak()
-            PABRIK_PENGOLAHAN -> rawListPabrikPengolahan()
+            PENGGILING -> rawListPenggiling(nameList)
+            PENGEPUL -> rawListPengepul(nameList)
+            GUDANG -> rawListGudang(nameList)
+            TENGKULAK -> rawListTengkulak(nameList)
+            PABRIK_PENGOLAHAN -> rawListPabrikPengolahan(nameList)
         }
     }
 
@@ -90,49 +90,49 @@ class ListActivity : AppCompatActivity() {
         bindData(dataList, nameList)
     }
 
-    private fun rawListPenggiling() {
+    private fun rawListPenggiling(nameList: String) {
         val gson = Gson()
         val i = assets.open(PENGGILINNG_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, PenggilingModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
-    private fun rawListPengepul() {
+    private fun rawListPengepul(nameList: String) {
         val gson = Gson()
         val i = assets.open(PENGEPUL_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, PengepulModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
-    private fun rawListGudang() {
+    private fun rawListGudang(nameList: String) {
         val gson = Gson()
         val i = assets.open(GUDANG_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, GudangModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
-    private fun rawListTengkulak() {
+    private fun rawListTengkulak(nameList: String) {
         val gson = Gson()
         val i = assets.open(TENGKULAK_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, TengkulakModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
-    private fun rawListPabrikPengolahan() {
+    private fun rawListPabrikPengolahan(nameList: String) {
         val gson = Gson()
         val i = assets.open(PABRIK_PENGOLAHAN_JSON)
         val br = BufferedReader(InputStreamReader(i))
         val dataList = gson.fromJson(br, PabrikPengolahanModel::class.java)
 
-        bindData(dataList)
+        bindData(dataList, nameList)
     }
 
     private fun bindData(dataList: ProdukModel, nameList: String) {
@@ -183,7 +183,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindData(dataList: PenggilingModel) {
+    private fun bindData(dataList: PenggilingModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = PenggilingAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -191,6 +191,9 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val penggiling = result.items[position].namaPenggiling
                     Toast.makeText(this@ListActivity, "$penggiling was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
+                    intentDetailPenggiling.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailPenggiling)
                 }
             })
         }
@@ -212,7 +215,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindData(dataList: PengepulModel) {
+    private fun bindData(dataList: PengepulModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = PengepulAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -220,12 +223,15 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val pengepul = result.items[position].namaPengepul
                     Toast.makeText(this@ListActivity, "$pengepul was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
+                    intentDetailPengepul.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailPengepul)
                 }
             })
         }
     }
 
-    private fun bindData(dataList: GudangModel) {
+    private fun bindData(dataList: GudangModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = GudangAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -233,12 +239,15 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val gudang = result.items[position].namaGudang
                     Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
+                    intentDetailGudang.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailGudang)
                 }
             })
         }
     }
 
-    private fun bindData(dataList: TengkulakModel) {
+    private fun bindData(dataList: TengkulakModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = TengkulakAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -246,12 +255,15 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val gudang = result.items[position].namaTengkulak
                     Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
+                    intentDetailTengkulak.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailTengkulak)
                 }
             })
         }
     }
 
-    private fun bindData(dataList: PabrikPengolahanModel) {
+    private fun bindData(dataList: PabrikPengolahanModel, nameList: String) {
         dataList.result.forEach { result ->
             val adapter = PabrikPengolahanAdapter(result.items)
             binding.rvList.adapter = adapter
@@ -259,6 +271,9 @@ class ListActivity : AppCompatActivity() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val gudang = result.items[position].namaPabrikPengolahan
                     Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
+                    val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
+                    intentDetailPabrikPengolahan.putExtra(NAME_LIST, nameList)
+                    startActivity(intentDetailPabrikPengolahan)
                 }
             })
         }

@@ -80,6 +80,31 @@
     <string name="masukan_npwp_produsen">Masukan NPWP produsen</string>
     <string name="kontak_whatsapp_telepon_email_dll">Kontak (WhatsApp, telepon, email, dll.)</string>
     <string name="masukan_kontak_produsen">Masukan kontak produsen</string>
+    <string name="masukan_nama_penggiling">Masukan nama penggiling</string>
+    <string name="masukan_kontak_penggiling">Masukan kontak penggiling</string>
+    <string name="alamat_penggiling">Alamat Penggiling</string>
+    <string name="masukan_alamat_penggiling">Masukan alamat penggiling</string>
+    <string name="nama_penggiling">Nama Penggiling</string>
+    <string name="masukan_kontak_pengepul">Masukan kontak pengepul</string>
+    <string name="alamat_pengepul">Alamat Pengepul</string>
+    <string name="masukan_alamat_pengepul">Masukan alamat pengepul</string>
+    <string name="nama_pengepul">Nama Pengepul</string>
+    <string name="masukan_nama_pengepul">Masukan nama pengepul</string>
+    <string name="nama_gudang">Nama Gudang</string>
+    <string name="masukan_nama_gudang">Masukan nama gudang</string>
+    <string name="masukan_kontak_gudang">Masukan kontak gudang</string>
+    <string name="alamat_gudang">Alamat Gudang</string>
+    <string name="masukan_alamat_gudang">Masukan alamat gudang</string>
+    <string name="nama_tengkulak">Nama Tengkulak</string>
+    <string name="masukan_nama_tengkulak">Masukan nama tengkulak</string>
+    <string name="masukan_kontak_tengkulak">Masukan kontak tengkulak</string>
+    <string name="alamat_tengkulak">Alamat Tengkulak</string>
+    <string name="masukan_alamat_tengkulak">Masukan alamat tengkulak</string>
+    <string name="nama_pabrik_pengolahan">Nama Pabrik Pengolahan</string>
+    <string name="masukan_nama_pabrik_pengolahan">Masukan nama pabrik pengolahan</string>
+    <string name="masukan_kontak_pabrik_pengolahan">Masukan kontak pabrik pengolahan</string>
+    <string name="alamat_pabrik_pengolahan">Alamat Pabrik Pengolahan</string>
+    <string name="masukan_alamat_pabrik_pengolahan">Masukan alamat pabrik pengolahan</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
