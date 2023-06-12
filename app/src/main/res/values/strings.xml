@@ -39,6 +39,7 @@
     <string name="jenis_produk">Jenis Produk</string>
     <string name="id_produk">ID Produk : %1$d</string>
     <string name="id_produsen">ID Produsen : %1$d</string>
+    <string name="id_distributor">ID Distributor : %1$d</string>
     <string name="nama_produk">Nama Produk</string>
     <string name="merek">Merek</string>
     <string name="masukan_nama_produk">Masukan nama produk</string>
@@ -58,6 +59,11 @@
     <string name="nama_produsen">Nama Produsen</string>
     <string name="masukan_nama_produsen">Masukan nama produsen</string>
     <string name="masukan_alamat_produsen">Masukan alamat produsen</string>
+    <string name="nama_distributor">Nama Distributor</string>
+    <string name="masukan_nama_distributor">Masukan nama distributor</string>
+    <string name="masukan_kontak_distributor">Masukan kontak distributor</string>
+    <string name="alamat_distributor">Alamat Distributor</string>
+    <string name="masukan_alamat_distributor">Masukan alamat distributor</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

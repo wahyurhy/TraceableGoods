@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.DetailProdusenActivity">
+    tools:context=".ui.activity.DetailDistributorActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layoutDetailProdusen"
+            android:id="@+id/layoutDetailDistributor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle">
 
             <LinearLayout
-                android:id="@+id/layoutJenisProdusen"
+                android:id="@+id/layoutNamaDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -86,60 +86,28 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/kategori_produsen"
+                        android:text="@string/nama_distributor"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/id_produsen"
+                        android:id="@+id/id_distributor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/id_produsen"
+                        android:text="@string/id_distributor"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/timeShowSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_spinner"
-                    android:entries="@array/jenis_produsen_spinner"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="23dp"
-                    android:popupBackground="@color/white"
-                    android:spinnerMode="dialog"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutNamaProdusen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_produsen"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_produsen"
+                    android:id="@+id/edt_nama_distributor"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_produsen"
+                    android:hint="@string/masukan_nama_distributor"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -149,7 +117,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutAlamatProdusen"
+                android:id="@+id/layoutKontakDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -160,7 +128,38 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/alamat_produsen"
+                    android:text="@string/nama_distributor"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_kontak_distributor"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_outline_gray"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/masukan_kontak_distributor"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:paddingHorizontal="15dp"
+                    android:textSize="16sp"
+                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAlamatDistributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/alamat_distributor"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -170,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_alamat_produsen"
+                    android:hint="@string/masukan_alamat_distributor"
                     android:inputType="textMultiLine"
                     android:gravity="top"
                     android:paddingTop="10dp"
