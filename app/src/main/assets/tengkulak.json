@@ -1,0 +1,28 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Tengkulak",
+      "items": [
+        {
+          "tengkulak_id": 1,
+          "nama_tengkulak": "Hendrawan",
+          "alamat_tengkulak": "Karawang",
+          "kontak_tengkulak": "08951412234"
+        },
+        {
+          "tengkulak_id": 2,
+          "nama_tengkulak": "Jari Bajuri",
+          "alamat_tengkulak": "Karawang",
+          "kontak_tengkulak": "08951412234"
+        },
+        {
+          "tengkulak_id": 3,
+          "nama_tengkulak": "Benny",
+          "alamat_tengkulak": "Karawang",
+          "kontak_tengkulak": "08951412234"
+        }
+      ]
+    }
+  ]
+}

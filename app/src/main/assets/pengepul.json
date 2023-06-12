@@ -1,0 +1,28 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Pengepul",
+      "items": [
+        {
+          "pengepul_id": 1,
+          "nama_pengepul": "Agus",
+          "alamat_pengepul": "Karawang",
+          "kontak_pengepul": "08951412234"
+        },
+        {
+          "pengepul_id": 2,
+          "nama_pengepul": "Mahmud",
+          "alamat_pengepul": "Karawang",
+          "kontak_pengepul": "08951412234"
+        },
+        {
+          "pengepul_id": 3,
+          "nama_pengepul": "Jean",
+          "alamat_pengepul": "Karawang",
+          "kontak_pengepul": "08951412234"
+        }
+      ]
+    }
+  ]
+}

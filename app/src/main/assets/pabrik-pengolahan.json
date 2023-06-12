@@ -1,0 +1,28 @@
+{
+  "result": [
+    {
+      "id": 0,
+      "title": "Pabrik Pengolahan",
+      "items": [
+        {
+          "pabrik_pengolahan_id": 1,
+          "nama_pabrik_pengolahan": "Ferdiansyah Factory",
+          "alamat_pabrik_pengolahan": "Karawang",
+          "kontak_pabrik_pengolahan": "08951412234"
+        },
+        {
+          "pabrik_pengolahan_id": 2,
+          "nama_pabrik_pengolahan": "Virdo Factory",
+          "alamat_pabrik_pengolahan": "Karawang",
+          "kontak_pabrik_pengolahan": "08951412234"
+        },
+        {
+          "pabrik_pengolahan_id": 3,
+          "nama_pabrik_pengolahan": "Indiana Factory",
+          "alamat_pabrik_pengolahan": "Karawang",
+          "kontak_pabrik_pengolahan": "08951412234"
+        }
+      ]
+    }
+  ]
+}
