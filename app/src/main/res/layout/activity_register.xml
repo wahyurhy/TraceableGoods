@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:id="@+id/scrollView"
-    tools:context=".ui.activity.LoginActivity">
+    tools:context=".ui.activity.auth.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

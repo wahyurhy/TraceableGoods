@@ -1,19 +1,21 @@
-package com.wahyurhy.traceablegoods.ui.activity
+package com.wahyurhy.traceablegoods.ui.activity.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailProdukBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityDetailDistributorBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityDetailPengepulBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityDetailPenggilingBinding
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class DetailProdukActivity : AppCompatActivity() {
+class DetailPengepulActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailProdukBinding
+    private lateinit var binding: ActivityDetailPengepulBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailProdukBinding.inflate(layoutInflater)
+        binding = ActivityDetailPengepulBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val nameDetail = intent.getStringExtra(MasterDataFragment.NAME_LIST) ?: ""
 

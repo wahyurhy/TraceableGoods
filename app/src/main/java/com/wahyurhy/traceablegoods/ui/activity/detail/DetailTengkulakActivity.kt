@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity
+package com.wahyurhy.traceablegoods.ui.activity.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

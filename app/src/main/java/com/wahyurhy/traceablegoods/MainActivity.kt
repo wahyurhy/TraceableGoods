@@ -1,5 +1,6 @@
 package com.wahyurhy.traceablegoods
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.databinding.ActivityMainBinding
+import com.wahyurhy.traceablegoods.ui.activity.tambah.TambahDataMasterActivity
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
 import com.wahyurhy.traceablegoods.ui.fragment.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.TransaksiFragment
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
     private fun initClickListener() {
         binding.fbTambahData.setOnClickListener {
             Toast.makeText(this, "Tambah Data", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, TambahDataMasterActivity::class.java))
         }
         binding.fbTambahTransaksi.setOnClickListener {
             Toast.makeText(this, "Tambah Transaksi", Toast.LENGTH_SHORT).show()

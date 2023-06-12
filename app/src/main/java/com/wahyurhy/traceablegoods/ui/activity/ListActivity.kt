@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.*
-import com.wahyurhy.traceablegoods.databinding.ActivityListProductBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
 import com.wahyurhy.traceablegoods.model.distributor.DistributorModel
 import com.wahyurhy.traceablegoods.model.gudang.GudangModel
 import com.wahyurhy.traceablegoods.model.pabrikpengolahan.PabrikPengolahanModel
@@ -18,6 +18,7 @@ import com.wahyurhy.traceablegoods.model.penggiling.PenggilingModel
 import com.wahyurhy.traceablegoods.model.produk.ProdukModel
 import com.wahyurhy.traceablegoods.model.produsen.ProdusenModel
 import com.wahyurhy.traceablegoods.model.tengkulak.TengkulakModel
+import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.Utils
 import java.io.BufferedReader
@@ -25,11 +26,11 @@ import java.io.InputStreamReader
 
 class ListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityListProductBinding
+    private lateinit var binding: ActivityListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityListProductBinding.inflate(layoutInflater)
+        binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val nameList = intent.getStringExtra(NAME_LIST) ?: ""
 

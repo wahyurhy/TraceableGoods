@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity
+package com.wahyurhy.traceablegoods.ui.activity.auth
 
 import android.os.Bundle
 import android.view.animation.AnimationUtils

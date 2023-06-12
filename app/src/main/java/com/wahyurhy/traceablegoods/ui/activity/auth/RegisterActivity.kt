@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity
+package com.wahyurhy.traceablegoods.ui.activity.auth
 
 import android.content.Intent
 import android.os.Bundle

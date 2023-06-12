@@ -105,6 +105,8 @@
     <string name="masukan_kontak_pabrik_pengolahan">Masukan kontak pabrik pengolahan</string>
     <string name="alamat_pabrik_pengolahan">Alamat Pabrik Pengolahan</string>
     <string name="masukan_alamat_pabrik_pengolahan">Masukan alamat pabrik pengolahan</string>
+    <string name="pilih_jenis_data">Pilih Jenis Data</string>
+    <string name="lanjut">Lanjut</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
@@ -128,5 +130,17 @@
         <item>Instansi Pemerintah</item>
         <item>Rumah Sakit / Fasilitas Kesehatan</item>
         <item>Organisasi Kemanusiaan / Proyek Bantuan</item>
+    </string-array>
+
+    <string-array name="jenis_data_spinner">
+        <item>Produk</item>
+        <item>Produsen</item>
+        <item>Distributor</item>
+        <item>Penerima</item>
+        <item>Penggiling</item>
+        <item>Pengepul</item>
+        <item>Gudang</item>
+        <item>Tengkulak</item>
+        <item>Pabrik Pengolahan</item>
     </string-array>
 </resources>

@@ -12,13 +12,13 @@
         android:theme="@style/Theme.TraceableGoods"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.DetailProdukActivity"
+            android:name=".ui.activity.detail.DetailProdukActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -32,17 +32,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.ForgotActivity" />
+        <activity android:name=".ui.activity.auth.RegisterActivity" />
+        <activity android:name=".ui.activity.auth.ForgotActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.MainObserverActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailProdusenActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailDistributorActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPenerimaActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPenggilingActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPengepulActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailGudangActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailTengkulakActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.DetailPabrikPengolahanActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailProdusenActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailDistributorActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailPenerimaActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailPenggilingActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailPengepulActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailGudangActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailTengkulakActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailPabrikPengolahanActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahDataMasterActivity" />
     </application>
 
 </manifest>

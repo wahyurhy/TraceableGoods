@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.wahyurhy.traceablegoods.databinding.FragmentProfileBinding
-import com.wahyurhy.traceablegoods.ui.activity.LoginActivity
+import com.wahyurhy.traceablegoods.ui.activity.auth.LoginActivity
 
 class ProfileFragment : Fragment() {
 
