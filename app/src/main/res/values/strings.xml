@@ -107,6 +107,21 @@
     <string name="masukan_alamat_pabrik_pengolahan">Masukan alamat pabrik pengolahan</string>
     <string name="pilih_jenis_data">Pilih Jenis Data</string>
     <string name="lanjut">Lanjut</string>
+    <string name="tambah_produk_title">Tambah Data Produk</string>
+    <string name="merek_jika_ada">Merek (Jika ada)</string>
+    <string name="kode_produk_atau_no_lot_jika_ada">Kode Produk atau No. Lot (Jika ada)</string>
+    <string name="tanggal_produksi_jika_ada">Tanggal Produksi (Jika ada)</string>
+    <string name="tanggal_kadaluarsa_jika_ada">Tanggal Kadaluarsa (Jika ada)</string>
+    <string name="deskripsi_produk_jika_ada">Deskripsi Produk (Jika ada)</string>
+    <string name="simpan">Simpan</string>
+    <string name="tambah_data_produsen">Tambah Data Produsen</string>
+    <string name="tambah_data_distributor">Tambah Data Distributor</string>
+    <string name="tambah_data_penerima">Tambah Data Penerima</string>
+    <string name="tambah_data_penggiling">Tambah Data Penggiling</string>
+    <string name="tambah_data_pengepul">Tambah Data Pengepul</string>
+    <string name="tambah_data_gudang">Tambah Data Gudang</string>
+    <string name="tambah_data_tengkulak">Tambah Data Tengkulak</string>
+    <string name="tambah_data_npabrik_pengolahan">Tambah Data\nPabrik Pengolahan</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

@@ -9,6 +9,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.transaksi.Item
+import com.wahyurhy.traceablegoods.utils.Utils.BIJIAN
+import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.DAGING
+import com.wahyurhy.traceablegoods.utils.Utils.SAYURAN
 
 class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
@@ -38,10 +42,10 @@ class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapte
 
         val image = holder.image
         when (transaksi.jenisProduk) {
-            "bijian" -> image.setImageResource(R.drawable.ic_bijian)
-            "buahan" -> image.setImageResource(R.drawable.ic_buahan)
-            "sayuran" -> image.setImageResource(R.drawable.ic_sayuran)
-            "daging" -> image.setImageResource(R.drawable.ic_daging)
+            BIJIAN -> image.setImageResource(R.drawable.ic_bijian)
+            BUAHAN -> image.setImageResource(R.drawable.ic_buahan)
+            SAYURAN -> image.setImageResource(R.drawable.ic_sayuran)
+            DAGING -> image.setImageResource(R.drawable.ic_daging)
         }
 
         holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {

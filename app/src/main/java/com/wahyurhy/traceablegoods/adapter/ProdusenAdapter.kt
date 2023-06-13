@@ -9,6 +9,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.produsen.Item
+import com.wahyurhy.traceablegoods.utils.Utils.NELAYAN
+import com.wahyurhy.traceablegoods.utils.Utils.PETANI
+import com.wahyurhy.traceablegoods.utils.Utils.PETERNAK
 
 class ProdusenAdapter(private val mProdusen: List<Item>) : RecyclerView.Adapter<ProdusenAdapter.ViewHolder>() {
 
@@ -38,9 +41,9 @@ class ProdusenAdapter(private val mProdusen: List<Item>) : RecyclerView.Adapter<
 
         val image = holder.image
         when (produsenModel.kategoriProdusen.lowercase()) {
-            "petani" -> image.setImageResource(R.drawable.ic_petani)
-            "nelayan" -> image.setImageResource(R.drawable.ic_nelayan)
-            "peternak" -> image.setImageResource(R.drawable.ic_peternak)
+            PETANI -> image.setImageResource(R.drawable.ic_petani)
+            NELAYAN -> image.setImageResource(R.drawable.ic_nelayan)
+            PETERNAK -> image.setImageResource(R.drawable.ic_peternak)
         }
 
         holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {
