@@ -43,16 +43,17 @@
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailGudangActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailTengkulakActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.detail.DetailPabrikPengolahanActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahDataMasterActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahProdukActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahProdusenActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahDistributorActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahPenerimaActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahPenggilingActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahPengepulActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahGudangActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahTengkulakActivity" />
-        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.TambahPabrikPengolahanActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDataMasterActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdukActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdusenActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenerimaActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenggilingActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPengepulActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahGudangActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahTengkulakActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPabrikPengolahanActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity" />
     </application>
 
 </manifest>

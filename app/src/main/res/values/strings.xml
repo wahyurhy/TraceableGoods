@@ -122,6 +122,18 @@
     <string name="tambah_data_gudang">Tambah Data Gudang</string>
     <string name="tambah_data_tengkulak">Tambah Data Tengkulak</string>
     <string name="tambah_data_npabrik_pengolahan">Tambah Data\nPabrik Pengolahan</string>
+    <string name="tahap_produsen">Tahap Produsen</string>
+    <string name="tidak_ada_produsen">Tidak ada produsen?</string>
+    <string name="pilih_produk">Pilih Produk</string>
+    <string name="tidak_ada_produk">Tidak ada produk?</string>
+    <string name="tidak_ada_distributor">Tidak ada distributor?</string>
+    <string name="total_yang_didistribusikan">Total yang Didistribusikan</string>
+    <string name="satuan">Satuan</string>
+    <string name="lokasi_asal_pendistribusian">Lokasi Asal Pendistribusian</string>
+    <string name="masukan_lokasi_asal_pendistribusian">Masukan lokasi asal pendistribusian</string>
+    <string name="lokasi_tujuan_pendistribusian">Lokasi Tujuan Pendistribusian</string>
+    <string name="masukan_lokasi_tujuan_pendistribusian">Masukan lokasi tujuan pendistribusian</string>
+    <string name="pilih_tahap_selanjutnya">Pilih Tahap Selanjutnya</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
@@ -134,6 +146,20 @@
         <item>Petani</item>
         <item>Peternak</item>
         <item>Nelayan</item>
+    </string-array>
+
+    <string-array name="satuan_produk_spinner">
+        <item>Karung</item>
+        <item>Sumbu</item>
+        <item>Kuintal</item>
+        <item>Ton</item>
+        <item>Kg</item>
+        <item>Liter</item>
+        <item>Ekor</item>
+        <item>Potong</item>
+        <item>Kardus</item>
+        <item>Kemasan</item>
+        <item>Bungkus</item>
     </string-array>
 
     <string-array name="kategori_penerima_spinner">
@@ -157,5 +183,14 @@
         <item>Gudang</item>
         <item>Tengkulak</item>
         <item>Pabrik Pengolahan</item>
+    </string-array>
+
+    <string-array name="tahap_spinner">
+        <item>Gudang</item>
+        <item>Pengepul</item>
+        <item>Tengkulak</item>
+        <item>Penggiling</item>
+        <item>Pabrik Pengolahan</item>
+        <item>Penerima</item>
     </string-array>
 </resources>

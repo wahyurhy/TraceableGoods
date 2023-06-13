@@ -1,17 +1,17 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah
+package com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.wahyurhy.traceablegoods.databinding.ActivityTambahGudangBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataPenggilingBinding
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class TambahGudangActivity : AppCompatActivity() {
+class TambahPenggilingActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTambahGudangBinding
+    private lateinit var binding: ActivityTambahDataPenggilingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTambahGudangBinding.inflate(layoutInflater)
+        binding = ActivityTambahDataPenggilingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         fitStatusBar()

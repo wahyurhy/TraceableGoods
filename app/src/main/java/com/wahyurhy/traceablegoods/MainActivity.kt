@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.databinding.ActivityMainBinding
-import com.wahyurhy.traceablegoods.ui.activity.tambah.TambahDataMasterActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDataMasterActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
 import com.wahyurhy.traceablegoods.ui.fragment.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.TransaksiFragment
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
         }
         binding.fbTambahTransaksi.setOnClickListener {
             Toast.makeText(this, "Tambah Transaksi", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, TahapProdusenActivity::class.java))
         }
     }
 
@@ -129,18 +131,18 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
         if (isMasterData) {
             // the delay of the extension of the FAB is set for 12 items
             if (scrollY > oldScrollY + 12 && binding.fbTambahData.isExtended) {
-                binding.fbTambahData.shrink();
+                binding.fbTambahData.shrink()
             }
 
             // the delay of the extension of the FAB is set for 12 items
             if (scrollY < oldScrollY - 12 && !binding.fbTambahData.isExtended) {
-                binding.fbTambahData.extend();
+                binding.fbTambahData.extend()
             }
 
             // if the nestedScrollView is at the first item of the list then the
             // extended floating action should be in extended state
             if (scrollY == 0) {
-                binding.fbTambahData.extend();
+                binding.fbTambahData.extend()
             }
         }
     }

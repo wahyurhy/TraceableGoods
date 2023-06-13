@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.tambah.TambahPenerimaActivity">
+    tools:context=".ui.activity.tambah.datamaster.TambahDistributorActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:paddingStart="0dp"
                     android:paddingEnd="30dp"
-                    android:text="@string/tambah_data_penerima"
+                    android:text="@string/tambah_data_distributor"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -61,7 +61,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layoutDetailPenerima"
+            android:id="@+id/layoutDetailDistributor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle">
 
             <LinearLayout
-                android:id="@+id/layoutJenisPenerima"
+                android:id="@+id/layoutNamaDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -80,49 +80,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/kategori_penerima"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/timeShowSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_spinner"
-                    android:entries="@array/kategori_penerima_spinner"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="23dp"
-                    android:popupBackground="@color/white"
-                    android:spinnerMode="dialog"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutNamaPenerima"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_penerima"
+                    android:text="@string/nama_distributor"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_penerima"
+                    android:id="@+id/edt_nama_distributor"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_penerima"
+                    android:hint="@string/masukan_nama_distributor"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -153,7 +121,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_kontak_penerima"
+                    android:hint="@string/masukan_kontak_distributor"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -163,7 +131,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutAlamatPenerima"
+                android:id="@+id/layoutAlamatDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -174,17 +142,17 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/alamat_penerima"
+                    android:text="@string/alamat_distributor"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_alamat_penerima"
+                    android:id="@+id/edt_alamat_distributor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_alamat_penerima"
+                    android:hint="@string/masukan_alamat_distributor"
                     android:inputType="textMultiLine"
                     android:gravity="top"
                     android:paddingTop="10dp"

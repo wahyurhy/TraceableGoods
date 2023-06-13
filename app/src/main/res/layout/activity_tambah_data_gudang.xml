@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.tambah.TambahProdusenActivity">
+    tools:context=".ui.activity.tambah.datamaster.TambahGudangActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:paddingStart="0dp"
                     android:paddingEnd="30dp"
-                    android:text="@string/tambah_data_produsen"
+                    android:text="@string/tambah_data_gudang"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -61,7 +61,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layoutDetailProdusen"
+            android:id="@+id/layoutDetailGudang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle">
 
             <LinearLayout
-                android:id="@+id/layoutJenisProdusen"
+                android:id="@+id/layoutNamaGudang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -80,49 +80,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/kategori_produsen"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/kategoriProdusenSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_spinner"
-                    android:entries="@array/kategori_produsen_spinner"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="23dp"
-                    android:popupBackground="@color/white"
-                    android:spinnerMode="dialog"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutNamaProdusen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_produsen"
+                    android:text="@string/nama_gudang"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_produsen"
+                    android:id="@+id/edt_nama_gudang"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_produsen"
+                    android:hint="@string/masukan_nama_gudang"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -132,38 +100,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutNPWPProdusen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/npwp_nomor_pokok_wajib_pajak"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_npwp_produsen"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/bg_outline_gray"
-                    android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_npwp_produsen"
-                    android:inputType="textCapWords"
-                    android:maxLines="1"
-                    android:paddingHorizontal="15dp"
-                    android:textSize="16sp"
-                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutKontakProdusen"
+                android:id="@+id/layoutKontakGudang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -179,12 +116,12 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_kontak_produsen"
+                    android:id="@+id/edt_kontak_gudang"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_kontak_produsen"
+                    android:hint="@string/masukan_kontak_gudang"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -194,7 +131,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutAlamatProdusen"
+                android:id="@+id/layoutAlamatGudang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -205,17 +142,17 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/alamat_produsen"
+                    android:text="@string/alamat_gudang"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_alamat_produsen"
+                    android:id="@+id/edt_alamat_tengkulak"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_alamat_produsen"
+                    android:hint="@string/masukan_alamat_gudang"
                     android:inputType="textMultiLine"
                     android:gravity="top"
                     android:paddingTop="10dp"
