@@ -5,23 +5,26 @@
       "title": "Transaksi",
       "items": [
         {
-          "batch_id": "ki54gi6",
+          "batch_id": "Su070623001KPB",
+          "status": "selesai",
           "jenis_produk": "bijian",
           "produk": "Beras",
-          "produk_batch": "Beras - Batch_ki54gi6",
+          "produk_batch": "Beras - Su070623001KPB",
           "penerima": "Pasar Induk Brebes",
           "date": "7 Juni 2023 - 08:56 WIB"
         },
         {
           "batch_id": "go32ra4",
+          "status": "",
           "jenis_produk": "bijian",
           "produk": "Jagung",
           "produk_batch": "Jagung - Batch_go32ra4",
           "penerima": "Pasar Induk Brebes",
-          "date": "7 Juni 2023 - 09:24 WIB"
+          "date": "Rabu, 7 Juni 2023 - 09:24 WIB"
         },
         {
           "batch_id": "ki54gi6",
+          "status": "selesai",
           "jenis_produk": "bijian",
           "produk": "Gandum",
           "produk_batch": "Gandum - Batch_re74ko3",
@@ -30,6 +33,7 @@
         },
         {
           "batch_id": "ji74ge8",
+          "status": "selesai",
           "jenis_produk": "buahan",
           "produk": "Apel",
           "produk_batch": "Apel - Batch_ji74ge8",
@@ -38,6 +42,7 @@
         },
         {
           "batch_id": "to73ra2",
+          "status": "selesai",
           "jenis_produk": "sayuran",
           "produk": "Bayam",
           "produk_batch": "Bayam - Batch_to73ra2",
@@ -46,6 +51,7 @@
         },
         {
           "batch_id": "vi43yo6",
+          "status": "selesai",
           "jenis_produk": "daging",
           "produk": "Daging Sapi",
           "produk_batch": "Daging Sapi - Batch_vi43yo6",
@@ -54,6 +60,7 @@
         },
         {
           "batch_id": "ki54gi6",
+          "status": "selesai",
           "jenis_produk": "bijian",
           "produk": "Beras",
           "produk_batch": "Beras - Batch_ki54gi6",
@@ -62,6 +69,7 @@
         },
         {
           "batch_id": "go32ra4",
+          "status": "selesai",
           "jenis_produk": "bijian",
           "produk": "Jagung",
           "produk_batch": "Jagung - Batch_go32ra4",
@@ -70,6 +78,7 @@
         },
         {
           "batch_id": "ki54gi6",
+          "status": "selesai",
           "jenis_produk": "bijian",
           "produk": "Gandum",
           "produk_batch": "Gandum - Batch_re74ko3",
@@ -78,6 +87,7 @@
         },
         {
           "batch_id": "ji74ge8",
+          "status": "selesai",
           "jenis_produk": "buahan",
           "produk": "Apel",
           "produk_batch": "Apel - Batch_ji74ge8",
@@ -86,6 +96,7 @@
         },
         {
           "batch_id": "to73ra2",
+          "status": "selesai",
           "jenis_produk": "sayuran",
           "produk": "Bayam",
           "produk_batch": "Bayam - Batch_to73ra2",
@@ -94,6 +105,7 @@
         },
         {
           "batch_id": "vi43yo6",
+          "status": "selesai",
           "jenis_produk": "daging",
           "produk": "Daging Sapi",
           "produk_batch": "Daging Sapi - Batch_vi43yo6",

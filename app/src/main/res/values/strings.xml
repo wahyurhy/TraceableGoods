@@ -134,6 +134,23 @@
     <string name="lokasi_tujuan_pendistribusian">Lokasi Tujuan Pendistribusian</string>
     <string name="masukan_lokasi_tujuan_pendistribusian">Masukan lokasi tujuan pendistribusian</string>
     <string name="pilih_tahap_selanjutnya">Pilih Tahap Selanjutnya</string>
+    <string name="masukan_totalnya">Masukan totalnya</string>
+    <string name="tahap_gudang">Tahap Gudang</string>
+    <string name="total_yang_diterima">Total yang Diterima</string>
+    <string name="nama_distributor_selanjutnya">Nama Distributor Selanjutnya</string>
+    <string name="masukan_distributor_selanjutnya">Masukan distributor selanjutnya</string>
+    <string name="tahap_tengkulak">Tahap Tengkulak</string>
+    <string name="tidak_ada_tengkulak">Tidak ada tengkulak?</string>
+    <string name="tidak_ada_gudang">Tidak ada gudang?</string>
+    <string name="tahap_penggiling">Tahap Penggiling</string>
+    <string name="tidak_ada_penggiling">Tidak ada penggiling?</string>
+    <string name="tahap_pengepul">Tahap Pengepul</string>
+    <string name="tidak_ada_pengepul">Tidak ada pengepul?</string>
+    <string name="tahap_penerima">Tahap Penerima</string>
+    <string name="tidak_ada_penerima">Tidak ada penerima?</string>
+    <string name="selesai">Selesai</string>
+    <string name="cetak">Cetak</string>
+    <string name="alur_distribusi">Alur Distribusi</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

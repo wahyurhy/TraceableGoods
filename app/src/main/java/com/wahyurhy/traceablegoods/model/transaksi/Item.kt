@@ -5,15 +5,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Item(
     @SerializedName("batch_id")
-    val batchId: String,
+    var batchId: String,
     @SerializedName("date")
-    val date: String,
+    var date: String,
     @SerializedName("jenis_produk")
-    val jenisProduk: String,
+    var jenisProduk: String,
     @SerializedName("penerima")
-    val penerima: String,
+    var penerima: String,
     @SerializedName("produk")
-    val produk: String,
+    var produk: String,
     @SerializedName("produk_batch")
-    val produkBatch: String
+    var produkBatch: String,
+    @SerializedName("status")
+    var status: String
 )

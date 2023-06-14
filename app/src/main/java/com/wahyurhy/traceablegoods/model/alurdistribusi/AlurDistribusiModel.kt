@@ -1,9 +1,9 @@
-package com.wahyurhy.traceablegoods.model.transaksi
+package com.wahyurhy.traceablegoods.model.alurdistribusi
 
 
 import com.google.gson.annotations.SerializedName
 
-data class TransaksiModel(
+data class AlurDistribusiModel(
     @SerializedName("result")
     var result: List<Result>
 )

@@ -54,6 +54,12 @@
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahTengkulakActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPabrikPengolahanActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapGudangActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapTengkulakActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPenggilingActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPengepulActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPenerimaActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity" />
     </application>
 
 </manifest>

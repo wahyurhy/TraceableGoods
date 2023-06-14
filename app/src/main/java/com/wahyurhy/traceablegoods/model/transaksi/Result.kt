@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Result(
     @SerializedName("id")
-    val id: Int,
+    var id: Int,
     @SerializedName("items")
-    val items: List<Item>,
+    var items: List<Item>,
     @SerializedName("title")
-    val title: String
+    var title: String
 )

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.tambah.transaksi.TahapProdusenActivity">
+    tools:context=".ui.activity.tambah.transaksi.TahapTengkulakActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:paddingStart="0dp"
                     android:paddingEnd="30dp"
-                    android:text="@string/tahap_produsen"
+                    android:text="@string/tahap_tengkulak"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -61,7 +61,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layoutTahapProdusen"
+            android:id="@+id/layoutTahapTengkulak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle">
 
             <LinearLayout
-                android:id="@+id/layoutNamaProdusen"
+                android:id="@+id/layoutNamaTengkulak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -81,17 +81,17 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_produsen"
+                    android:text="@string/nama_tengkulak"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_produsen"
+                    android:id="@+id/edt_nama_tengkulak"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_produsen"
+                    android:hint="@string/masukan_nama_tengkulak"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
@@ -107,12 +107,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tidak_ada_produsen"
+                        android:text="@string/tidak_ada_tengkulak"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular" />
 
                     <TextView
-                        android:id="@+id/btn_tambah_produsen"
+                        android:id="@+id/btn_tambah_tengkulak"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tambah_data"
@@ -126,62 +126,78 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutPilihProduk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/pilih_produk"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_produk"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/bg_outline_gray"
-                    android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_produk"
-                    android:inputType="textCapWords"
-                    android:maxLines="1"
-                    android:paddingHorizontal="15dp"
-                    android:textSize="16sp"
-                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/layoutTotalYangDiterima"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tidak_ada_produk"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/total_yang_diterima"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edt_total_yang_diterima"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_outline_gray"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/masukan_totalnya"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:maxLines="1"
+                        android:layout_marginEnd="10dp"
+                        android:paddingHorizontal="15dp"
+                        android:textSize="16sp"
+                        tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutSatuanDiterima"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/btn_tambah_produk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tambah_data"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/satuan"
                         android:textColor="@color/black"
-                        android:padding="5dp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_bold" />
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/satuanDiterimaSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_spinner_satuan"
+                        android:entries="@array/satuan_produk_spinner"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="23dp"
+                        android:popupBackground="@color/white"
+                        android:spinnerMode="dialog"
+                        android:textColor="@color/black"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutNamaDistributor"
+                android:id="@+id/layoutDistributorSelanjutnya"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -192,17 +208,17 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/nama_distributor"
+                    android:text="@string/nama_distributor_selanjutnya"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_nama_distributor"
+                    android:id="@+id/edt_nama_distributor_selanjutnya"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/masukan_nama_distributor"
+                    android:hint="@string/masukan_distributor_selanjutnya"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"

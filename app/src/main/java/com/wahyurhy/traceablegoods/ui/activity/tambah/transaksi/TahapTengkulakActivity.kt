@@ -7,19 +7,18 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityTahapProdusenBinding
-import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.*
+import com.wahyurhy.traceablegoods.databinding.ActivityTahapTengkulakBinding
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var binding: ActivityTahapProdusenBinding
+    private lateinit var binding: ActivityTahapTengkulakBinding
 
     private var selectedTahapSelanjutnya = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTahapProdusenBinding.inflate(layoutInflater)
+        binding = ActivityTahapTengkulakBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         fitStatusBar()
@@ -33,11 +32,8 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya.lowercase()) {
                 Utils.GUDANG -> startActivity(Intent(this, TahapGudangActivity::class.java))
-                Utils.PENGEPUL -> startActivity(Intent(this, TambahPengepulActivity::class.java))
-                Utils.TENGKULAK -> startActivity(Intent(this, TambahTengkulakActivity::class.java))
-                Utils.PENGGILING -> startActivity(Intent(this, TambahPenggilingActivity::class.java))
-                Utils.PABRIK_PENGOLAHAN -> startActivity(Intent(this, TambahPabrikPengolahanActivity::class.java))
-                Utils.PENERIMA -> startActivity(Intent(this, TambahPenerimaActivity::class.java))
+                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
+                Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
             }
         }
     }

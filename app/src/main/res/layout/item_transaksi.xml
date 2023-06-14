@@ -37,6 +37,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/poppins_bold"
+            android:maxWidth="200dp"
             android:text="Beras - Batch_ki54gi6"
             android:textColor="@color/black"
             android:textSize="14sp"

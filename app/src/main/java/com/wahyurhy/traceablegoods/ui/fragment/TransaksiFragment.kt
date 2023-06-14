@@ -1,5 +1,6 @@
 package com.wahyurhy.traceablegoods.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
 import com.wahyurhy.traceablegoods.model.transaksi.TransaksiModel
+import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -67,6 +70,16 @@ class TransaksiFragment : Fragment() {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val produkBatch = result.items[position].produkBatch
                     Toast.makeText(requireContext(), "$produkBatch was clicked!", Toast.LENGTH_SHORT).show()
+                    if (result.items[position].status == "selesai") {
+                        val intent =
+                            Intent(requireContext(), TahapAlurDistribusiActivity::class.java)
+                        intent.putExtra("batch_id", result.items[position].batchId)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(requireContext(), TahapProdusenActivity::class.java)
+                        intent.putExtra("batch_id", result.items[position].batchId)
+                        startActivity(intent)
+                    }
                 }
             })
         }
