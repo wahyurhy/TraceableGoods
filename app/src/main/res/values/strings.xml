@@ -16,20 +16,8 @@
     <string name="masuk_aplikasi">Masuk Aplikasi</string>
     <string name="email">Email</string>
     <string name="kata_sandi">Kata sandi</string>
-    <string name="lupa_kata_sandi">Lupa kata sandi?</string>
-    <string name="masuk">Masuk</string>
-    <string name="belum_memiliki_akun">Belum memiliki akun?</string>
-    <string name="daftar_sekarang">Daftar Sekarang</string>
-    <string name="daftar_akun">Daftar Akun</string>
+    <string name="masuk_sebagai_admin">Masuk sebagai Admin</string>
     <string name="silahkan_masukan_email_dan_nkata_sandi_anda">Silahkan masukan email dan\nkata sandi Anda</string>
-    <string name="silahkan_daftarkan_email_dan_npassword_anda">Silahkan daftarkan email dan\npassword Anda</string>
-    <string name="ulangi_kata_sandi_sebelumnya">Ulangi kata sandi sebelumnya</string>
-    <string name="daftar">Daftar</string>
-    <string name="sudah_memiliki_akun">Sudah memiliki akun?</string>
-    <string name="masuk_sekarang">Masuk Sekarang</string>
-    <string name="lupa_kata_sandi_capital_each_sentence">Lupa Kata Sandi?</string>
-    <string name="jangan_khawatir_anda_dapat_nmemulihkannya_melalui_email_anda">Jangan khawatir, Anda dapat\nmemulihkannya melalui email Anda</string>
-    <string name="kirimkan">Kirimkan</string>
     <string name="list_title">Daftar %1$s</string>
     <string name="detail_title">Detail %1$s</string>
     <string name="cari_apa">Cari %1$s…</string>
@@ -151,6 +139,13 @@
     <string name="selesai">Selesai</string>
     <string name="cetak">Cetak</string>
     <string name="alur_distribusi">Alur Distribusi</string>
+    <string name="masuk_sebagai_pengamat">Masuk sebagai Pengamat</string>
+    <string name="atau">Atau</string>
+    <string name="traceable_goods">Traceable Goods</string>
+    <string name="explain_app">Traceable Goods adalah aplikasi yang diperuntukan untuk menjaga transparansi dari distribusi bahan pangan yang ditujukan sebagai kontribusi untuk mendukung E-Government di Dinas Perdagangan.</string>
+    <string name="explain_app_more">Aplikasi ini dibangun sebagai bagian dari penelitian yang dilakukan di perguruan tinggi Universitas Singaperbangsa Karawang untuk keperluan salah satu persyaratan kelulusan pada penulisan skripsi.\n\n\nTertanda</string>
+    <string name="wahyu_rahayu">Wahyu Rahayu</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

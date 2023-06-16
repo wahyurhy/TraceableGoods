@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:id="@+id/scrollView"
-    tools:context=".ui.activity.auth.LoginActivity">
+    tools:context=".ui.activity.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -121,25 +121,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/forgot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="10dp"
-                android:text="@string/lupa_kata_sandi"
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
-
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="@string/masuk"
+                android:text="@string/masuk_sebagai_admin"
                 android:textSize="14sp"
                 android:textColor="@color/white"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:textAllCaps="false"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingEnd="10dp"
@@ -147,33 +136,55 @@
                 android:drawableEnd="@drawable/ic_right_white"
                 android:background="@drawable/bg_button_rounded"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="16dp"
+                android:layout_marginVertical="15dp">
+
+                <View
+                    android:id="@+id/lineLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/text1"
+                    android:background="@color/gray" />
 
                 <TextView
+                    android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/belum_memiliki_akun"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="13sp" />
+                    android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="@string/atau" />
 
-                <TextView
-                    android:id="@+id/btn_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/daftar_sekarang"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_bold"
-                    android:layout_marginStart="5dp"
-                    android:textSize="13sp" />
+                <View
+                    android:id="@+id/lineRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/text1"
+                    android:background="@color/gray" />
 
-            </LinearLayout>
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_observer"
+                style="@style/Button.OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="@string/masuk_sebagai_pengamat"
+                android:textAllCaps="false"
+                android:textColor="@color/primary_color"
+                android:textSize="14sp"
+                android:paddingStart="40dp"
+                android:paddingEnd="10dp"
+                app:rippleColor="@color/primary_color"
+                android:drawableEnd="@drawable/ic_observer"
+                app:strokeColor="@color/primary_color"
+                app:cornerRadius="15dp"
+                app:iconTint="@null"
+                tools:ignore="VisualLintButtonSize" />
 
         </LinearLayout>
 

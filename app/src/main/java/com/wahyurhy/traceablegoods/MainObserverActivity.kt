@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.wahyurhy.traceablegoods.databinding.ActivityMainObserverBinding
-import com.wahyurhy.traceablegoods.ui.fragment.ProfileFragment
+import com.wahyurhy.traceablegoods.ui.fragment.TentangAplikasiFragment
 import com.wahyurhy.traceablegoods.ui.fragment.TransaksiFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 
@@ -26,7 +26,7 @@ class MainObserverActivity : AppCompatActivity() {
 
     private fun initTabs() {
         val transaksiFragment = TransaksiFragment()
-        val profileFragment = ProfileFragment()
+        val tentangAplikasiFragment = TentangAplikasiFragment()
         makeCurrentFragment(transaksiFragment)
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -36,10 +36,10 @@ class MainObserverActivity : AppCompatActivity() {
                     it.setIcon(R.drawable.ic_transaksi_state)
                     false
                 }
-                R.id.profile_fragment -> {
-                    makeCurrentFragment(profileFragment)
+                R.id.tentang_aplikasi_fragment -> {
+                    makeCurrentFragment(tentangAplikasiFragment)
                     it.isChecked = true
-                    it.setIcon(R.drawable.ic_profile_state)
+                    it.setIcon(R.drawable.ic_tentang_aplikasi_state)
                     false
                 }
                 else -> {
