@@ -35,6 +35,10 @@ class TambahDataMasterActivity : AppCompatActivity(), AdapterView.OnItemSelected
     }
 
     private fun initClickListener() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         binding.jenisDataSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {

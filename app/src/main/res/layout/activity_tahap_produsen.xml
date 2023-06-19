@@ -299,7 +299,6 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="23dp"
                         android:popupBackground="@color/white"
-                        android:spinnerMode="dialog"
                         android:textColor="@color/black"
                         tools:ignore="TouchTargetSizeCheck" />
 
@@ -394,7 +393,6 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="23dp"
                     android:popupBackground="@color/white"
-                    android:spinnerMode="dialog"
                     android:textColor="@color/black"
                     tools:ignore="TouchTargetSizeCheck" />
 

@@ -94,7 +94,6 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="23dp"
                     android:popupBackground="@color/white"
-                    android:spinnerMode="dialog"
                     android:textColor="@color/black"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -290,7 +289,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_ubah"
+                android:id="@+id/btn_simpan"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/simpan"

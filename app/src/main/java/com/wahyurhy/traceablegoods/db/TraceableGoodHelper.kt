@@ -12,6 +12,7 @@ class TraceableGoodHelper(context: Context) {
     private lateinit var database: SQLiteDatabase
 
     companion object {
+        private const val DATABASE_TABLE_DATA_INFO = DatabaseContract.DataInformasiColumns.TABLE_NAME
         private const val DATABASE_TABLE_PRODUK = DatabaseContract.ProdukColumns.TABLE_NAME
         private const val DATABASE_TABLE_PRODUSEN = DatabaseContract.ProdusenColumns.TABLE_NAME
         private const val DATABASE_TABLE_DISTRIBUTOR = DatabaseContract.DistributorColumns.TABLE_NAME
@@ -21,6 +22,8 @@ class TraceableGoodHelper(context: Context) {
         private const val DATABASE_TABLE_GUDANG = DatabaseContract.GudangColumns.TABLE_NAME
         private const val DATABASE_TABLE_TENGKULAK = DatabaseContract.TengkulakColumns.TABLE_NAME
         private const val DATABASE_TABLE_PABRIK_PENGOLAHAN = DatabaseContract.PabrikPengolahanColumns.TABLE_NAME
+        private const val DATABASE_TABLE_TRANSAKSI = DatabaseContract.TransaksiColumns.TABLE_NAME
+        private const val DATABASE_TABLE_ALUR_DISTRIBUSI = DatabaseContract.AlurDistribusiColumns.TABLE_NAME
 
         private var INSTANCE: TraceableGoodHelper? = null
         fun getInstance(context: Context): TraceableGoodHelper =
@@ -40,6 +43,22 @@ class TraceableGoodHelper(context: Context) {
         if (database.isOpen) {
             database.close()
         }
+    }
+
+    fun queryAllDataInfo(): Cursor {
+        return database.query(
+            DATABASE_TABLE_DATA_INFO,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "${DatabaseContract.DataInformasiColumns.COLUMN_ID} ASC",
+            null)
+    }
+
+    fun insertDataInfo(values: ContentValues?): Long {
+        return database.insert(DATABASE_TABLE_DATA_INFO, null, values)
     }
 
     fun queryAllProduk(): Cursor {
@@ -364,6 +383,62 @@ class TraceableGoodHelper(context: Context) {
 
     fun deletePabrikPengolahan(id: String): Int {
         return database.delete(DATABASE_TABLE_PABRIK_PENGOLAHAN, "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = '$id'", null)
+    }
+
+    fun queryAllTransaksi(): Cursor {
+        return database.query(
+            DATABASE_TABLE_TRANSAKSI,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} ASC",
+            null)
+    }
+
+    fun queryTransaksiById(id: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_TRANSAKSI,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} = ?",
+            arrayOf(id),
+            null,
+            null,
+            null,
+            null)
+    }
+
+    fun insertTransaksi(values: ContentValues?): Long {
+        return database.insert(DATABASE_TABLE_TRANSAKSI, null, values)
+    }
+
+    fun queryAllAlurDistribusi(): Cursor {
+        return database.query(
+            DATABASE_TABLE_ALUR_DISTRIBUSI,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} ASC",
+            null)
+    }
+
+    fun queryAlurDistribusiById(id: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_ALUR_DISTRIBUSI,
+            null,
+            "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} = ?",
+            arrayOf(id),
+            null,
+            null,
+            null,
+            null)
+    }
+
+    fun insertAlurDistribusi(values: ContentValues?): Long {
+        return database.insert(DATABASE_TABLE_ALUR_DISTRIBUSI, null, values)
     }
 
 }

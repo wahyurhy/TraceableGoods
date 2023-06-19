@@ -147,6 +147,7 @@
     <string name="wahyu_rahayu">Wahyu Rahayu</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="info_content">Terdapat total %1$s Data Informasi yang telah ditambahkan</string>
+    <string name="silahkan_tambahkan_data_terlebih_dahulu">Silahkan tambahkan data\nterlebih dahulu</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

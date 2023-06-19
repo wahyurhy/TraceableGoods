@@ -3,18 +3,20 @@ package com.wahyurhy.traceablegoods.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
+import com.wahyurhy.traceablegoods.databinding.ItemDataInfoBinding
 import com.wahyurhy.traceablegoods.model.datainfo.Item
 
-class DataInfoAdapter(private val mDataInfo: List<Item>) : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
+class DataInfoAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
 
-    interface OnItemClickListener {
-        fun onItemClick(itemView: View?, position: Int)
-    }
-
-    private lateinit var listener: OnItemClickListener
+    var mDataInfo = ArrayList<Item>()
+        set(mDataInfo) {
+            if (mDataInfo.size > 0) {
+                this.mDataInfo.clear()
+            }
+            this.mDataInfo.addAll(mDataInfo)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
@@ -26,28 +28,21 @@ class DataInfoAdapter(private val mDataInfo: List<Item>) : RecyclerView.Adapter<
     override fun getItemCount(): Int = mDataInfo.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dataInfo = mDataInfo[position]
-        val dataCount = holder.dataCount
-        dataCount.text = dataInfo.listData.size.toString()
-        val dataName = holder.dataName
-        dataName.text  = dataInfo.dataName
-    }
-
-    fun setOnClickedListener(listener: OnItemClickListener) {
-        this.listener = listener
+        holder.bind(mDataInfo[position])
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dataCount = itemView.findViewById<TextView>(R.id.data_count)
-        val dataName = itemView.findViewById<TextView>(R.id.data_name)
-
-        init {
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(itemView, position)
-                }
+        private val binding = ItemDataInfoBinding.bind(itemView)
+        fun bind(item: Item) {
+            binding.dataCount.text = item.listData.size.toString()
+            binding.dataName.text = item.dataName
+            binding.cvItemDataInfo.setOnClickListener {
+                onItemClickCallback.onItemClicked(item, adapterPosition)
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(selectedItem: Item?, position: Int?)
     }
 }

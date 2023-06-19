@@ -13,6 +13,7 @@ import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
 import com.wahyurhy.traceablegoods.adapter.DataInfoCardInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.model.datainfo.DataInfoModel
+import com.wahyurhy.traceablegoods.model.datainfo.Item
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -20,6 +21,7 @@ import java.io.InputStreamReader
 class MasterDataFragment : Fragment() {
 
     private lateinit var binding: FragmentMasterDataBinding
+    private lateinit var adapter: DataInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +36,14 @@ class MasterDataFragment : Fragment() {
 
 
         rawListInit()
+
+        adapter = DataInfoAdapter(object : DataInfoAdapter.OnItemClickCallback {
+            override fun onItemClicked(selectedItem: Item?, position: Int?) {
+
+            }
+        })
+        binding.rvDataInfo.adapter = adapter
+
         hideFloatingActionButton()
     }
 
@@ -54,21 +64,21 @@ class MasterDataFragment : Fragment() {
 
     private fun bindData(dataList: DataInfoModel) {
         dataList.result.forEach { result ->
-            val adapter = DataInfoAdapter(result.items)
+//            val adapter = DataInfoAdapter(result.items)
             val adapterCardInfo = DataInfoCardInfoAdapter(result.items)
-            binding.rvDataInfo.adapter = adapter
+//            binding.rvDataInfo.adapter = adapter
             binding.rvCardInfo.adapter = adapterCardInfo
-            adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val dataName = result.items[position].dataName
-                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
-                        .show()
-                    Intent(requireContext(), ListActivity::class.java).apply {
-                        putExtra(NAME_LIST, dataName)
-                        startActivity(this)
-                    }
-                }
-            })
+//            adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
+//                override fun onItemClick(itemView: View?, position: Int) {
+//                    val dataName = result.items[position].dataName
+//                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
+//                        .show()
+//                    Intent(requireContext(), ListActivity::class.java).apply {
+//                        putExtra(NAME_LIST, dataName)
+//                        startActivity(this)
+//                    }
+//                }
+//            })
         }
     }
 
