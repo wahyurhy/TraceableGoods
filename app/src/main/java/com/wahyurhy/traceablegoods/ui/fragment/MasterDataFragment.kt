@@ -10,6 +10,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
+import com.wahyurhy.traceablegoods.adapter.DataInfoCardInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.model.datainfo.DataInfoModel
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
@@ -54,7 +55,9 @@ class MasterDataFragment : Fragment() {
     private fun bindData(dataList: DataInfoModel) {
         dataList.result.forEach { result ->
             val adapter = DataInfoAdapter(result.items)
+            val adapterCardInfo = DataInfoCardInfoAdapter(result.items)
             binding.rvDataInfo.adapter = adapter
+            binding.rvCardInfo.adapter = adapterCardInfo
             adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val dataName = result.items[position].dataName

@@ -28,7 +28,7 @@ class DataInfoAdapter(private val mDataInfo: List<Item>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataInfo = mDataInfo[position]
         val dataCount = holder.dataCount
-        dataCount.text = dataInfo.dataCount
+        dataCount.text = dataInfo.listData.size.toString()
         val dataName = holder.dataName
         dataName.text  = dataInfo.dataName
     }

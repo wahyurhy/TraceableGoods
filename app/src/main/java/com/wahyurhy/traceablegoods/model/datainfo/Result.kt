@@ -1,13 +1,16 @@
 package com.wahyurhy.traceablegoods.model.datainfo
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Result(
     @SerializedName("id")
-    val id: Int,
+    var id: Int,
     @SerializedName("items")
-    val items: List<Item>,
+    var items: List<Item>,
     @SerializedName("title")
-    val title: String
-)
+    var title: String
+): Parcelable

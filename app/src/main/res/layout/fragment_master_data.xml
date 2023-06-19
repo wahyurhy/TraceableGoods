@@ -38,68 +38,33 @@
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_info"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_card_info"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            app:cardBackgroundColor="#ECD59F"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="-10dp"
+            android:overScrollMode="never"
+            android:scrollbarSize="0dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="@id/tv_username"
-            app:layout_constraintTop_toBottomOf="@id/tv_username">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_title_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/info"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="Terdapat penambahanan\n147 Data Transaksi Minggu ini"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@id/tv_title_card"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_card"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toBottomOf="@id/tv_username"
+            app:spanCount="1"
+            tools:listitem="@layout/item_card_info" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="-70dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/data_informasi"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_info" />
+            app:layout_constraintTop_toBottomOf="@id/rv_card_info" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data_info"
