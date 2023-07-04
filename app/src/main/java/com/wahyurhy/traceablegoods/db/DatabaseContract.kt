@@ -9,6 +9,7 @@ internal class DatabaseContract {
             const val TABLE_NAME = "data_info"
             const val COLUMN_ID = "_id"
             const val COLUMN_DATA_NAME = "data_name"
+            const val COLUMN_TIMESTAMP = "timestamp"
         }
     }
 
@@ -130,6 +131,7 @@ internal class DatabaseContract {
     internal class TransaksiColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "transaksi"
+            const val COLUMN_TRANSAKSI_ID = "transaksi_id"
             const val COLUMN_BATCH_ID = "batch_id"
             const val COLUMN_STATUS = "status"
             const val COLUMN_JENIS_PRODUK = "jenis_produk"

@@ -12,18 +12,22 @@ class TraceableGoodHelper(context: Context) {
     private lateinit var database: SQLiteDatabase
 
     companion object {
-        private const val DATABASE_TABLE_DATA_INFO = DatabaseContract.DataInformasiColumns.TABLE_NAME
+        private const val DATABASE_TABLE_DATA_INFO =
+            DatabaseContract.DataInformasiColumns.TABLE_NAME
         private const val DATABASE_TABLE_PRODUK = DatabaseContract.ProdukColumns.TABLE_NAME
         private const val DATABASE_TABLE_PRODUSEN = DatabaseContract.ProdusenColumns.TABLE_NAME
-        private const val DATABASE_TABLE_DISTRIBUTOR = DatabaseContract.DistributorColumns.TABLE_NAME
+        private const val DATABASE_TABLE_DISTRIBUTOR =
+            DatabaseContract.DistributorColumns.TABLE_NAME
         private const val DATABASE_TABLE_PENERIMA = DatabaseContract.PenerimaColumns.TABLE_NAME
         private const val DATABASE_TABLE_PENGGILING = DatabaseContract.PenggilingColumns.TABLE_NAME
         private const val DATABASE_TABLE_PENGEPUL = DatabaseContract.PengepulColumns.TABLE_NAME
         private const val DATABASE_TABLE_GUDANG = DatabaseContract.GudangColumns.TABLE_NAME
         private const val DATABASE_TABLE_TENGKULAK = DatabaseContract.TengkulakColumns.TABLE_NAME
-        private const val DATABASE_TABLE_PABRIK_PENGOLAHAN = DatabaseContract.PabrikPengolahanColumns.TABLE_NAME
+        private const val DATABASE_TABLE_PABRIK_PENGOLAHAN =
+            DatabaseContract.PabrikPengolahanColumns.TABLE_NAME
         private const val DATABASE_TABLE_TRANSAKSI = DatabaseContract.TransaksiColumns.TABLE_NAME
-        private const val DATABASE_TABLE_ALUR_DISTRIBUSI = DatabaseContract.AlurDistribusiColumns.TABLE_NAME
+        private const val DATABASE_TABLE_ALUR_DISTRIBUSI =
+            DatabaseContract.AlurDistribusiColumns.TABLE_NAME
 
         private var INSTANCE: TraceableGoodHelper? = null
         fun getInstance(context: Context): TraceableGoodHelper =
@@ -54,10 +58,16 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.DataInformasiColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
-    fun insertDataInfo(values: ContentValues?): Long {
+    fun insertDataInfo(id: Int, dataName: String, timeStamp: String): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.DataInformasiColumns.COLUMN_ID, id)
+            put(DatabaseContract.DataInformasiColumns.COLUMN_DATA_NAME, dataName)
+            put(DatabaseContract.DataInformasiColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_DATA_INFO, null, values)
     }
 
@@ -70,7 +80,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.ProdukColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryProdukById(id: String): Cursor {
@@ -82,19 +93,50 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
-    fun insertProduk(values: ContentValues?): Long {
+    fun insertProduk(
+        dataInfoId: Int,
+        jenisProduk: String,
+        namaProduk: String,
+        merek: String,
+        noLot: String,
+        tanggalProduksi: String,
+        tanggalKadaluarsa: String,
+        deskripsi: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.ProdukColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.ProdukColumns.COLUMN_JENIS_PRODUK, jenisProduk)
+            put(DatabaseContract.ProdukColumns.COLUMN_NAMA_PRODUK, namaProduk)
+            put(DatabaseContract.ProdukColumns.COLUMN_MEREK, merek)
+            put(DatabaseContract.ProdukColumns.COLUMN_NOMOR_LOT, noLot)
+            put(DatabaseContract.ProdukColumns.COLUMN_TANGGAL_PRODUKSI, tanggalProduksi)
+            put(DatabaseContract.ProdukColumns.COLUMN_TANGGAL_KADALUARSA, tanggalKadaluarsa)
+            put(DatabaseContract.ProdukColumns.COLUMN_DESKRIPSI, deskripsi)
+            put(DatabaseContract.ProdukColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PRODUK, null, values)
     }
 
     fun updateProduk(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PRODUK, values, "${DatabaseContract.ProdukColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PRODUK,
+            values,
+            "${DatabaseContract.ProdukColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deleteProduk(id: String): Int {
-        return database.delete(DATABASE_TABLE_PRODUK, "${DatabaseContract.ProdukColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PRODUK,
+            "${DatabaseContract.ProdukColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllProdusen(): Cursor {
@@ -106,7 +148,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.ProdusenColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryProdusenById(id: String): Cursor {
@@ -118,7 +161,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertProdusen(values: ContentValues?): Long {
@@ -126,11 +170,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updateProdusen(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PRODUSEN, values, "${DatabaseContract.ProdusenColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PRODUSEN,
+            values,
+            "${DatabaseContract.ProdusenColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deleteProdusen(id: String): Int {
-        return database.delete(DATABASE_TABLE_PRODUSEN, "${DatabaseContract.ProdusenColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PRODUSEN,
+            "${DatabaseContract.ProdusenColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllDistributor(): Cursor {
@@ -142,7 +195,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.DistributorColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryDistributorById(id: String): Cursor {
@@ -154,7 +208,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertDistributor(values: ContentValues?): Long {
@@ -162,11 +217,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updateDistributor(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_DISTRIBUTOR, values, "${DatabaseContract.DistributorColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_DISTRIBUTOR,
+            values,
+            "${DatabaseContract.DistributorColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deleteDistributor(id: String): Int {
-        return database.delete(DATABASE_TABLE_DISTRIBUTOR, "${DatabaseContract.DistributorColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_DISTRIBUTOR,
+            "${DatabaseContract.DistributorColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllPenerima(): Cursor {
@@ -178,7 +242,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.PenerimaColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryPenerimaById(id: String): Cursor {
@@ -190,7 +255,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertPenerima(values: ContentValues?): Long {
@@ -198,11 +264,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updatePenerima(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PENERIMA, values, "${DatabaseContract.PenerimaColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PENERIMA,
+            values,
+            "${DatabaseContract.PenerimaColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deletePenerima(id: String): Int {
-        return database.delete(DATABASE_TABLE_PENERIMA, "${DatabaseContract.PenerimaColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PENERIMA,
+            "${DatabaseContract.PenerimaColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllPenggiling(): Cursor {
@@ -214,7 +289,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.PenggilingColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryPenggilingById(id: String): Cursor {
@@ -226,7 +302,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertPenggiling(values: ContentValues?): Long {
@@ -234,11 +311,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updatePenggiling(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PENGGILING, values, "${DatabaseContract.PenggilingColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PENGGILING,
+            values,
+            "${DatabaseContract.PenggilingColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deletePenggiling(id: String): Int {
-        return database.delete(DATABASE_TABLE_PENGGILING, "${DatabaseContract.PenggilingColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PENGGILING,
+            "${DatabaseContract.PenggilingColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllPengepul(): Cursor {
@@ -250,7 +336,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.PengepulColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryPengepulById(id: String): Cursor {
@@ -262,7 +349,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertPengepul(values: ContentValues?): Long {
@@ -270,11 +358,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updatePengepul(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PENGEPUL, values, "${DatabaseContract.PengepulColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PENGEPUL,
+            values,
+            "${DatabaseContract.PengepulColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deletePengepul(id: String): Int {
-        return database.delete(DATABASE_TABLE_PENGEPUL, "${DatabaseContract.PengepulColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PENGEPUL,
+            "${DatabaseContract.PengepulColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllGudang(): Cursor {
@@ -286,7 +383,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.GudangColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryGudangById(id: String): Cursor {
@@ -298,7 +396,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertGudang(values: ContentValues?): Long {
@@ -306,11 +405,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updateGudang(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_GUDANG, values, "${DatabaseContract.GudangColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_GUDANG,
+            values,
+            "${DatabaseContract.GudangColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deleteGudang(id: String): Int {
-        return database.delete(DATABASE_TABLE_GUDANG, "${DatabaseContract.GudangColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_GUDANG,
+            "${DatabaseContract.GudangColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllTengkulak(): Cursor {
@@ -322,7 +430,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.TengkulakColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryTengkulakById(id: String): Cursor {
@@ -334,7 +443,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertTengkulak(values: ContentValues?): Long {
@@ -342,11 +452,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updateTengkulak(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_TENGKULAK, values, "${DatabaseContract.TengkulakColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_TENGKULAK,
+            values,
+            "${DatabaseContract.TengkulakColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deleteTengkulak(id: String): Int {
-        return database.delete(DATABASE_TABLE_TENGKULAK, "${DatabaseContract.TengkulakColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_TENGKULAK,
+            "${DatabaseContract.TengkulakColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllPabrikPengolahan(): Cursor {
@@ -358,7 +477,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryPabrikPengolahanById(id: String): Cursor {
@@ -370,7 +490,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertPabrikPengolahan(values: ContentValues?): Long {
@@ -378,11 +499,20 @@ class TraceableGoodHelper(context: Context) {
     }
 
     fun updatePabrikPengolahan(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE_PABRIK_PENGOLAHAN, values, "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = ?", arrayOf(id))
+        return database.update(
+            DATABASE_TABLE_PABRIK_PENGOLAHAN,
+            values,
+            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun deletePabrikPengolahan(id: String): Int {
-        return database.delete(DATABASE_TABLE_PABRIK_PENGOLAHAN, "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = '$id'", null)
+        return database.delete(
+            DATABASE_TABLE_PABRIK_PENGOLAHAN,
+            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = '$id'",
+            null
+        )
     }
 
     fun queryAllTransaksi(): Cursor {
@@ -394,7 +524,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryTransaksiById(id: String): Cursor {
@@ -406,7 +537,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertTransaksi(values: ContentValues?): Long {
@@ -422,7 +554,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} ASC",
-            null)
+            null
+        )
     }
 
     fun queryAlurDistribusiById(id: String): Cursor {
@@ -434,7 +567,8 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            null)
+            null
+        )
     }
 
     fun insertAlurDistribusi(values: ContentValues?): Long {

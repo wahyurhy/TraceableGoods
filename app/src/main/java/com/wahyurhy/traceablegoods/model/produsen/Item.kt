@@ -15,5 +15,7 @@ data class Item(
     @SerializedName("no_npwp")
     val noNpwp: String,
     @SerializedName("produsen_id")
-    val produsenId: Int
+    val produsenId: Int,
+    @SerializedName("timestamp")
+    val timestamp: String
 )

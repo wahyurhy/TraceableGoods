@@ -10,7 +10,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Bekasi",
           "kontak_produsen": "08951412234",
-          "no_npwp": "123456789"
+          "no_npwp": "123456789",
+          "timestamp":""
         },
         {
           "produsen_id": 2,
@@ -18,7 +19,8 @@
           "kategori_produsen": "Peternak",
           "alamat_produsen": "Karawang",
           "kontak_produsen": "08951335563",
-          "no_npwp": "123456789"
+          "no_npwp": "123456789",
+          "timestamp": ""
         },
         {
           "produsen_id": 3,
@@ -26,7 +28,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Bandung",
           "kontak_produsen": "08951225538",
-          "no_npwp": "123456789"
+          "no_npwp": "123456789",
+          "timestamp": ""
         },
         {
           "produsen_id": 4,
@@ -34,7 +37,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Karawang",
           "kontak_produsen": "08123456789",
-          "no_npwp": "987654321"
+          "no_npwp": "987654321",
+          "timestamp": ""
         },
         {
           "produsen_id": 5,
@@ -42,7 +46,8 @@
           "kategori_produsen": "Nelayan",
           "alamat_produsen": "Surabaya",
           "kontak_produsen": "087654321",
-          "no_npwp": "456789123"
+          "no_npwp": "456789123",
+          "timestamp": ""
         },
         {
           "produsen_id": 5,
@@ -50,7 +55,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Bandung",
           "kontak_produsen": "082345678",
-          "no_npwp": "789123456"
+          "no_npwp": "789123456",
+          "timestamp": ""
         },
         {
           "produsen_id": 6,
@@ -58,7 +64,8 @@
           "kategori_produsen": "Peternak",
           "alamat_produsen": "Medan",
           "kontak_produsen": "087654321",
-          "no_npwp": "234567891"
+          "no_npwp": "234567891",
+          "timestamp": ""
         },
         {
           "produsen_id": 7,
@@ -66,7 +73,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Yogyakarta",
           "kontak_produsen": "081234567",
-          "no_npwp": "678912345"
+          "no_npwp": "678912345",
+          "timestamp": ""
         },
         {
           "produsen_id": 8,
@@ -74,7 +82,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Bandung",
           "kontak_produsen": "081234567",
-          "no_npwp": "456789123"
+          "no_npwp": "456789123",
+          "timestamp": ""
         },
         {
           "produsen_id": 9,
@@ -82,7 +91,8 @@
           "kategori_produsen": "Nelayan",
           "alamat_produsen": "Medan",
           "kontak_produsen": "082345678",
-          "no_npwp": "912345678"
+          "no_npwp": "912345678",
+          "timestamp": ""
         },
         {
           "produsen_id": 10,
@@ -90,7 +100,8 @@
           "kategori_produsen": "Petani",
           "alamat_produsen": "Karawang",
           "kontak_produsen": "087654321",
-          "no_npwp": "891234567"
+          "no_npwp": "891234567",
+          "timestamp": ""
         }
       ]
     }

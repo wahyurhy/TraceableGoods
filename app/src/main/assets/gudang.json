@@ -8,19 +8,22 @@
           "gudang_id": 1,
           "nama_gudang": "Nanda Jaya Bersama",
           "alamat_gudang": "Karawang",
-          "kontak_gudang": "08951412234"
+          "kontak_gudang": "08951412234",
+          "timestamp": ""
         },
         {
           "gudang_id": 2,
           "nama_gudang": "Ferdy Jaya Selalu",
           "alamat_gudang": "Karawang",
-          "kontak_gudang": "08951412234"
+          "kontak_gudang": "08951412234",
+          "timestamp": ""
         },
         {
           "gudang_id": 3,
           "nama_gudang": "Haris Jaya Selamanya",
           "alamat_gudang": "Karawang",
-          "kontak_gudang": "08951412234"
+          "kontak_gudang": "08951412234",
+          "timestamp": ""
         }
       ]
     }

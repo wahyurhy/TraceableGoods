@@ -14,15 +14,15 @@ object Utils {
     const val SAYURAN = "sayuran"
     const val DAGING = "daging"
 
-    const val PRODUK = "produk"
-    const val PRODUSEN = "produsen"
-    const val DISTRIBUTOR = "distributor"
-    const val PENERIMA = "penerima"
-    const val PENGGILING = "penggiling"
-    const val PENGEPUL = "pengepul"
-    const val GUDANG = "gudang"
-    const val TENGKULAK = "tengkulak"
-    const val PABRIK_PENGOLAHAN = "pabrik pengolahan"
+    const val PRODUK = "Produk"
+    const val PRODUSEN = "Produsen"
+    const val DISTRIBUTOR = "Distributor"
+    const val PENERIMA = "Penerima"
+    const val PENGGILING = "Penggiling"
+    const val PENGEPUL = "Pengepul"
+    const val GUDANG = "Gudang"
+    const val TENGKULAK = "Tengkulak"
+    const val PABRIK_PENGOLAHAN = "Pabrik Pengolahan"
 
     const val EXTRA_PRODUK = "extra_produk"
     const val EXTRA_PRODUSEN = "extra_produsen"
@@ -33,6 +33,16 @@ object Utils {
     const val EXTRA_GUDANG = "extra_gudang"
     const val EXTRA_TENGKULAK = "extra_tengkulak"
     const val EXTRA_PABRIK_PENGOLAHAN = "extra_pabrik_pengolahan"
+
+    const val PRODUK_ID = 0
+    const val PRODUSEN_ID = 1
+    const val DISTRIBUTOR_ID = 2
+    const val PENERIMA_ID = 3
+    const val PENGGILING_ID = 4
+    const val PENGEPUL_ID = 5
+    const val GUDANG_ID = 6
+    const val TENGKULAK_ID = 7
+    const val PABRIK_PENGOLAHAN_ID = 8
 
     const val RESULT_ADD = 101
     const val RESULT_UPDATE = 201

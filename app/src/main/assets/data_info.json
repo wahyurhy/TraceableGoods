@@ -7,436 +7,47 @@
         {
           "id": 0,
           "data_name": "Produk",
-          "list_data": [
-            {
-              "product_id": 1,
-              "jenis_produk": "Bijian",
-              "nama_produk": "Beras",
-              "merek": "Beras Kita",
-              "nomor_lot": "234511598754",
-              "tanggal_produksi": "7 Juni 2023",
-              "tanggal_kadaluarsa": "7 Juni 2025",
-              "deskripsi": "Beras merupakan makanan pokok sehari-hari",
-              "timestamp": "1686886409"
-            },
-            {
-              "product_id": 2,
-              "jenis_produk": "Bijian",
-              "nama_produk": "Jagung",
-              "merek": "Jagung Kita",
-              "nomor_lot": "234515748286",
-              "tanggal_produksi": "8 Juni 2023",
-              "tanggal_kadaluarsa": "8 Juni 2025",
-              "deskripsi": "Jagung merupakan makanan pokok sehari-hari",
-              "timestamp": "1686886409"
-            },
-            {
-              "product_id": 3,
-              "jenis_produk": "Bijian",
-              "nama_produk": "Gandum",
-              "merek": "Gandum Kita",
-              "nomor_lot": "234511598295",
-              "tanggal_produksi": "9 Juni 2023",
-              "tanggal_kadaluarsa": "9 Juni 2025",
-              "deskripsi": "Gandum merupakan makanan pokok sehari-hari",
-              "timestamp": "1686886409"
-            },
-            {
-              "product_id": 4,
-              "jenis_produk": "Buahan",
-              "nama_produk": "Apel",
-              "merek": "Buah Kita",
-              "nomor_lot": "234511537375",
-              "tanggal_produksi": "10 Juni 2023",
-              "tanggal_kadaluarsa": "10 Juni 2025",
-              "deskripsi": "Apel merupakan buahan yang bergizi",
-              "timestamp": "1686886409"
-            },
-            {
-              "product_id": 5,
-              "jenis_produk": "Sayuran",
-              "nama_produk": "Bayam",
-              "merek": "Sayur Kita",
-              "nomor_lot": "234511385840",
-              "tanggal_produksi": "11 Juni 2023",
-              "tanggal_kadaluarsa": "11 Juni 2025",
-              "deskripsi": "Bayam merupakan sayuran pokok sehari-hari",
-              "timestamp": "1686886409"
-            },
-            {
-              "product_id": 6,
-              "jenis_produk": "Daging",
-              "nama_produk": "Daging Sapi",
-              "merek": "Sedap Rasa",
-              "nomor_lot": "234511445537",
-              "tanggal_produksi": "12 Juni 2023",
-              "tanggal_kadaluarsa": "12 Juni 2025",
-              "deskripsi": "Daging Sapi merupakan makanan hari raya",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 1,
           "data_name": "Produsen",
-          "list_data": [
-            {
-              "produsen_id": 1,
-              "nama_produsen": "Wahyu Rahayu",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Bekasi",
-              "kontak_produsen": "08951412234",
-              "no_npwp": "123456789",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 2,
-              "nama_produsen": "Adam",
-              "kategori_produsen": "Peternak",
-              "alamat_produsen": "Karawang",
-              "kontak_produsen": "08951335563",
-              "no_npwp": "123456789",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 3,
-              "nama_produsen": "Mario",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Bandung",
-              "kontak_produsen": "08951225538",
-              "no_npwp": "123456789",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 4,
-              "nama_produsen": "Andi",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Karawang",
-              "kontak_produsen": "08123456789",
-              "no_npwp": "987654321",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 5,
-              "nama_produsen": "Siti",
-              "kategori_produsen": "Nelayan",
-              "alamat_produsen": "Surabaya",
-              "kontak_produsen": "087654321",
-              "no_npwp": "456789123",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 5,
-              "nama_produsen": "Budi",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Bandung",
-              "kontak_produsen": "082345678",
-              "no_npwp": "789123456",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 6,
-              "nama_produsen": "Linda",
-              "kategori_produsen": "Peternak",
-              "alamat_produsen": "Medan",
-              "kontak_produsen": "087654321",
-              "no_npwp": "234567891",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 7,
-              "nama_produsen": "Rudi",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Yogyakarta",
-              "kontak_produsen": "081234567",
-              "no_npwp": "678912345",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 8,
-              "nama_produsen": "Tina",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Bandung",
-              "kontak_produsen": "081234567",
-              "no_npwp": "456789123",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 9,
-              "nama_produsen": "Rina",
-              "kategori_produsen": "Nelayan",
-              "alamat_produsen": "Medan",
-              "kontak_produsen": "082345678",
-              "no_npwp": "912345678",
-              "timestamp": "1686886409"
-            },
-            {
-              "produsen_id": 10,
-              "nama_produsen": "Ahmad",
-              "kategori_produsen": "Petani",
-              "alamat_produsen": "Karawang",
-              "kontak_produsen": "087654321",
-              "no_npwp": "891234567",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 2,
           "data_name": "Distributor",
-          "list_data": [
-            {
-              "distributor_id": 1,
-              "nama_distributor": "Wahyu Rahayu",
-              "alamat_distributor": "Bekasi",
-              "kontak_distributor": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 2,
-              "nama_distributor": "Andi Susanto",
-              "alamat_distributor": "Jakarta",
-              "kontak_distributor": "08771234567",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 3,
-              "nama_distributor": "Siti Mulyani",
-              "alamat_distributor": "Surabaya",
-              "kontak_distributor": "08123456789",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 4,
-              "nama_distributor": "Budi Santoso",
-              "alamat_distributor": "Bandung",
-              "kontak_distributor": "08567891234",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 5,
-              "nama_distributor": "Rina Sari",
-              "alamat_distributor": "Semarang",
-              "kontak_distributor": "08987654321",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 6,
-              "nama_distributor": "Ahmad Hidayat",
-              "alamat_distributor": "Yogyakarta",
-              "kontak_distributor": "08123456789",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 7,
-              "nama_distributor": "Dewi Kartika",
-              "alamat_distributor": "Medan",
-              "kontak_distributor": "08765432109",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 8,
-              "nama_distributor": "Rudi Setiawan",
-              "alamat_distributor": "Palembang",
-              "kontak_distributor": "08234567890",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 9,
-              "nama_distributor": "Eka Pratiwi",
-              "alamat_distributor": "Makassar",
-              "kontak_distributor": "08765432987",
-              "timestamp": "1686886409"
-            },
-            {
-              "distributor_id": 10,
-              "nama_distributor": "Surya Wijaya",
-              "alamat_distributor": "Denpasar",
-              "kontak_distributor": "08234567890",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 3,
           "data_name": "Penerima",
-          "list_data": [
-            {
-              "penerima_id": 1,
-              "nama_penerima": "Wahyu Rahayu",
-              "kategori_penerima": "Toko / Pengecer",
-              "alamat_penerima": "Bekasi",
-              "kontak_penerima": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penerima_id": 2,
-              "nama_penerima": "Dandy Sijabat",
-              "kategori_penerima": "Toko Grosir",
-              "alamat_penerima": "Bekasi",
-              "kontak_penerima": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penerima_id": 3,
-              "nama_penerima": "Rio Syahputra",
-              "kategori_penerima": "Pasar Induk",
-              "alamat_penerima": "Cibitung",
-              "kontak_penerima": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penerima_id": 4,
-              "nama_penerima": "Duril Luthfi",
-              "kategori_penerima": "Konsumen Akhir",
-              "alamat_penerima": "Bekasi",
-              "kontak_penerima": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penerima_id": 5,
-              "nama_penerima": "Ramly Febriansyah",
-              "kategori_penerima": "Restoran / Rumah Makan",
-              "alamat_penerima": "Bekasi",
-              "kontak_penerima": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 4,
           "data_name": "Penggiling",
-          "list_data": [
-            {
-              "penggiling_id": 1,
-              "nama_penggiling": "Wahyu Rahayu",
-              "alamat_penggiling": "Bekasi",
-              "kontak_penggiling": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penggiling_id": 2,
-              "nama_penggiling": "Ramadhan",
-              "alamat_penggiling": "Bekasi",
-              "kontak_penggiling": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "penggiling_id": 3,
-              "nama_penggiling": "Jacky",
-              "alamat_penggiling": "Bekasi",
-              "kontak_penggiling": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 5,
           "data_name": "Pengepul",
-          "list_data": [
-            {
-              "pengepul_id": 1,
-              "nama_pengepul": "Agus",
-              "alamat_pengepul": "Karawang",
-              "kontak_pengepul": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "pengepul_id": 2,
-              "nama_pengepul": "Mahmud",
-              "alamat_pengepul": "Karawang",
-              "kontak_pengepul": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "pengepul_id": 3,
-              "nama_pengepul": "Jean",
-              "alamat_pengepul": "Karawang",
-              "kontak_pengepul": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 6,
           "data_name": "Gudang",
-          "list_data": [
-            {
-              "gudang_id": 1,
-              "nama_gudang": "Nanda Jaya Bersama",
-              "alamat_gudang": "Karawang",
-              "kontak_gudang": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "gudang_id": 2,
-              "nama_gudang": "Ferdy Jaya Selalu",
-              "alamat_gudang": "Karawang",
-              "kontak_gudang": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "gudang_id": 3,
-              "nama_gudang": "Haris Jaya Selamanya",
-              "alamat_gudang": "Karawang",
-              "kontak_gudang": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 7,
           "data_name": "Tengkulak",
-          "list_data": [
-            {
-              "tengkulak_id": 1,
-              "nama_tengkulak": "Hendrawan",
-              "alamat_tengkulak": "Karawang",
-              "kontak_tengkulak": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "tengkulak_id": 2,
-              "nama_tengkulak": "Jari Bajuri",
-              "alamat_tengkulak": "Karawang",
-              "kontak_tengkulak": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "tengkulak_id": 3,
-              "nama_tengkulak": "Benny",
-              "alamat_tengkulak": "Karawang",
-              "kontak_tengkulak": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         },
         {
           "id": 8,
           "data_name": "Pabrik Pengolahan",
-          "list_data": [
-            {
-              "pabrik_pengolahan_id": 1,
-              "nama_pabrik_pengolahan": "Ferdiansyah Factory",
-              "alamat_pabrik_pengolahan": "Karawang",
-              "kontak_pabrik_pengolahan": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "pabrik_pengolahan_id": 2,
-              "nama_pabrik_pengolahan": "Virdo Factory",
-              "alamat_pabrik_pengolahan": "Karawang",
-              "kontak_pabrik_pengolahan": "08951412234",
-              "timestamp": "1686886409"
-            },
-            {
-              "pabrik_pengolahan_id": 3,
-              "nama_pabrik_pengolahan": "Indiana Factory",
-              "alamat_pabrik_pengolahan": "Karawang",
-              "kontak_pabrik_pengolahan": "08951412234",
-              "timestamp": "1686886409"
-            }
-          ]
+          "timestamp": ""
         }
       ]
     }

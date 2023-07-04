@@ -11,5 +11,7 @@ data class Item(
     @SerializedName("nama_penggiling")
     val namaPenggiling: String,
     @SerializedName("penggiling_id")
-    val penggilingId: Int
+    val penggilingId: Int,
+    @SerializedName("timestamp")
+    val timestamp: String
 )

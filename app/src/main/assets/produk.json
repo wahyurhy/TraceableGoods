@@ -12,7 +12,8 @@
           "nomor_lot": "234511598754",
           "tanggal_produksi": "7 Juni 2023",
           "tanggal_kadaluarsa": "7 Juni 2025",
-          "deskripsi": "Beras merupakan makanan pokok sehari-hari"
+          "deskripsi": "Beras merupakan makanan pokok sehari-hari",
+          "timestamp":""
         },
         {
           "product_id": 2,
@@ -22,7 +23,8 @@
           "nomor_lot": "234515748286",
           "tanggal_produksi": "8 Juni 2023",
           "tanggal_kadaluarsa": "8 Juni 2025",
-          "deskripsi": "Jagung merupakan makanan pokok sehari-hari"
+          "deskripsi": "Jagung merupakan makanan pokok sehari-hari",
+          "timestamp": ""
         },
         {
           "product_id": 3,
@@ -32,7 +34,8 @@
           "nomor_lot": "234511598295",
           "tanggal_produksi": "9 Juni 2023",
           "tanggal_kadaluarsa": "9 Juni 2025",
-          "deskripsi": "Gandum merupakan makanan pokok sehari-hari"
+          "deskripsi": "Gandum merupakan makanan pokok sehari-hari",
+          "timestamp": ""
         },
         {
           "product_id": 4,
@@ -42,7 +45,8 @@
           "nomor_lot": "234511537375",
           "tanggal_produksi": "10 Juni 2023",
           "tanggal_kadaluarsa": "10 Juni 2025",
-          "deskripsi": "Apel merupakan buahan yang bergizi"
+          "deskripsi": "Apel merupakan buahan yang bergizi",
+          "timestamp": ""
         },
         {
           "product_id": 5,
@@ -52,7 +56,8 @@
           "nomor_lot": "234511385840",
           "tanggal_produksi": "11 Juni 2023",
           "tanggal_kadaluarsa": "11 Juni 2025",
-          "deskripsi": "Bayam merupakan sayuran pokok sehari-hari"
+          "deskripsi": "Bayam merupakan sayuran pokok sehari-hari",
+          "timestamp": ""
         },
         {
           "product_id": 6,
@@ -62,7 +67,8 @@
           "nomor_lot": "234511445537",
           "tanggal_produksi": "12 Juni 2023",
           "tanggal_kadaluarsa": "12 Juni 2025",
-          "deskripsi": "Daging Sapi merupakan makanan hari raya"
+          "deskripsi": "Daging Sapi merupakan makanan hari raya",
+          "timestamp": ""
         }
       ]
     }

@@ -8,19 +8,22 @@
           "penggiling_id": 1,
           "nama_penggiling": "Wahyu Rahayu",
           "alamat_penggiling": "Bekasi",
-          "kontak_penggiling": "08951412234"
+          "kontak_penggiling": "08951412234",
+          "timestamp": ""
         },
         {
           "penggiling_id": 2,
           "nama_penggiling": "Ramadhan",
           "alamat_penggiling": "Bekasi",
-          "kontak_penggiling": "08951412234"
+          "kontak_penggiling": "08951412234",
+          "timestamp": ""
         },
         {
           "penggiling_id": 3,
           "nama_penggiling": "Jacky",
           "alamat_penggiling": "Bekasi",
-          "kontak_penggiling": "08951412234"
+          "kontak_penggiling": "08951412234",
+          "timestamp": ""
         }
       ]
     }

@@ -8,61 +8,71 @@
           "distributor_id": 1,
           "nama_distributor": "Wahyu Rahayu",
           "alamat_distributor": "Bekasi",
-          "kontak_distributor": "08951412234"
+          "kontak_distributor": "08951412234",
+          "timestamp": ""
         },
         {
           "distributor_id": 2,
           "nama_distributor": "Andi Susanto",
           "alamat_distributor": "Jakarta",
-          "kontak_distributor": "08771234567"
+          "kontak_distributor": "08771234567",
+          "timestamp": ""
         },
         {
           "distributor_id": 3,
           "nama_distributor": "Siti Mulyani",
           "alamat_distributor": "Surabaya",
-          "kontak_distributor": "08123456789"
+          "kontak_distributor": "08123456789",
+          "timestamp": ""
         },
         {
           "distributor_id": 4,
           "nama_distributor": "Budi Santoso",
           "alamat_distributor": "Bandung",
-          "kontak_distributor": "08567891234"
+          "kontak_distributor": "08567891234",
+          "timestamp": ""
         },
         {
           "distributor_id": 5,
           "nama_distributor": "Rina Sari",
           "alamat_distributor": "Semarang",
-          "kontak_distributor": "08987654321"
+          "kontak_distributor": "08987654321",
+          "timestamp": ""
         },
         {
           "distributor_id": 6,
           "nama_distributor": "Ahmad Hidayat",
           "alamat_distributor": "Yogyakarta",
-          "kontak_distributor": "08123456789"
+          "kontak_distributor": "08123456789",
+          "timestamp": ""
         },
         {
           "distributor_id": 7,
           "nama_distributor": "Dewi Kartika",
           "alamat_distributor": "Medan",
-          "kontak_distributor": "08765432109"
+          "kontak_distributor": "08765432109",
+          "timestamp": ""
         },
         {
           "distributor_id": 8,
           "nama_distributor": "Rudi Setiawan",
           "alamat_distributor": "Palembang",
-          "kontak_distributor": "08234567890"
+          "kontak_distributor": "08234567890",
+          "timestamp": ""
         },
         {
           "distributor_id": 9,
           "nama_distributor": "Eka Pratiwi",
           "alamat_distributor": "Makassar",
-          "kontak_distributor": "08765432987"
+          "kontak_distributor": "08765432987",
+          "timestamp": ""
         },
         {
           "distributor_id": 10,
           "nama_distributor": "Surya Wijaya",
           "alamat_distributor": "Denpasar",
-          "kontak_distributor": "08234567890"
+          "kontak_distributor": "08234567890",
+          "timestamp": ""
         }
       ]
     }

@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.datainfo.Data
-import com.wahyurhy.traceablegoods.model.datainfo.Item
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.PRODUK_ID
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private var itemDataInfo: Item? = null
-    private var dataInfo: Data? = null
     private lateinit var traceableGoodHelper: TraceableGoodHelper
+    private var isAllSet: Boolean = false
 
     private var selectedJenisProduk = ""
 
@@ -26,6 +27,9 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         super.onCreate(savedInstanceState)
         binding = ActivityTambahDataProdukBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
+        traceableGoodHelper.open()
 
         fitStatusBar()
         initClickListener()
@@ -39,7 +43,54 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         binding.jenisProdukSpinner.onItemSelectedListener = this
 
         binding.btnSimpan.setOnClickListener {
+            binding.apply {
+                val jenisProduk = selectedJenisProduk
+                val namaProduk = edtNamaProduk.text.toString().trim()
+                val merekProduk = edtMerekProduk.text.toString().trim()
+                val noLot = edtNoLotProduk.text.toString().trim()
+                val tanggalProduksi = edtTanggalProduksiProduk.text.toString().trim()
+                val tanggalKadaluarsa = edtTanggalKadaluarsaProduk.text.toString().trim()
+                val deskripsiProduk = edtDeskripsiProduk.text.toString().trim()
 
+                namaProduk.showErrorIfEmpty(binding, getString(R.string.tidak_boleh_kosong))
+
+                if (isAllSet) {
+                    val dataInfoId = traceableGoodHelper.insertDataInfo(PRODUK_ID, PRODUK, getCurrentDate() + " WIB")
+                    val produkId = traceableGoodHelper.insertProduk(PRODUK_ID, jenisProduk,namaProduk, merekProduk, noLot, tanggalProduksi, tanggalKadaluarsa, deskripsiProduk, getCurrentDate() + " WIB")
+
+                    if (produkId > 0) {
+                        Toast.makeText(
+                            this@TambahProdukActivity,
+                            "Berhasil Tambah Data $PRODUK",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@TambahProdukActivity,
+                            "Gagal menambahkan data",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
+        val date = Date()
+
+        return dateFormat.format(date)
+    }
+
+    fun String.showErrorIfEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String) {
+        if (this.isEmpty()) {
+            isAllSet = false
+            binding.edtNamaProduk.error = errorMessage
+        } else {
+            isAllSet = true
+            binding.edtNamaProduk.error = null
         }
     }
 

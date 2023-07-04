@@ -42,7 +42,7 @@ class TambahDataMasterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         binding.jenisDataSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
-            when (selectedJenisData.lowercase()) {
+            when (selectedJenisData) {
                 PRODUK -> startActivity(Intent(this, TambahProdukActivity::class.java))
                 PRODUSEN -> startActivity(Intent(this, TambahProdusenActivity::class.java))
                 DISTRIBUTOR -> startActivity(Intent(this, TambahDistributorActivity::class.java))
@@ -53,6 +53,7 @@ class TambahDataMasterActivity : AppCompatActivity(), AdapterView.OnItemSelected
                 TENGKULAK -> startActivity(Intent(this, TambahTengkulakActivity::class.java))
                 PABRIK_PENGOLAHAN -> startActivity(Intent(this, TambahPabrikPengolahanActivity::class.java))
             }
+            finish()
         }
     }
 

@@ -14,13 +14,14 @@ internal class DatabaseHelper(context: Context) :
 
         private const val SQL_CREATE_TABLE_DATA_INFO =
             "CREATE TABLE ${DatabaseContract.DataInformasiColumns.TABLE_NAME}" +
-                    " (${DatabaseContract.DataInformasiColumns.COLUMN_ID} TEXT NOT NULL," +
-                    " ${DatabaseContract.DataInformasiColumns.COLUMN_DATA_NAME} TEXT NOT NULL)"
+                    " (${DatabaseContract.DataInformasiColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " ${DatabaseContract.DataInformasiColumns.COLUMN_DATA_NAME} TEXT NOT NULL," +
+                    " ${DatabaseContract.DataInformasiColumns.COLUMN_TIMESTAMP} TEXT NOT NULL)"
 
         private const val SQL_CREATE_TABLE_PRODUK =
             "CREATE TABLE ${DatabaseContract.ProdukColumns.TABLE_NAME}" +
                     " (${DatabaseContract.ProdukColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.ProdukColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.ProdukColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.ProdukColumns.COLUMN_JENIS_PRODUK} TEXT NOT NULL," +
                     " ${DatabaseContract.ProdukColumns.COLUMN_NAMA_PRODUK} TEXT NOT NULL," +
                     " ${DatabaseContract.ProdukColumns.COLUMN_MEREK} TEXT," +
@@ -34,7 +35,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_PRODUSEN =
             "CREATE TABLE ${DatabaseContract.ProdusenColumns.TABLE_NAME}" +
                     " (${DatabaseContract.ProdusenColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.ProdusenColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.ProdusenColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.ProdusenColumns.COLUMN_NAMA_PRODUSEN} TEXT NOT NULL," +
                     " ${DatabaseContract.ProdusenColumns.COLUMN_KATEGORI_PRODUSEN} TEXT NOT NULL," +
                     " ${DatabaseContract.ProdusenColumns.COLUMN_ALAMAT_PRODUSEN} TEXT," +
@@ -46,7 +47,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_DISTRIBUTOR =
             "CREATE TABLE ${DatabaseContract.DistributorColumns.TABLE_NAME}" +
                     " (${DatabaseContract.DistributorColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.DistributorColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.DistributorColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR} TEXT NOT NULL," +
                     " ${DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR} TEXT," +
                     " ${DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR} TEXT," +
@@ -56,8 +57,9 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_PENERIMA =
             "CREATE TABLE ${DatabaseContract.PenerimaColumns.TABLE_NAME}" +
                     " (${DatabaseContract.PenerimaColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.PenerimaColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.PenerimaColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.PenerimaColumns.COLUMN_NAMA_PENERIMA} TEXT NOT NULL," +
+                    " ${DatabaseContract.PenerimaColumns.COLUMN_KATEGORI_PENERIMA} TEXT NOT NULL," +
                     " ${DatabaseContract.PenerimaColumns.COLUMN_ALAMAT_PENERIMA} TEXT," +
                     " ${DatabaseContract.PenerimaColumns.COLUMN_KONTAK_PENERIMA} TEXT," +
                     " ${DatabaseContract.PenerimaColumns.COLUMN_TIMESTAMP} TEXT," +
@@ -66,7 +68,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_PENGGILING =
             "CREATE TABLE ${DatabaseContract.PenggilingColumns.TABLE_NAME}" +
                     " (${DatabaseContract.PenggilingColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.PenggilingColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.PenggilingColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.PenggilingColumns.COLUMN_NAMA_PENGGILING} TEXT NOT NULL," +
                     " ${DatabaseContract.PenggilingColumns.COLUMN_ALAMAT_PENGGILING} TEXT," +
                     " ${DatabaseContract.PenggilingColumns.COLUMN_KONTAK_PENGGILING} TEXT," +
@@ -76,7 +78,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_PENGEPUL =
             "CREATE TABLE ${DatabaseContract.PengepulColumns.TABLE_NAME}" +
                     " (${DatabaseContract.PengepulColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.PengepulColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.PengepulColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.PengepulColumns.COLUMN_NAMA_PENGEPUL} TEXT NOT NULL," +
                     " ${DatabaseContract.PengepulColumns.COLUMN_ALAMAT_PENGEPUL} TEXT," +
                     " ${DatabaseContract.PengepulColumns.COLUMN_KONTAK_PENGEPUL} TEXT," +
@@ -86,7 +88,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_GUDANG =
             "CREATE TABLE ${DatabaseContract.GudangColumns.TABLE_NAME}" +
                     " (${DatabaseContract.GudangColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.GudangColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.GudangColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.GudangColumns.COLUMN_NAMA_GUDANG} TEXT NOT NULL," +
                     " ${DatabaseContract.GudangColumns.COLUMN_ALAMAT_GUDANG} TEXT," +
                     " ${DatabaseContract.GudangColumns.COLUMN_KONTAK_GUDANG} TEXT," +
@@ -96,7 +98,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_TENGKULAK =
             "CREATE TABLE ${DatabaseContract.TengkulakColumns.TABLE_NAME}" +
                     " (${DatabaseContract.TengkulakColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.TengkulakColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.TengkulakColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.TengkulakColumns.COLUMN_NAMA_TENGKULAK} TEXT NOT NULL," +
                     " ${DatabaseContract.TengkulakColumns.COLUMN_ALAMAT_TENGKULAK} TEXT," +
                     " ${DatabaseContract.TengkulakColumns.COLUMN_KONTAK_TENGKULAK} TEXT," +
@@ -106,7 +108,7 @@ internal class DatabaseHelper(context: Context) :
         private const val SQL_CREATE_TABLE_PABRIK_PENGOLAHAN =
             "CREATE TABLE ${DatabaseContract.PabrikPengolahanColumns.TABLE_NAME}" +
                     " (${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " ${DatabaseContract.PabrikPengolahanColumns.COLUMN_DATA_INFO_ID_FK} TEXT NOT NULL," +
+                    " ${DatabaseContract.PabrikPengolahanColumns.COLUMN_DATA_INFO_ID_FK} INTEGER NOT NULL," +
                     " ${DatabaseContract.PabrikPengolahanColumns.COLUMN_NAMA_PABRIK} TEXT NOT NULL," +
                     " ${DatabaseContract.PabrikPengolahanColumns.COLUMN_ALAMAT_PABRIK} TEXT," +
                     " ${DatabaseContract.PabrikPengolahanColumns.COLUMN_KONTAK_PABRIK} TEXT," +
@@ -115,7 +117,8 @@ internal class DatabaseHelper(context: Context) :
 
         private const val SQL_CREATE_TABLE_TRANSAKSI =
             "CREATE TABLE ${DatabaseContract.TransaksiColumns.TABLE_NAME}" +
-                    " (${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " (${DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " ${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_STATUS} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_JENIS_PRODUK} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_PRODUK} TEXT NOT NULL," +
@@ -125,7 +128,7 @@ internal class DatabaseHelper(context: Context) :
 
         private const val SQL_CREATE_TABLE_ALUR_DISTRIBUSI =
             "CREATE TABLE ${DatabaseContract.AlurDistribusiColumns.TABLE_NAME}" +
-                    " (${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " (${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_TAHAP} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_STATUS} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_NAMA} TEXT NOT NULL," +

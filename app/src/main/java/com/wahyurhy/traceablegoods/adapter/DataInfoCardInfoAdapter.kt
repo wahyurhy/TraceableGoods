@@ -21,11 +21,11 @@ class DataInfoCardInfoAdapter(private val mDataInfoCardInfo: List<Item>) : Recyc
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var countData = 0
-        mDataInfoCardInfo.forEach { infoCard ->
-                countData += infoCard.listData.size
-            val infoContent = holder.infoContent
-            infoContent.text = holder.infoContent.resources.getString(R.string.info_content, countData.toString())
-        }
+//        mDataInfoCardInfo.forEach { infoCard ->
+//                countData += infoCard.listData?.size as Int
+//            val infoContent = holder.infoContent
+//            infoContent.text = holder.infoContent.resources.getString(R.string.info_content, countData.toString())
+//        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

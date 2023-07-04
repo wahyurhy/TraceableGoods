@@ -19,5 +19,7 @@ data class Item(
     @SerializedName("tanggal_kadaluarsa")
     val tanggalKadaluarsa: String,
     @SerializedName("tanggal_produksi")
-    val tanggalProduksi: String
+    val tanggalProduksi: String,
+    @SerializedName("timestamp")
+    val timeStamp: String
 )
