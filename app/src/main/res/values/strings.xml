@@ -48,7 +48,14 @@
     <string name="alamat_produsen">Alamat Produsen</string>
     <string name="masukan_deskripsi_produk">Masukan deskripsi produk</string>
     <string name="ubah">Ubah</string>
+    <string name="ubah_data">Ubah Data</string>
     <string name="hapus">Hapus</string>
+    <string name="hapus_data">Hapus Data?</string>
+    <string name="message_hapus_data">Apakah anda yakin untuk menghapus data ini?</string>
+    <string name="gagal_simpan_data">Gagal menyimpan data</string>
+    <string name="gagal_hapus_data">Gagal menghapus data</string>
+    <string name="berhasil_simpan_data">Data berhasil disimpan</string>
+    <string name="berhasil_hapus_data">Data berhasil dihapus</string>
     <string name="kategori_produsen">Kategori Produsen</string>
     <string name="nama_produsen">Nama Produsen</string>
     <string name="masukan_nama_produsen">Masukan nama produsen</string>
@@ -149,6 +156,8 @@
     <string name="info_content">Terdapat total %1$s Data Informasi yang telah ditambahkan</string>
     <string name="silahkan_tambahkan_data_terlebih_dahulu">Silahkan tambahkan data\nterlebih dahulu</string>
     <string name="tidak_boleh_kosong">Kolom ini wajib diisi!</string>
+    <string name="detail_produk">Detail Produk</string>
+    <string name="belum_ada">Belum ada</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

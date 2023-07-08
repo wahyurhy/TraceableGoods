@@ -34,6 +34,15 @@ object Utils {
     const val EXTRA_GUDANG = "extra_gudang"
     const val EXTRA_TENGKULAK = "extra_tengkulak"
     const val EXTRA_PABRIK_PENGOLAHAN = "extra_pabrik_pengolahan"
+    const val EXTRA_TOTAL_DATA_INFO = "extra_total_data_info"
+    const val EXTRA_PRODUK_ID = "extra_produk_id"
+    const val EXTRA_JENIS_PRODUK = "extra_jenis_produk"
+    const val EXTRA_NAMA_PRODUK = "extra_nama_produk"
+    const val EXTRA_MEREK_PRODUK = "extra_merek_produk"
+    const val EXTRA_NO_LOT_PRODUK = "extra_no_lot_produk"
+    const val EXTRA_TGL_PRODUKSI_PRODUK = "extra_tgl_produksi_produk"
+    const val EXTRA_TGL_KADALUARSA_PRODUK = "extra_tgl_kadaluarsa_produk"
+    const val EXTRA_DESKRIPSI_PRODUK = "extra_deskripsi_produk"
 
     const val PRODUK_ID = 0
     const val PRODUSEN_ID = 1

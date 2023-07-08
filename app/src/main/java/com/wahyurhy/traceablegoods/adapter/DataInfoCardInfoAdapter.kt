@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.datainfo.Item
 
-class DataInfoCardInfoAdapter(private val mDataInfoCardInfo: List<Item>) : RecyclerView.Adapter<DataInfoCardInfoAdapter.ViewHolder>() {
+class DataInfoCardInfoAdapter : RecyclerView.Adapter<DataInfoCardInfoAdapter.ViewHolder>() {
+
+    var totalDataInfo = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
@@ -17,15 +18,11 @@ class DataInfoCardInfoAdapter(private val mDataInfoCardInfo: List<Item>) : Recyc
         return ViewHolder(dataInfoView)
     }
 
-    override fun getItemCount(): Int = mDataInfoCardInfo.size
+    override fun getItemCount(): Int = totalDataInfo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var countData = 0
-//        mDataInfoCardInfo.forEach { infoCard ->
-//                countData += infoCard.listData?.size as Int
-//            val infoContent = holder.infoContent
-//            infoContent.text = holder.infoContent.resources.getString(R.string.info_content, countData.toString())
-//        }
+        val infoContent = holder.infoContent
+        infoContent.text = holder.infoContent.resources.getString(R.string.info_content, totalDataInfo.toString())
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -14,15 +14,23 @@ import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DESKRIPSI_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_MEREK_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NO_LOT_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_KADALUARSA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_PRODUKSI_PRODUK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -176,10 +184,18 @@ class ListActivity : AppCompatActivity() {
                             adapterProduk.mProduk = produk
                             adapterProduk.setOnClickedListener(object : ProdukAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = produk[position].namaProduk
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
-                                    intentDetailProduk.putExtra(NAME_LIST, nameList)
+                                    intentDetailProduk.apply {
+                                        putExtra(NAME_LIST, nameList)
+                                        putExtra(EXTRA_PRODUK_ID, produk[position].productId)
+                                        putExtra(EXTRA_JENIS_PRODUK, produk[position].jenisProduk)
+                                        putExtra(EXTRA_NAMA_PRODUK, produk[position].namaProduk)
+                                        putExtra(EXTRA_MEREK_PRODUK, produk[position].merek)
+                                        putExtra(EXTRA_NO_LOT_PRODUK, produk[position].nomorLot)
+                                        putExtra(EXTRA_TGL_PRODUKSI_PRODUK, produk[position].tanggalProduksi)
+                                        putExtra(EXTRA_TGL_KADALUARSA_PRODUK, produk[position].tanggalKadaluarsa)
+                                        putExtra(EXTRA_DESKRIPSI_PRODUK, produk[position].deskripsi)
+                                    }
                                     startActivity(intentDetailProduk)
                                 }
                             })
@@ -200,8 +216,6 @@ class ListActivity : AppCompatActivity() {
                             adapterProdusen.mProdusen = produsen
                             adapterProdusen.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = produsen[position].namaProdusen
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
                                     intentDetailProdusen.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailProdusen)
@@ -224,8 +238,6 @@ class ListActivity : AppCompatActivity() {
                             adapterDistributor.mDistributor = distributor
                             adapterDistributor.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = distributor[position].namaDistributor
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailDistributor = Intent(this@ListActivity, DetailDistributorActivity::class.java)
                                     intentDetailDistributor.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailDistributor)
@@ -248,8 +260,6 @@ class ListActivity : AppCompatActivity() {
                             adapterPenerima.mPenerima = penerima
                             adapterPenerima.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = penerima[position].namaPenerima
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
                                     intentDetailPenerima.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailPenerima)
@@ -272,8 +282,6 @@ class ListActivity : AppCompatActivity() {
                             adapterPenggiling.mPenggiling = penggiling
                             adapterPenggiling.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = penggiling[position].namaPenggiling
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
                                     intentDetailPenggiling.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailPenggiling)
@@ -296,8 +304,6 @@ class ListActivity : AppCompatActivity() {
                             adapterPengepul.mPengepul = pengepul
                             adapterPengepul.setOnClickedListener(object : PengepulAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = pengepul[position].namaPengepul
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
                                     intentDetailPengepul.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailPengepul)
@@ -320,8 +326,6 @@ class ListActivity : AppCompatActivity() {
                             adapterGudang.mGudang = gudang
                             adapterGudang.setOnClickedListener(object : GudangAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = gudang[position].namaGudang
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
                                     intentDetailGudang.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailGudang)
@@ -344,8 +348,6 @@ class ListActivity : AppCompatActivity() {
                             adapterTengkulak.mTengkulak = tengkulak
                             adapterTengkulak.setOnClickedListener(object : TengkulakAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = tengkulak[position].namaTengkulak
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
                                     intentDetailTengkulak.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailTengkulak)
@@ -368,8 +370,6 @@ class ListActivity : AppCompatActivity() {
                             adapterPabrikPengolahan.mPabrikPengolahan = pabrikPengolahan
                             adapterPabrikPengolahan.setOnClickedListener(object : PabrikPengolahanAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
-                                    val dataName = pabrikPengolahan[position].namaPabrikPengolahan
-                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
                                     val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
                                     intentDetailPabrikPengolahan.putExtra(NAME_LIST, nameList)
                                     startActivity(intentDetailPabrikPengolahan)

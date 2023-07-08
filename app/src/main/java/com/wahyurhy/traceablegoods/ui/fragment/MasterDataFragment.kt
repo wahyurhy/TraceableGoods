@@ -9,35 +9,26 @@ import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
 import com.wahyurhy.traceablegoods.adapter.DataInfoCardInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.datainfo.DataInfoModel
 import com.wahyurhy.traceablegoods.model.datainfo.Item
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DATA_INFO
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TOTAL_DATA_INFO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 class MasterDataFragment : Fragment() {
 
     private lateinit var binding: FragmentMasterDataBinding
     private lateinit var adapter: DataInfoAdapter
+    private lateinit var adapterCardInfo: DataInfoCardInfoAdapter
+
+    private var totalDataInfo = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,11 +41,7 @@ class MasterDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DataInfoAdapter()
-        binding.rvDataInfo.adapter = adapter
-
-
-        rawListInit()
+        setAdapter()
         hideFloatingActionButton()
 
         if (savedInstanceState == null) {
@@ -62,11 +49,21 @@ class MasterDataFragment : Fragment() {
             loadDataInfoAsync()
         } else {
             val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_DATA_INFO)
-            Toast.makeText(requireContext(), "hei ${list?.size}", Toast.LENGTH_SHORT).show()
+            val totalDataInfoExtra = savedInstanceState.getInt(EXTRA_TOTAL_DATA_INFO)
+            Toast.makeText(requireContext(), "hei $totalDataInfoExtra", Toast.LENGTH_SHORT).show()
             if (list != null) {
                 adapter.mDataInfo = list
             }
+            totalDataInfo = totalDataInfoExtra
         }
+    }
+
+    private fun setAdapter() {
+        adapter = DataInfoAdapter()
+        binding.rvDataInfo.adapter = adapter
+
+        adapterCardInfo = DataInfoCardInfoAdapter()
+        binding.rvCardInfo.adapter = adapterCardInfo
     }
 
     private fun loadDataInfoAsync() {
@@ -140,11 +137,13 @@ class MasterDataFragment : Fragment() {
                         tengkulakCount = tengkulak.size.toString()
                         pabrikPengolahanCount = pabrikPengolahan.size.toString()
                     }
+                    totalDataInfo = produk.size + produsen.size + distributor.size + penerima.size +
+                            penggiling.size + pengepul.size + gudang.size + tengkulak.size + pabrikPengolahan.size
+
+                    adapterCardInfo.totalDataInfo = totalDataInfo
                     adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
                         override fun onItemClick(itemView: View?, position: Int) {
                             val dataName = dataInfo[position].dataName
-                            Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
-                                .show()
                             Intent(requireContext(), ListActivity::class.java).apply {
                                 putExtra(NAME_LIST, dataName)
                                 startActivity(this)
@@ -167,22 +166,6 @@ class MasterDataFragment : Fragment() {
         })
     }
 
-    private fun rawListInit() {
-        val gson = Gson()
-        val i = requireContext().assets.open("data_info.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, DataInfoModel::class.java)
-
-        bindData(dataList)
-    }
-
-    private fun bindData(dataList: DataInfoModel) {
-        dataList.result.forEach { result ->
-            val adapterCardInfo = DataInfoCardInfoAdapter(result.items)
-            binding.rvCardInfo.adapter = adapterCardInfo
-        }
-    }
-
     interface ScrollListener {
         fun onScrollChanged(scrollY: Int, oldScrollY: Int)
     }
@@ -196,6 +179,7 @@ class MasterDataFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(EXTRA_DATA_INFO, adapter.mDataInfo)
+        outState.putInt(EXTRA_TOTAL_DATA_INFO, totalDataInfo)
     }
 
     companion object {

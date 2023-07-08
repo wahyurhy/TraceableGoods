@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.wahyurhy.traceablegoods.utils.Utils.PRODUK_ID
 import java.sql.SQLException
 
 class TraceableGoodHelper(context: Context) {
@@ -122,7 +123,18 @@ class TraceableGoodHelper(context: Context) {
         return database.insert(DATABASE_TABLE_PRODUK, null, values)
     }
 
-    fun updateProduk(id: String, values: ContentValues?): Int {
+    fun updateProduk(id: String, jenisProduk: String, namaProduk: String, merek: String, noLot: String, tanggalProduksi: String, tanggalKadaluarsa: String, deskripsi: String, timeStamp: String): Int {
+        val values = ContentValues().apply {
+            put(DatabaseContract.ProdukColumns.COLUMN_DATA_INFO_ID_FK, PRODUK_ID)
+            put(DatabaseContract.ProdukColumns.COLUMN_JENIS_PRODUK, jenisProduk)
+            put(DatabaseContract.ProdukColumns.COLUMN_NAMA_PRODUK, namaProduk)
+            put(DatabaseContract.ProdukColumns.COLUMN_MEREK, merek)
+            put(DatabaseContract.ProdukColumns.COLUMN_NOMOR_LOT, noLot)
+            put(DatabaseContract.ProdukColumns.COLUMN_TANGGAL_PRODUKSI, tanggalProduksi)
+            put(DatabaseContract.ProdukColumns.COLUMN_TANGGAL_KADALUARSA, tanggalKadaluarsa)
+            put(DatabaseContract.ProdukColumns.COLUMN_DESKRIPSI, deskripsi)
+            put(DatabaseContract.ProdukColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.update(
             DATABASE_TABLE_PRODUK,
             values,

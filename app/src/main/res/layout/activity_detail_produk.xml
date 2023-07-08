@@ -50,7 +50,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:paddingStart="0dp"
                     android:paddingEnd="30dp"
-                    android:text="@string/detail_title"
+                    android:text="@string/detail_produk"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -102,7 +102,7 @@
                 </LinearLayout>
 
                 <Spinner
-                    android:id="@+id/timeShowSpinner"
+                    android:id="@+id/jenis_produk_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -137,11 +137,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_nama_produk"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -168,11 +170,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_merek_produk"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -199,11 +203,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_kode_produk_atau_no_lot"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -230,11 +236,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_tanggal_produksi"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -261,11 +269,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_tanggal_kadaluarsa"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -292,14 +302,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
+                    android:gravity="top"
                     android:hint="@string/masukan_deskripsi_produk"
                     android:inputType="textMultiLine"
-                    android:gravity="top"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:minLines="5"
                     android:paddingHorizontal="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/edittext_disabled_text_color"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
@@ -307,34 +319,34 @@
                     android:id="@+id/btn_ubah"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="@string/ubah"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:layout_marginTop="16dp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/poppins_bold"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="30dp"
+                    android:background="@drawable/bg_button_rounded"
                     android:drawableEnd="@drawable/ic_ubah"
-                    android:background="@drawable/bg_button_rounded"/>
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/ubah"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_hapus"
                     style="@style/Button.OutlineButton"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:layout_marginTop="16dp"
+                    android:drawableEnd="@drawable/ic_hapus"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/hapus"
                     android:textAllCaps="false"
                     android:textColor="@color/red"
                     android:textSize="14sp"
-                    android:paddingStart="40dp"
-                    android:paddingEnd="10dp"
-                    app:rippleColor="@color/red"
-                    android:layout_marginTop="16dp"
-                    android:drawableEnd="@drawable/ic_hapus"
-                    app:strokeColor="@color/red"
                     app:cornerRadius="15dp"
-                    app:iconTint="@null" />
+                    app:iconTint="@null"
+                    app:rippleColor="@color/red"
+                    app:strokeColor="@color/red" />
 
             </LinearLayout>
 
