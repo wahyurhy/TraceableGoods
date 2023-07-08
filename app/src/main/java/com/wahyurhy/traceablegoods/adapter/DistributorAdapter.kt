@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.distributor.Item
 
-class DistributorAdapter(private val mDistributor: List<Item>) : RecyclerView.Adapter<DistributorAdapter.ViewHolder>() {
+class DistributorAdapter : RecyclerView.Adapter<DistributorAdapter.ViewHolder>() {
+
+    var mDistributor = ArrayList<Item>()
+        set(mDistributor) {
+            if (mDistributor.size > 0) {
+                this.mDistributor.clear()
+            }
+            this.mDistributor.addAll(mDistributor)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

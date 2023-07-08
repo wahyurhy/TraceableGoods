@@ -165,7 +165,24 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertProdusen(values: ContentValues?): Long {
+    fun insertProdusen(
+        dataInfoId: Int,
+        namaProdusen: String,
+        kategoriProdusen: String,
+        alamatProdusen: String,
+        kontakProdusen: String,
+        noNpwp: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.ProdusenColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.ProdusenColumns.COLUMN_NAMA_PRODUSEN, namaProdusen)
+            put(DatabaseContract.ProdusenColumns.COLUMN_KATEGORI_PRODUSEN, kategoriProdusen)
+            put(DatabaseContract.ProdusenColumns.COLUMN_ALAMAT_PRODUSEN, alamatProdusen)
+            put(DatabaseContract.ProdusenColumns.COLUMN_KONTAK_PRODUSEN, kontakProdusen)
+            put(DatabaseContract.ProdusenColumns.COLUMN_NO_NPWP, noNpwp)
+            put(DatabaseContract.ProdusenColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PRODUSEN, null, values)
     }
 
@@ -212,7 +229,20 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertDistributor(values: ContentValues?): Long {
+    fun insertDistributor(
+        dataInfoId: Int,
+        namaDistributor: String,
+        alamatDistributor: String,
+        kontakDistributor: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.DistributorColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR, namaDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR, alamatDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR, kontakDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_DISTRIBUTOR, null, values)
     }
 
@@ -259,7 +289,22 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertPenerima(values: ContentValues?): Long {
+    fun insertPenerima(
+        dataInfoId: Int,
+        namaPenerima: String,
+        kategoriPenerima: String,
+        alamatPenerima: String,
+        kontakPenerima: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.PenerimaColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.PenerimaColumns.COLUMN_NAMA_PENERIMA, namaPenerima)
+            put(DatabaseContract.PenerimaColumns.COLUMN_KATEGORI_PENERIMA, kategoriPenerima)
+            put(DatabaseContract.PenerimaColumns.COLUMN_ALAMAT_PENERIMA, alamatPenerima)
+            put(DatabaseContract.PenerimaColumns.COLUMN_KONTAK_PENERIMA, kontakPenerima)
+            put(DatabaseContract.PenerimaColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PENERIMA, null, values)
     }
 
@@ -306,7 +351,20 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertPenggiling(values: ContentValues?): Long {
+    fun insertPenggiling(
+        dataInfoId: Int,
+        namaPenggiling: String,
+        alamatPenggiling: String,
+        kontakPenggiling: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.PenggilingColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.PenggilingColumns.COLUMN_NAMA_PENGGILING, namaPenggiling)
+            put(DatabaseContract.PenggilingColumns.COLUMN_ALAMAT_PENGGILING, alamatPenggiling)
+            put(DatabaseContract.PenggilingColumns.COLUMN_KONTAK_PENGGILING, kontakPenggiling)
+            put(DatabaseContract.PenggilingColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PENGGILING, null, values)
     }
 
@@ -353,7 +411,20 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertPengepul(values: ContentValues?): Long {
+    fun insertPengepul(
+        dataInfoId: Int,
+        namaPengepul: String,
+        alamatPengepul: String,
+        kontakPengepul: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.PengepulColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.PengepulColumns.COLUMN_NAMA_PENGEPUL, namaPengepul)
+            put(DatabaseContract.PengepulColumns.COLUMN_ALAMAT_PENGEPUL, alamatPengepul)
+            put(DatabaseContract.PengepulColumns.COLUMN_KONTAK_PENGEPUL, kontakPengepul)
+            put(DatabaseContract.PengepulColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PENGEPUL, null, values)
     }
 
@@ -400,7 +471,20 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertGudang(values: ContentValues?): Long {
+    fun insertGudang(
+        dataInfoId: Int,
+        namaGudang: String,
+        alamatGudang: String,
+        kontakGudang: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.GudangColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.GudangColumns.COLUMN_NAMA_GUDANG, namaGudang)
+            put(DatabaseContract.GudangColumns.COLUMN_ALAMAT_GUDANG, alamatGudang)
+            put(DatabaseContract.GudangColumns.COLUMN_KONTAK_GUDANG, kontakGudang)
+            put(DatabaseContract.GudangColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_GUDANG, null, values)
     }
 
@@ -447,7 +531,20 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertTengkulak(values: ContentValues?): Long {
+    fun insertTengkulak(
+        dataInfoId: Int,
+        namaTengkulak: String,
+        alamatTengkulak: String,
+        kontakTengkulak: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.TengkulakColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.TengkulakColumns.COLUMN_NAMA_TENGKULAK, namaTengkulak)
+            put(DatabaseContract.TengkulakColumns.COLUMN_ALAMAT_TENGKULAK, alamatTengkulak)
+            put(DatabaseContract.TengkulakColumns.COLUMN_KONTAK_TENGKULAK, kontakTengkulak)
+            put(DatabaseContract.TengkulakColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_TENGKULAK, null, values)
     }
 
@@ -494,7 +591,26 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertPabrikPengolahan(values: ContentValues?): Long {
+    fun insertPabrikPengolahan(
+        dataInfoId: Int,
+        namaPabrikPengolahan: String,
+        alamatPabrikPengolahan: String,
+        kontakPabrikPengolahan: String,
+        timeStamp: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.PabrikPengolahanColumns.COLUMN_DATA_INFO_ID_FK, dataInfoId)
+            put(DatabaseContract.PabrikPengolahanColumns.COLUMN_NAMA_PABRIK, namaPabrikPengolahan)
+            put(
+                DatabaseContract.PabrikPengolahanColumns.COLUMN_ALAMAT_PABRIK,
+                alamatPabrikPengolahan
+            )
+            put(
+                DatabaseContract.PabrikPengolahanColumns.COLUMN_KONTAK_PABRIK,
+                kontakPabrikPengolahan
+            )
+            put(DatabaseContract.PabrikPengolahanColumns.COLUMN_TIMESTAMP, timeStamp)
+        }
         return database.insert(DATABASE_TABLE_PABRIK_PENGOLAHAN, null, values)
     }
 

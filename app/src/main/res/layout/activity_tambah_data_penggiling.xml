@@ -147,7 +147,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_alamat_produsen"
+                    android:id="@+id/edt_alamat_penggiling"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_outline_gray"
@@ -165,7 +165,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_ubah"
+                android:id="@+id/btn_simpan"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/simpan"

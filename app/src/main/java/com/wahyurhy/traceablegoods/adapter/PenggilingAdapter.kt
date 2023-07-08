@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.penggiling.Item
 
-class PenggilingAdapter(private val mPenggiling: List<Item>) : RecyclerView.Adapter<PenggilingAdapter.ViewHolder>() {
+class PenggilingAdapter : RecyclerView.Adapter<PenggilingAdapter.ViewHolder>() {
+
+    var mPenggiling = ArrayList<Item>()
+        set(mPenggiling) {
+            if (mPenggiling.size > 0) {
+                this.mPenggiling.clear()
+            }
+            this.mPenggiling.addAll(mPenggiling)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

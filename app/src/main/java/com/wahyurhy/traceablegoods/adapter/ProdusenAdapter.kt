@@ -13,7 +13,15 @@ import com.wahyurhy.traceablegoods.utils.Utils.NELAYAN
 import com.wahyurhy.traceablegoods.utils.Utils.PETANI
 import com.wahyurhy.traceablegoods.utils.Utils.PETERNAK
 
-class ProdusenAdapter(private val mProdusen: List<Item>) : RecyclerView.Adapter<ProdusenAdapter.ViewHolder>() {
+class ProdusenAdapter : RecyclerView.Adapter<ProdusenAdapter.ViewHolder>() {
+
+    var mProdusen = ArrayList<Item>()
+        set(mProdusen) {
+            if (mProdusen.size > 0) {
+                this.mProdusen.clear()
+            }
+            this.mProdusen.addAll(mProdusen)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

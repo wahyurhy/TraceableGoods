@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.pengepul.Item
 
-class PengepulAdapter(private val mPengepul: List<Item>) : RecyclerView.Adapter<PengepulAdapter.ViewHolder>() {
+class PengepulAdapter : RecyclerView.Adapter<PengepulAdapter.ViewHolder>() {
+
+    var mPengepul = ArrayList<Item>()
+        set(mPengepul) {
+            if (mPengepul.size > 0) {
+                this.mPengepul.clear()
+            }
+            this.mPengepul.addAll(mPengepul)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

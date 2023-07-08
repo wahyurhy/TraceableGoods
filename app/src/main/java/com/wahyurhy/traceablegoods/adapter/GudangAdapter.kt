@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.gudang.Item
 
-class GudangAdapter(private val mGudang: List<Item>) : RecyclerView.Adapter<GudangAdapter.ViewHolder>() {
+class GudangAdapter : RecyclerView.Adapter<GudangAdapter.ViewHolder>() {
+
+    var mGudang = ArrayList<Item>()
+        set(mGudang) {
+            if (mGudang.size > 0) {
+                this.mGudang.clear()
+            }
+            this.mGudang.addAll(mGudang)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

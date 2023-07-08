@@ -9,7 +9,15 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.datainfo.Item
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class DataInfoAdapter(var mDataInfo: ArrayList<Item>) : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
+class DataInfoAdapter : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
+
+    var mDataInfo = ArrayList<Item>()
+        set(mDataInfo) {
+            if (mDataInfo.size > 0) {
+                this.mDataInfo.clear()
+            }
+            this.mDataInfo.addAll(mDataInfo)
+        }
 
     var produkCount = "0"
     var produsenCount = "0"
@@ -39,7 +47,7 @@ class DataInfoAdapter(var mDataInfo: ArrayList<Item>) : RecyclerView.Adapter<Dat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataInfo = mDataInfo[position]
         val dataName = holder.dataName
-        dataName.text  = dataInfo.dataName
+        dataName.text = dataInfo.dataName
         val dataCount = holder.dataCount
         when (dataInfo.dataName) {
             Utils.PRODUK -> {

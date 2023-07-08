@@ -85,7 +85,7 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/timeShowSpinner"
+                    android:id="@+id/kategori_penerima_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -147,7 +147,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_kontak_distributor"
+                    android:id="@+id/edt_kontak_penerima"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_outline_gray"
@@ -196,7 +196,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_ubah"
+                android:id="@+id/btn_simpan"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/simpan"

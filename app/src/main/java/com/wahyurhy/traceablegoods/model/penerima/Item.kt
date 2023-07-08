@@ -1,8 +1,11 @@
 package com.wahyurhy.traceablegoods.model.penerima
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Item(
     @SerializedName("alamat_penerima")
     val alamatPenerima: String,
@@ -16,4 +19,4 @@ data class Item(
     val penerimaId: Int,
     @SerializedName("timestamp")
     val timestamp: String
-)
+): Parcelable

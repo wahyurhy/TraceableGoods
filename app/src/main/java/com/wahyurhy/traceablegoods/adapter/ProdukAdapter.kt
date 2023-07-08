@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.produk.Item
 
-class ProdukAdapter(private val mProduk: List<Item>) : RecyclerView.Adapter<ProdukAdapter.ViewHolder>() {
+class ProdukAdapter : RecyclerView.Adapter<ProdukAdapter.ViewHolder>() {
+
+    var mProduk = ArrayList<Item>()
+        set(mProduk) {
+            if (mProduk.size > 0) {
+                this.mProduk.clear()
+            }
+            this.mProduk.addAll(mProduk)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)
@@ -32,7 +40,7 @@ class ProdukAdapter(private val mProduk: List<Item>) : RecyclerView.Adapter<Prod
         val produk = holder.produk
         produk.text = produkModel.namaProduk
         val merek = holder.merek
-        merek.text  = produkModel.merek
+        merek.text = produkModel.merek
         val noLot = holder.noLot
         noLot.text = holder.itemView.context.getString(R.string.no_lot, produkModel.nomorLot)
 
@@ -62,7 +70,7 @@ class ProdukAdapter(private val mProduk: List<Item>) : RecyclerView.Adapter<Prod
 
         val cardView = itemView.findViewById<CardView>(R.id.card_view)
 
-            init {
+        init {
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {

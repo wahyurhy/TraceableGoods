@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK_ID
@@ -55,7 +56,7 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 namaProduk.showErrorIfEmpty(binding, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
-                    val dataInfoId = traceableGoodHelper.insertDataInfo(PRODUK_ID, PRODUK, getCurrentDate() + " WIB")
+                    traceableGoodHelper.insertDataInfo(PRODUK_ID, PRODUK, getCurrentDate() + " WIB")
                     val produkId = traceableGoodHelper.insertProduk(PRODUK_ID, jenisProduk,namaProduk, merekProduk, noLot, tanggalProduksi, tanggalKadaluarsa, deskripsiProduk, getCurrentDate() + " WIB")
 
                     if (produkId > 0) {
@@ -84,7 +85,7 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         return dateFormat.format(date)
     }
 
-    fun String.showErrorIfEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String) {
+    private fun String.showErrorIfEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String) {
         if (this.isEmpty()) {
             isAllSet = false
             binding.edtNamaProduk.error = errorMessage

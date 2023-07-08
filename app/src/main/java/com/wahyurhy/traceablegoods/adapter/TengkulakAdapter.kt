@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.tengkulak.Item
 
-class TengkulakAdapter(private val mTengkulak: List<Item>) : RecyclerView.Adapter<TengkulakAdapter.ViewHolder>() {
+class TengkulakAdapter : RecyclerView.Adapter<TengkulakAdapter.ViewHolder>() {
+
+    var mTengkulak = ArrayList<Item>()
+        set(mTengkulak) {
+            if (mTengkulak.size > 0) {
+                this.mTengkulak.clear()
+            }
+            this.mTengkulak.addAll(mTengkulak)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

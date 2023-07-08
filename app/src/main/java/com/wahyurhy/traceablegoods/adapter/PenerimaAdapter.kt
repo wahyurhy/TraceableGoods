@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.penerima.Item
 
-class PenerimaAdapter(private val mPenerima: List<Item>) : RecyclerView.Adapter<PenerimaAdapter.ViewHolder>() {
+class PenerimaAdapter : RecyclerView.Adapter<PenerimaAdapter.ViewHolder>() {
+
+    var mPenerima = ArrayList<Item>()
+        set(mPenerima) {
+            if (mPenerima.size > 0) {
+                this.mPenerima.clear()
+            }
+            this.mPenerima.addAll(mPenerima)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

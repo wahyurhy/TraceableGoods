@@ -18,6 +18,16 @@ import com.wahyurhy.traceablegoods.model.datainfo.DataInfoModel
 import com.wahyurhy.traceablegoods.model.datainfo.Item
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
 import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DATA_INFO
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -40,6 +50,9 @@ class MasterDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = DataInfoAdapter()
+        binding.rvDataInfo.adapter = adapter
+
 
         rawListInit()
         hideFloatingActionButton()
@@ -48,16 +61,12 @@ class MasterDataFragment : Fragment() {
             // proses ambil data
             loadDataInfoAsync()
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_STATE)
+            val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_DATA_INFO)
+            Toast.makeText(requireContext(), "hei ${list?.size}", Toast.LENGTH_SHORT).show()
             if (list != null) {
                 adapter.mDataInfo = list
             }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(EXTRA_STATE, adapter.mDataInfo)
     }
 
     private fun loadDataInfoAsync() {
@@ -131,6 +140,17 @@ class MasterDataFragment : Fragment() {
                         tengkulakCount = tengkulak.size.toString()
                         pabrikPengolahanCount = pabrikPengolahan.size.toString()
                     }
+                    adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
+                        override fun onItemClick(itemView: View?, position: Int) {
+                            val dataName = dataInfo[position].dataName
+                            Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
+                                .show()
+                            Intent(requireContext(), ListActivity::class.java).apply {
+                                putExtra(NAME_LIST, dataName)
+                                startActivity(this)
+                            }
+                        }
+                    })
                 } else {
                     adapter.mDataInfo = ArrayList()
                     Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
@@ -158,21 +178,8 @@ class MasterDataFragment : Fragment() {
 
     private fun bindData(dataList: DataInfoModel) {
         dataList.result.forEach { result ->
-            adapter = DataInfoAdapter(result.items)
             val adapterCardInfo = DataInfoCardInfoAdapter(result.items)
-            binding.rvDataInfo.adapter = adapter
             binding.rvCardInfo.adapter = adapterCardInfo
-            adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val dataName = result.items[position].dataName
-                    Toast.makeText(requireContext(), "$dataName was clicked!", Toast.LENGTH_SHORT)
-                        .show()
-                    Intent(requireContext(), ListActivity::class.java).apply {
-                        putExtra(NAME_LIST, dataName)
-                        startActivity(this)
-                    }
-                }
-            })
         }
     }
 
@@ -186,9 +193,13 @@ class MasterDataFragment : Fragment() {
         scrollListener = listener
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(EXTRA_DATA_INFO, adapter.mDataInfo)
+    }
+
     companion object {
         const val NAME_LIST = "name"
-        private const val EXTRA_STATE = "extra_state"
     }
 
 }

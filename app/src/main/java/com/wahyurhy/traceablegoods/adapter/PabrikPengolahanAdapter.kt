@@ -10,7 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item
 
-class PabrikPengolahanAdapter(private val mPabrikPengolahan: List<Item>) : RecyclerView.Adapter<PabrikPengolahanAdapter.ViewHolder>() {
+class PabrikPengolahanAdapter : RecyclerView.Adapter<PabrikPengolahanAdapter.ViewHolder>() {
+
+    var mPabrikPengolahan = ArrayList<Item>()
+        set(mPabrikPengolahan) {
+            if (mPabrikPengolahan.size > 0) {
+                this.mPabrikPengolahan.clear()
+            }
+            this.mPabrikPengolahan.addAll(mPabrikPengolahan)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

@@ -5,26 +5,41 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
+import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.*
 import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
-import com.wahyurhy.traceablegoods.model.distributor.DistributorModel
-import com.wahyurhy.traceablegoods.model.gudang.GudangModel
-import com.wahyurhy.traceablegoods.model.pabrikpengolahan.PabrikPengolahanModel
-import com.wahyurhy.traceablegoods.model.penerima.PenerimaModel
-import com.wahyurhy.traceablegoods.model.pengepul.PengepulModel
-import com.wahyurhy.traceablegoods.model.penggiling.PenggilingModel
-import com.wahyurhy.traceablegoods.model.produk.ProdukModel
-import com.wahyurhy.traceablegoods.model.produsen.ProdusenModel
-import com.wahyurhy.traceablegoods.model.tengkulak.TengkulakModel
+import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
+import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class ListActivity : AppCompatActivity() {
+
+    private lateinit var adapterProduk: ProdukAdapter
+    private lateinit var adapterProdusen: ProdusenAdapter
+    private lateinit var adapterDistributor: DistributorAdapter
+    private lateinit var adapterPenerima: PenerimaAdapter
+    private lateinit var adapterPenggiling: PenggilingAdapter
+    private lateinit var adapterPengepul: PengepulAdapter
+    private lateinit var adapterGudang: GudangAdapter
+    private lateinit var adapterTengkulak: TengkulakAdapter
+    private lateinit var adapterPabrikPengolahan: PabrikPengolahanAdapter
+
+    private var nameList = ""
 
     private lateinit var binding: ActivityListBinding
 
@@ -32,251 +47,343 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val nameList = intent.getStringExtra(NAME_LIST) ?: ""
+        nameList = intent.getStringExtra(NAME_LIST) ?: ""
+
+        setAdapter(nameList)
 
         fitStatusBar()
         initExtras(nameList)
         initClickListener()
 
-        initRawList(nameList)
-    }
-
-    private fun initRawList(nameList: String) {
-        when (nameList.lowercase()) {
-            PRODUK -> rawListProduk(nameList)
-            PRODUSEN -> rawListProdusen(nameList)
-            DISTRIBUTOR -> rawListDistributor(nameList)
-            PENERIMA -> rawListPenerima(nameList)
-            PENGGILING -> rawListPenggiling(nameList)
-            PENGEPUL -> rawListPengepul(nameList)
-            GUDANG -> rawListGudang(nameList)
-            TENGKULAK -> rawListTengkulak(nameList)
-            PABRIK_PENGOLAHAN -> rawListPabrikPengolahan(nameList)
+        if (savedInstanceState == null) {
+            // proses ambil data
+            loadData(nameList)
+        } else {
+            when (nameList) {
+                Utils.PRODUK -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.produk.Item>(EXTRA_PRODUK)
+                    if (list != null) {
+                        adapterProduk.mProduk = list
+                    }
+                }
+                Utils.PRODUSEN -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.produsen.Item>(EXTRA_PRODUSEN)
+                    if (list != null) {
+                        adapterProdusen.mProdusen = list
+                    }
+                }
+                Utils.DISTRIBUTOR -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.distributor.Item>(EXTRA_DISTRIBUTOR)
+                    if (list != null) {
+                        adapterDistributor.mDistributor = list
+                    }
+                }
+                Utils.PENERIMA -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.penerima.Item>(EXTRA_PENERIMA)
+                    if (list != null) {
+                        adapterPenerima.mPenerima = list
+                    }
+                }
+                Utils.PENGGILING -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.penggiling.Item>(EXTRA_PENGGILING)
+                    if (list != null) {
+                        adapterPenggiling.mPenggiling = list
+                    }
+                }
+                Utils.PENGEPUL -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.pengepul.Item>(EXTRA_PENGEPUL)
+                    if (list != null) {
+                        adapterPengepul.mPengepul = list
+                    }
+                }
+                Utils.GUDANG -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.gudang.Item>(EXTRA_GUDANG)
+                    if (list != null) {
+                        adapterGudang.mGudang = list
+                    }
+                }
+                Utils.TENGKULAK -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.tengkulak.Item>(EXTRA_TENGKULAK)
+                    if (list != null) {
+                        adapterTengkulak.mTengkulak = list
+                    }
+                }
+                Utils.PABRIK_PENGOLAHAN -> {
+                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item>(EXTRA_PABRIK_PENGOLAHAN)
+                    if (list != null) {
+                        adapterPabrikPengolahan.mPabrikPengolahan = list
+                    }
+                }
+            }
         }
     }
 
-    private fun rawListProduk(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PRODUK_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, ProdukModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListProdusen(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PRODUSEN_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, ProdusenModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListDistributor(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(DISTRIBUTOR_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, DistributorModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListPenerima(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PENERIMA_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, PenerimaModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListPenggiling(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PENGGILINNG_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, PenggilingModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListPengepul(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PENGEPUL_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, PengepulModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListGudang(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(GUDANG_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, GudangModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListTengkulak(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(TENGKULAK_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, TengkulakModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun rawListPabrikPengolahan(nameList: String) {
-        val gson = Gson()
-        val i = assets.open(PABRIK_PENGOLAHAN_JSON)
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, PabrikPengolahanModel::class.java)
-
-        bindData(dataList, nameList)
-    }
-
-    private fun bindData(dataList: ProdukModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = ProdukAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : ProdukAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val produk = result.items[position].namaProduk
-                    Toast.makeText(this@ListActivity, "$produk was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
-                    intentDetailProduk.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailProduk)
-                }
-            })
+    private fun setAdapter(nameList: String) {
+        when (nameList) {
+            Utils.PRODUK -> {
+                adapterProduk = ProdukAdapter()
+                binding.rvList.adapter = adapterProduk
+            }
+            Utils.PRODUSEN -> {
+                adapterProdusen = ProdusenAdapter()
+                binding.rvList.adapter = adapterProdusen
+            }
+            Utils.DISTRIBUTOR -> {
+                adapterDistributor = DistributorAdapter()
+                binding.rvList.adapter = adapterDistributor
+            }
+            Utils.PENERIMA -> {
+                adapterPenerima = PenerimaAdapter()
+                binding.rvList.adapter = adapterPenerima
+            }
+            Utils.PENGGILING -> {
+                adapterPenggiling = PenggilingAdapter()
+                binding.rvList.adapter = adapterPenggiling
+            }
+            Utils.PENGEPUL -> {
+                adapterPengepul = PengepulAdapter()
+                binding.rvList.adapter = adapterPengepul
+            }
+            Utils.GUDANG -> {
+                adapterGudang = GudangAdapter()
+                binding.rvList.adapter = adapterGudang
+            }
+            Utils.TENGKULAK -> {
+                adapterTengkulak = TengkulakAdapter()
+                binding.rvList.adapter = adapterTengkulak
+            }
+            Utils.PABRIK_PENGOLAHAN -> {
+                adapterPabrikPengolahan = PabrikPengolahanAdapter()
+                binding.rvList.adapter = adapterPabrikPengolahan
+            }
         }
     }
 
-    private fun bindData(dataList: ProdusenModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = ProdusenAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val produsen = result.items[position].namaProdusen
-                    Toast.makeText(this@ListActivity, "$produsen was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
-                    intentDetailProdusen.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailProdusen)
-                }
-            })
-        }
-    }
+    private fun loadData(nameList: String) {
+        lifecycleScope.launch {
+            binding.apply {
+                val traceableGoodHelper = TraceableGoodHelper.getInstance(this@ListActivity)
+                traceableGoodHelper.open()
 
-    private fun bindData(dataList: DistributorModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = DistributorAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val distributor = result.items[position].namaDistributor
-                    Toast.makeText(this@ListActivity, "$distributor was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailDistributor = Intent(this@ListActivity, DetailDistributorActivity::class.java)
-                    intentDetailDistributor.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailDistributor)
+                when (nameList) {
+                    Utils.PRODUK -> {
+                        val deferredProduk = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllProduk()
+                            MappingHelper.mapCursorToArrayListProduk(cursor)
+                        }
+                        val produk = deferredProduk.await()
+                        if (produk.size > 0) {
+                            adapterProduk.mProduk = produk
+                            adapterProduk.setOnClickedListener(object : ProdukAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = produk[position].namaProduk
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
+                                    intentDetailProduk.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailProduk)
+                                }
+                            })
+                        } else {
+                            adapterProduk.mProduk = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.PRODUSEN -> {
+                        val deferredProdusen = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllProdusen()
+                            MappingHelper.mapCursorToArrayListProdusen(cursor)
+                        }
+                        val produsen = deferredProdusen.await()
+                        if (produsen.size > 0) {
+                            adapterProdusen.mProdusen = produsen
+                            adapterProdusen.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = produsen[position].namaProdusen
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
+                                    intentDetailProdusen.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailProdusen)
+                                }
+                            })
+                        } else {
+                            adapterProdusen.mProdusen = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.DISTRIBUTOR -> {
+                        val deferredDistributor = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllDistributor()
+                            MappingHelper.mapCursorToArrayListDistributor(cursor)
+                        }
+                        val distributor = deferredDistributor.await()
+                        if (distributor.size > 0) {
+                            adapterDistributor.mDistributor = distributor
+                            adapterDistributor.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = distributor[position].namaDistributor
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailDistributor = Intent(this@ListActivity, DetailDistributorActivity::class.java)
+                                    intentDetailDistributor.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailDistributor)
+                                }
+                            })
+                        } else {
+                            adapterDistributor.mDistributor = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.PENERIMA -> {
+                        val deferredPenerima = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllPenerima()
+                            MappingHelper.mapCursorToArrayListPenerima(cursor)
+                        }
+                        val penerima = deferredPenerima.await()
+                        if (penerima.size > 0) {
+                            adapterPenerima.mPenerima = penerima
+                            adapterPenerima.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = penerima[position].namaPenerima
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
+                                    intentDetailPenerima.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailPenerima)
+                                }
+                            })
+                        } else {
+                            adapterPenerima.mPenerima = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.PENGGILING -> {
+                        val deferredPenggiling = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllPenggiling()
+                            MappingHelper.mapCursorToArrayListPenggiling(cursor)
+                        }
+                        val penggiling = deferredPenggiling.await()
+                        if (penggiling.size > 0) {
+                            adapterPenggiling.mPenggiling = penggiling
+                            adapterPenggiling.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = penggiling[position].namaPenggiling
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
+                                    intentDetailPenggiling.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailPenggiling)
+                                }
+                            })
+                        } else {
+                            adapterPenggiling.mPenggiling = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.PENGEPUL -> {
+                        val deferredPengepul = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllPengepul()
+                            MappingHelper.mapCursorToArrayListPengepul(cursor)
+                        }
+                        val pengepul = deferredPengepul.await()
+                        if (pengepul.size > 0) {
+                            adapterPengepul.mPengepul = pengepul
+                            adapterPengepul.setOnClickedListener(object : PengepulAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = pengepul[position].namaPengepul
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
+                                    intentDetailPengepul.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailPengepul)
+                                }
+                            })
+                        } else {
+                            adapterPengepul.mPengepul = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.GUDANG -> {
+                        val deferredGudang = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllGudang()
+                            MappingHelper.mapCursorToArrayListGudang(cursor)
+                        }
+                        val gudang = deferredGudang.await()
+                        if (gudang.size > 0) {
+                            adapterGudang.mGudang = gudang
+                            adapterGudang.setOnClickedListener(object : GudangAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = gudang[position].namaGudang
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
+                                    intentDetailGudang.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailGudang)
+                                }
+                            })
+                        } else {
+                            adapterGudang.mGudang = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.TENGKULAK -> {
+                        val deferredTengkulak = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllTengkulak()
+                            MappingHelper.mapCursorToArrayListTengkulak(cursor)
+                        }
+                        val tengkulak = deferredTengkulak.await()
+                        if (tengkulak.size > 0) {
+                            adapterTengkulak.mTengkulak = tengkulak
+                            adapterTengkulak.setOnClickedListener(object : TengkulakAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = tengkulak[position].namaTengkulak
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
+                                    intentDetailTengkulak.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailTengkulak)
+                                }
+                            })
+                        } else {
+                            adapterTengkulak.mTengkulak = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
+                    Utils.PABRIK_PENGOLAHAN -> {
+                        val deferredPabrikPengolahan = async(Dispatchers.IO) {
+                            val cursor = traceableGoodHelper.queryAllPabrikPengolahan()
+                            MappingHelper.mapCursorToArrayListPabrikPengolahan(cursor)
+                        }
+                        val pabrikPengolahan = deferredPabrikPengolahan.await()
+                        if (pabrikPengolahan.size > 0) {
+                            adapterPabrikPengolahan.mPabrikPengolahan = pabrikPengolahan
+                            adapterPabrikPengolahan.setOnClickedListener(object : PabrikPengolahanAdapter.OnItemClickListener {
+                                override fun onItemClick(itemView: View?, position: Int) {
+                                    val dataName = pabrikPengolahan[position].namaPabrikPengolahan
+                                    Toast.makeText(this@ListActivity, "$dataName was clicked!", Toast.LENGTH_SHORT).show()
+                                    val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
+                                    intentDetailPabrikPengolahan.putExtra(NAME_LIST, nameList)
+                                    startActivity(intentDetailPabrikPengolahan)
+                                }
+                            })
+                        } else {
+                            adapterPabrikPengolahan.mPabrikPengolahan = ArrayList()
+                            Toast.makeText(this@ListActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        traceableGoodHelper.close()
+                    }
                 }
-            })
-        }
-    }
-
-    private fun bindData(dataList: PenggilingModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = PenggilingAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val penggiling = result.items[position].namaPenggiling
-                    Toast.makeText(this@ListActivity, "$penggiling was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
-                    intentDetailPenggiling.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailPenggiling)
-                }
-            })
-        }
-    }
-
-    private fun bindData(dataList: PenerimaModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = PenerimaAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val penerima = result.items[position].namaPenerima
-                    Toast.makeText(this@ListActivity, "$penerima was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
-                    intentDetailPenerima.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailPenerima)
-                }
-            })
-        }
-    }
-
-    private fun bindData(dataList: PengepulModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = PengepulAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : PengepulAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val pengepul = result.items[position].namaPengepul
-                    Toast.makeText(this@ListActivity, "$pengepul was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
-                    intentDetailPengepul.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailPengepul)
-                }
-            })
-        }
-    }
-
-    private fun bindData(dataList: GudangModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = GudangAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : GudangAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val gudang = result.items[position].namaGudang
-                    Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
-                    intentDetailGudang.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailGudang)
-                }
-            })
-        }
-    }
-
-    private fun bindData(dataList: TengkulakModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = TengkulakAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : TengkulakAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val gudang = result.items[position].namaTengkulak
-                    Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
-                    intentDetailTengkulak.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailTengkulak)
-                }
-            })
-        }
-    }
-
-    private fun bindData(dataList: PabrikPengolahanModel, nameList: String) {
-        dataList.result.forEach { result ->
-            val adapter = PabrikPengolahanAdapter(result.items)
-            binding.rvList.adapter = adapter
-            adapter.setOnClickedListener(object : PabrikPengolahanAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val gudang = result.items[position].namaPabrikPengolahan
-                    Toast.makeText(this@ListActivity, "$gudang was clicked!", Toast.LENGTH_SHORT).show()
-                    val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
-                    intentDetailPabrikPengolahan.putExtra(NAME_LIST, nameList)
-                    startActivity(intentDetailPabrikPengolahan)
-                }
-            })
+            }
         }
     }
 
@@ -295,25 +402,36 @@ class ListActivity : AppCompatActivity() {
         Utils.setSystemBarFitWindow(this)
     }
 
-    companion object {
-        const val PRODUK = "produk"
-        const val PRODUSEN = "produsen"
-        const val DISTRIBUTOR = "distributor"
-        const val PENERIMA = "penerima"
-        const val PENGGILING = "penggiling"
-        const val PENGEPUL = "pengepul"
-        const val GUDANG = "gudang"
-        const val TENGKULAK = "tengkulak"
-        const val PABRIK_PENGOLAHAN = "pabrik pengolahan"
-
-        const val PRODUK_JSON = "produk.json"
-        const val PRODUSEN_JSON = "produsen.json"
-        const val DISTRIBUTOR_JSON = "distributor.json"
-        const val PENERIMA_JSON = "penerima.json"
-        const val PENGGILINNG_JSON = "penggiling.json"
-        const val PENGEPUL_JSON = "pengepul.json"
-        const val GUDANG_JSON = "gudang.json"
-        const val TENGKULAK_JSON = "tengkulak.json"
-        const val PABRIK_PENGOLAHAN_JSON = "pabrik-pengolahan.json"
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        when (nameList) {
+            Utils.PRODUK -> {
+                outState.putParcelableArrayList(EXTRA_PRODUK, adapterProduk.mProduk)
+            }
+            Utils.PRODUSEN -> {
+                outState.putParcelableArrayList(EXTRA_PRODUSEN, adapterProdusen.mProdusen)
+            }
+            Utils.DISTRIBUTOR -> {
+                outState.putParcelableArrayList(EXTRA_DISTRIBUTOR, adapterDistributor.mDistributor)
+            }
+            Utils.PENERIMA -> {
+                outState.putParcelableArrayList(EXTRA_PENERIMA, adapterPenerima.mPenerima)
+            }
+            Utils.PENGGILING -> {
+                outState.putParcelableArrayList(EXTRA_PENGGILING, adapterPenggiling.mPenggiling)
+            }
+            Utils.PENGEPUL -> {
+                outState.putParcelableArrayList(EXTRA_PENGEPUL, adapterPengepul.mPengepul)
+            }
+            Utils.GUDANG -> {
+                outState.putParcelableArrayList(EXTRA_GUDANG, adapterGudang.mGudang)
+            }
+            Utils.TENGKULAK -> {
+                outState.putParcelableArrayList(EXTRA_TENGKULAK, adapterTengkulak.mTengkulak)
+            }
+            Utils.PABRIK_PENGOLAHAN -> {
+                outState.putParcelableArrayList(EXTRA_PABRIK_PENGOLAHAN, adapterPabrikPengolahan.mPabrikPengolahan)
+            }
+        }
     }
 }
