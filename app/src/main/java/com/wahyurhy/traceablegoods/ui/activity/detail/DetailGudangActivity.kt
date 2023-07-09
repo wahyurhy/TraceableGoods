@@ -1,16 +1,23 @@
 package com.wahyurhy.traceablegoods.ui.activity.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailDistributorBinding
 import com.wahyurhy.traceablegoods.databinding.ActivityDetailGudangBinding
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailPengepulBinding
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailPenggilingBinding
-import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
+import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG_ID
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailGudangActivity : AppCompatActivity() {
+
+    private lateinit var traceableGoodHelper: TraceableGoodHelper
+
+    private var isEdit = true
 
     private lateinit var binding: ActivityDetailGudangBinding
 
@@ -18,14 +25,118 @@ class DetailGudangActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailGudangBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val nameDetail = intent.getStringExtra(MasterDataFragment.NAME_LIST) ?: ""
 
-        initExtras(nameDetail)
+        traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
+        traceableGoodHelper.open()
+
         fitStatusBar()
+
+        initDataExtras()
+
+        initClickListener()
     }
 
-    private fun initExtras(nameList: String) {
-        binding.tvDetailTitle.text = getString(R.string.list_title, nameList)
+    private fun initClickListener() {
+        binding.apply {
+            btnBack.setOnClickListener {
+                finish()
+            }
+
+            btnUbah.setOnClickListener {
+                edtNamaGudang.isEnabled = true
+                edtKontakGudang.isEnabled = true
+                edtAlamatGudang.isEnabled = true
+
+                isEdit = !isEdit
+                btnUbah.text = getString(R.string.simpan)
+                tvDetailTitle.text = getString(R.string.ubah_data)
+                val gudangId = intent.getIntExtra(EXTRA_GUDANG_ID, 0)
+
+                btnUbah.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    null,
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_selesai, null),
+                    null
+                )
+
+                val namaGudang = edtNamaGudang.text.toString().trim()
+                val kontakGudang = edtKontakGudang.text.toString().trim()
+                val alamatGudang = edtAlamatGudang.text.toString().trim()
+                if (isEdit) {
+                    val result = traceableGoodHelper.updateGudang(
+                        gudangId.toString(),
+                        namaGudang,
+                        alamatGudang,
+                        kontakGudang,
+                        getCurrentDate() + " WIB"
+                    )
+                    if (result > 0) {
+                        Toast.makeText(
+                            this@DetailGudangActivity,
+                            getString(R.string.berhasil_simpan_data),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@DetailGudangActivity,
+                            getString(R.string.gagal_simpan_data),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
+            btnHapus.setOnClickListener {
+                val gudangId = intent.getIntExtra(EXTRA_GUDANG_ID, 0)
+                val alertDialogBuilder = AlertDialog.Builder(this@DetailGudangActivity)
+
+                alertDialogBuilder.setTitle(getString(R.string.hapus_data))
+                alertDialogBuilder
+                    .setMessage(getString(R.string.message_hapus_data))
+                    .setCancelable(false)
+                    .setPositiveButton("Ya") { _, _ ->
+                        val result = traceableGoodHelper.deleteGudang(gudangId.toString())
+                        if (result > 0) {
+                            Toast.makeText(
+                                this@DetailGudangActivity,
+                                getString(R.string.berhasil_hapus_data),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@DetailGudangActivity,
+                                getString(R.string.gagal_hapus_data),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    .setNegativeButton("Batalkan") { dialog, _ -> dialog.cancel() }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
+            }
+        }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
+        val date = Date()
+
+        return dateFormat.format(date)
+    }
+
+    private fun initDataExtras() {
+        val gudangId = intent.getIntExtra(EXTRA_GUDANG_ID, 0)
+        val namaGudang = intent.getStringExtra(Utils.EXTRA_NAMA_GUDANG)
+        val kontakGudang = intent.getStringExtra(Utils.EXTRA_KONTAK_GUDANG)
+        val alamatGudang = intent.getStringExtra(Utils.EXTRA_ALAMAT_GUDANG)
+
+        Toast.makeText(this, "kategori gudang: $gudangId", Toast.LENGTH_SHORT).show()
+        binding.idGudang.text = getString(R.string.id_gudang, gudangId)
+        binding.edtNamaGudang.setText(namaGudang)
+        binding.edtKontakGudang.setText(kontakGudang)
+        binding.edtAlamatGudang.setText(alamatGudang)
     }
 
     private fun fitStatusBar() {

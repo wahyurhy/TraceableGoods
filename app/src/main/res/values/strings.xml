@@ -157,6 +157,14 @@
     <string name="silahkan_tambahkan_data_terlebih_dahulu">Silahkan tambahkan data\nterlebih dahulu</string>
     <string name="tidak_boleh_kosong">Kolom ini wajib diisi!</string>
     <string name="detail_produk">Detail Produk</string>
+    <string name="detail_produsen">Detail Produsen</string>
+    <string name="detail_distributor">Detail Distributor</string>
+    <string name="detail_penerima">Detail Penerima</string>
+    <string name="detail_penggiling">Detail Penggiling</string>
+    <string name="detail_pengepul">Detail Pengepul</string>
+    <string name="detail_gudang">Detail Gudang</string>
+    <string name="detail_tengkulak">Detail Tengkulak</string>
+    <string name="detail_pabrik_pengolahan">Detail Pabrik Pengolahan</string>
     <string name="belum_ada">Belum ada</string>
 
     <string-array name="jenis_produk_spinner">

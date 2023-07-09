@@ -1,17 +1,23 @@
 package com.wahyurhy.traceablegoods.ui.activity.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailDistributorBinding
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailGudangBinding
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailPengepulBinding
-import com.wahyurhy.traceablegoods.databinding.ActivityDetailPenggilingBinding
 import com.wahyurhy.traceablegoods.databinding.ActivityDetailTengkulakBinding
-import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
+import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK_ID
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailTengkulakActivity : AppCompatActivity() {
+
+    private lateinit var traceableGoodHelper: TraceableGoodHelper
+
+    private var isEdit = true
 
     private lateinit var binding: ActivityDetailTengkulakBinding
 
@@ -19,14 +25,118 @@ class DetailTengkulakActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailTengkulakBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val nameDetail = intent.getStringExtra(MasterDataFragment.NAME_LIST) ?: ""
 
-        initExtras(nameDetail)
+        traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
+        traceableGoodHelper.open()
+
         fitStatusBar()
+
+        initDataExtras()
+
+        initClickListener()
     }
 
-    private fun initExtras(nameList: String) {
-        binding.tvDetailTitle.text = getString(R.string.list_title, nameList)
+    private fun initClickListener() {
+        binding.apply {
+            btnBack.setOnClickListener {
+                finish()
+            }
+
+            btnUbah.setOnClickListener {
+                edtNamaTengkulak.isEnabled = true
+                edtKontakTengkulak.isEnabled = true
+                edtAlamatTengkulak.isEnabled = true
+
+                isEdit = !isEdit
+                btnUbah.text = getString(R.string.simpan)
+                tvDetailTitle.text = getString(R.string.ubah_data)
+                val tengkulakId = intent.getIntExtra(EXTRA_TENGKULAK_ID, 0)
+
+                btnUbah.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    null,
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_selesai, null),
+                    null
+                )
+
+                val namaTengkulak = edtNamaTengkulak.text.toString().trim()
+                val kontakTengkulak = edtKontakTengkulak.text.toString().trim()
+                val alamatTengkulak = edtAlamatTengkulak.text.toString().trim()
+                if (isEdit) {
+                    val result = traceableGoodHelper.updateTengkulak(
+                        tengkulakId.toString(),
+                        namaTengkulak,
+                        alamatTengkulak,
+                        kontakTengkulak,
+                        getCurrentDate() + " WIB"
+                    )
+                    if (result > 0) {
+                        Toast.makeText(
+                            this@DetailTengkulakActivity,
+                            getString(R.string.berhasil_simpan_data),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@DetailTengkulakActivity,
+                            getString(R.string.gagal_simpan_data),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
+            btnHapus.setOnClickListener {
+                val tengkulakId = intent.getIntExtra(EXTRA_TENGKULAK_ID, 0)
+                val alertDialogBuilder = AlertDialog.Builder(this@DetailTengkulakActivity)
+
+                alertDialogBuilder.setTitle(getString(R.string.hapus_data))
+                alertDialogBuilder
+                    .setMessage(getString(R.string.message_hapus_data))
+                    .setCancelable(false)
+                    .setPositiveButton("Ya") { _, _ ->
+                        val result = traceableGoodHelper.deleteTengkulak(tengkulakId.toString())
+                        if (result > 0) {
+                            Toast.makeText(
+                                this@DetailTengkulakActivity,
+                                getString(R.string.berhasil_hapus_data),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@DetailTengkulakActivity,
+                                getString(R.string.gagal_hapus_data),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    .setNegativeButton("Batalkan") { dialog, _ -> dialog.cancel() }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
+            }
+        }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
+        val date = Date()
+
+        return dateFormat.format(date)
+    }
+
+    private fun initDataExtras() {
+        val tengkulakId = intent.getIntExtra(EXTRA_TENGKULAK_ID, 0)
+        val namaTengkulak = intent.getStringExtra(Utils.EXTRA_NAMA_TENGKULAK)
+        val kontakTengkulak = intent.getStringExtra(Utils.EXTRA_KONTAK_TENGKULAK)
+        val alamatTengkulak = intent.getStringExtra(Utils.EXTRA_ALAMAT_TENGKULAK)
+
+        Toast.makeText(this, "kategori tengkulak: $tengkulakId", Toast.LENGTH_SHORT).show()
+        binding.idTengkulak.text = getString(R.string.id_tengkulak, tengkulakId)
+        binding.edtNamaTengkulak.setText(namaTengkulak)
+        binding.edtKontakTengkulak.setText(kontakTengkulak)
+        binding.edtAlamatTengkulak.setText(alamatTengkulak)
     }
 
     private fun fitStatusBar() {

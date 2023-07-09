@@ -14,21 +14,56 @@ import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_PENGGILING
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_TENGKULAK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DESKRIPSI_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DISTRIBUTOR_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_GUDANG_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KATEGORI_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KATEGORI_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_PENGGILING
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_KONTAK_TENGKULAK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_MEREK_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_DISTRIBUTOR
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_GUDANG
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PENGGILING
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_TENGKULAK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NO_LOT_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NPWP_PRODUSEN
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENERIMA_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGEPUL_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUSEN_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_KADALUARSA_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_PRODUKSI_PRODUK
 import kotlinx.coroutines.Dispatchers
@@ -186,7 +221,6 @@ class ListActivity : AppCompatActivity() {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
                                     intentDetailProduk.apply {
-                                        putExtra(NAME_LIST, nameList)
                                         putExtra(EXTRA_PRODUK_ID, produk[position].productId)
                                         putExtra(EXTRA_JENIS_PRODUK, produk[position].jenisProduk)
                                         putExtra(EXTRA_NAMA_PRODUK, produk[position].namaProduk)
@@ -217,7 +251,14 @@ class ListActivity : AppCompatActivity() {
                             adapterProdusen.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
-                                    intentDetailProdusen.putExtra(NAME_LIST, nameList)
+                                    intentDetailProdusen.apply {
+                                        putExtra(EXTRA_PRODUSEN_ID, produsen[position].produsenId)
+                                        putExtra(EXTRA_KATEGORI_PRODUSEN, produsen[position].kategoriProdusen)
+                                        putExtra(EXTRA_NAMA_PRODUSEN, produsen[position].namaProdusen)
+                                        putExtra(EXTRA_NPWP_PRODUSEN, produsen[position].noNpwp)
+                                        putExtra(EXTRA_KONTAK_PRODUSEN, produsen[position].kontakProdusen)
+                                        putExtra(EXTRA_ALAMAT_PRODUSEN, produsen[position].alamatProdusen)
+                                    }
                                     startActivity(intentDetailProdusen)
                                 }
                             })
@@ -239,7 +280,12 @@ class ListActivity : AppCompatActivity() {
                             adapterDistributor.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailDistributor = Intent(this@ListActivity, DetailDistributorActivity::class.java)
-                                    intentDetailDistributor.putExtra(NAME_LIST, nameList)
+                                    intentDetailDistributor.apply {
+                                        putExtra(EXTRA_DISTRIBUTOR_ID, distributor[position].distributorId)
+                                        putExtra(EXTRA_NAMA_DISTRIBUTOR, distributor[position].namaDistributor)
+                                        putExtra(EXTRA_KONTAK_DISTRIBUTOR, distributor[position].kontakDistributor)
+                                        putExtra(EXTRA_ALAMAT_DISTRIBUTOR, distributor[position].alamatDistributor)
+                                    }
                                     startActivity(intentDetailDistributor)
                                 }
                             })
@@ -261,7 +307,13 @@ class ListActivity : AppCompatActivity() {
                             adapterPenerima.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
-                                    intentDetailPenerima.putExtra(NAME_LIST, nameList)
+                                    intentDetailPenerima.apply {
+                                        putExtra(EXTRA_PENERIMA_ID, penerima[position].penerimaId)
+                                        putExtra(EXTRA_KATEGORI_PENERIMA, penerima[position].kategoriPenerima)
+                                        putExtra(EXTRA_NAMA_PENERIMA, penerima[position].namaPenerima)
+                                        putExtra(EXTRA_KONTAK_PENERIMA, penerima[position].kontakPenerima)
+                                        putExtra(EXTRA_ALAMAT_PENERIMA, penerima[position].alamatPenerima)
+                                    }
                                     startActivity(intentDetailPenerima)
                                 }
                             })
@@ -283,7 +335,12 @@ class ListActivity : AppCompatActivity() {
                             adapterPenggiling.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
-                                    intentDetailPenggiling.putExtra(NAME_LIST, nameList)
+                                    intentDetailPenggiling.apply {
+                                        putExtra(EXTRA_PENGGILING_ID, penggiling[position].penggilingId)
+                                        putExtra(EXTRA_NAMA_PENGGILING, penggiling[position].namaPenggiling)
+                                        putExtra(EXTRA_KONTAK_PENGGILING, penggiling[position].kontakPenggiling)
+                                        putExtra(EXTRA_ALAMAT_PENGGILING, penggiling[position].alamatPenggiling)
+                                    }
                                     startActivity(intentDetailPenggiling)
                                 }
                             })
@@ -305,7 +362,12 @@ class ListActivity : AppCompatActivity() {
                             adapterPengepul.setOnClickedListener(object : PengepulAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
-                                    intentDetailPengepul.putExtra(NAME_LIST, nameList)
+                                    intentDetailPengepul.apply {
+                                        putExtra(EXTRA_PENGEPUL_ID, pengepul[position].pengepulId)
+                                        putExtra(EXTRA_NAMA_PENGEPUL, pengepul[position].namaPengepul)
+                                        putExtra(EXTRA_KONTAK_PENGEPUL, pengepul[position].kontakPengepul)
+                                        putExtra(EXTRA_ALAMAT_PENGEPUL, pengepul[position].alamatPengepul)
+                                    }
                                     startActivity(intentDetailPengepul)
                                 }
                             })
@@ -327,7 +389,12 @@ class ListActivity : AppCompatActivity() {
                             adapterGudang.setOnClickedListener(object : GudangAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
-                                    intentDetailGudang.putExtra(NAME_LIST, nameList)
+                                    intentDetailGudang.apply {
+                                        putExtra(EXTRA_GUDANG_ID, gudang[position].gudangId)
+                                        putExtra(EXTRA_NAMA_GUDANG, gudang[position].namaGudang)
+                                        putExtra(EXTRA_KONTAK_GUDANG, gudang[position].kontakGudang)
+                                        putExtra(EXTRA_ALAMAT_GUDANG, gudang[position].alamatGudang)
+                                    }
                                     startActivity(intentDetailGudang)
                                 }
                             })
@@ -349,7 +416,12 @@ class ListActivity : AppCompatActivity() {
                             adapterTengkulak.setOnClickedListener(object : TengkulakAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
-                                    intentDetailTengkulak.putExtra(NAME_LIST, nameList)
+                                    intentDetailTengkulak.apply {
+                                        putExtra(EXTRA_TENGKULAK_ID, tengkulak[position].tengkulakId)
+                                        putExtra(EXTRA_NAMA_TENGKULAK, tengkulak[position].namaTengkulak)
+                                        putExtra(EXTRA_KONTAK_TENGKULAK, tengkulak[position].kontakTengkulak)
+                                        putExtra(EXTRA_ALAMAT_TENGKULAK, tengkulak[position].alamatTengkulak)
+                                    }
                                     startActivity(intentDetailTengkulak)
                                 }
                             })
@@ -371,7 +443,12 @@ class ListActivity : AppCompatActivity() {
                             adapterPabrikPengolahan.setOnClickedListener(object : PabrikPengolahanAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
-                                    intentDetailPabrikPengolahan.putExtra(NAME_LIST, nameList)
+                                    intentDetailPabrikPengolahan.apply {
+                                        putExtra(EXTRA_PABRIK_PENGOLAHAN_ID, pabrikPengolahan[position].pabrikPengolahanId)
+                                        putExtra(EXTRA_NAMA_PABRIK_PENGOLAHAN, pabrikPengolahan[position].namaPabrikPengolahan)
+                                        putExtra(EXTRA_KONTAK_PABRIK_PENGOLAHAN, pabrikPengolahan[position].kontakPabrikPengolahan)
+                                        putExtra(EXTRA_ALAMAT_PABRIK_PENGOLAHAN, pabrikPengolahan[position].alamatPabrikPengolahan)
+                                    }
                                     startActivity(intentDetailPabrikPengolahan)
                                 }
                             })
