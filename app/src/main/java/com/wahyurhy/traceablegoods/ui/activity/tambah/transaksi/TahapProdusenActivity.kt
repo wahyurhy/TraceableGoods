@@ -48,7 +48,6 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        // buat array dari nama produsen from db
         loadDataProdusen()
         loadDataProduk()
         loadDataDistributor()

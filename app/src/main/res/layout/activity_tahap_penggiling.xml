@@ -85,7 +85,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <AutoCompleteTextView
                     android:id="@+id/edt_nama_penggiling"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -211,7 +211,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <AutoCompleteTextView
                     android:id="@+id/edt_nama_distributor_selanjutnya"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -306,7 +306,7 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/timeShowSpinner"
+                        android:id="@+id/satuanDiDistibusikanSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/bg_spinner_satuan"

@@ -50,7 +50,6 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        // buat array dari nama gudang from db
         loadDataGudang()
         loadDataDistributor()
 
