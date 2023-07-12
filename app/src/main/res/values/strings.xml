@@ -53,8 +53,11 @@
     <string name="hapus_data">Hapus Data?</string>
     <string name="message_hapus_data">Apakah anda yakin untuk menghapus data ini?</string>
     <string name="gagal_simpan_data">Gagal menyimpan data</string>
+    <string name="gagal_menambah_data">Gagal menambah data</string>
+    <string name="tahap_sedang_dikerjakan">"Anda telah berada pada tahap %1$s"</string>
     <string name="gagal_hapus_data">Gagal menghapus data</string>
     <string name="berhasil_simpan_data">Data berhasil disimpan</string>
+    <string name="berhasil_menambah_data">Berhasil Tambah Data %1$s</string>
     <string name="berhasil_hapus_data">Data berhasil dihapus</string>
     <string name="kategori_produsen">Kategori Produsen</string>
     <string name="nama_produsen">Nama Produsen</string>
@@ -141,6 +144,7 @@
     <string name="tidak_ada_penggiling">Tidak ada penggiling?</string>
     <string name="tahap_pengepul">Tahap Pengepul</string>
     <string name="tidak_ada_pengepul">Tidak ada pengepul?</string>
+    <string name="tidak_ada_pabrik_pengolahan">Tidak ada pabrik?</string>
     <string name="tahap_penerima">Tahap Penerima</string>
     <string name="tidak_ada_penerima">Tidak ada penerima?</string>
     <string name="selesai">Selesai</string>
@@ -166,6 +170,8 @@
     <string name="detail_tengkulak">Detail Tengkulak</string>
     <string name="detail_pabrik_pengolahan">Detail Pabrik Pengolahan</string>
     <string name="belum_ada">Belum ada</string>
+    <string name="tambah_alur_distribusi">Tambah Alur Distribusi</string>
+    <string name="tahap_pabrik_pengolahan">Tahap Pabrik Pengolahan</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
@@ -219,9 +225,9 @@
 
     <string-array name="tahap_spinner">
         <item>Gudang</item>
-        <item>Pengepul</item>
         <item>Tengkulak</item>
         <item>Penggiling</item>
+        <item>Pengepul</item>
         <item>Pabrik Pengolahan</item>
         <item>Penerima</item>
     </string-array>

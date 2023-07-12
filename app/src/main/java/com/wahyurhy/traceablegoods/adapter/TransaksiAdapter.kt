@@ -14,7 +14,15 @@ import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.DAGING
 import com.wahyurhy.traceablegoods.utils.Utils.SAYURAN
 
-class TransaksiAdapter(private val mTransaksi: List<Item>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
+class TransaksiAdapter : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
+
+    var mTransaksi = ArrayList<Item>()
+        set(mTransaksi) {
+            if (mTransaksi.size > 0) {
+                this.mTransaksi.clear()
+            }
+            this.mTransaksi.addAll(mTransaksi)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)

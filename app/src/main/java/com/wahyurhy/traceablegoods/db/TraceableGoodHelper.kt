@@ -749,7 +749,10 @@ class TraceableGoodHelper(context: Context) {
         timeStamp: String
     ): Int {
         val values = ContentValues().apply {
-            put(DatabaseContract.PabrikPengolahanColumns.COLUMN_DATA_INFO_ID_FK, PABRIK_PENGOLAHAN_ID)
+            put(
+                DatabaseContract.PabrikPengolahanColumns.COLUMN_DATA_INFO_ID_FK,
+                PABRIK_PENGOLAHAN_ID
+            )
             put(DatabaseContract.PabrikPengolahanColumns.COLUMN_NAMA_PABRIK, namaPabrikPengolahan)
             put(
                 DatabaseContract.PabrikPengolahanColumns.COLUMN_ALAMAT_PABRIK,
@@ -803,7 +806,24 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertTransaksi(values: ContentValues?): Long {
+    fun insertTransaksi(
+        batchId: String,
+        status: String,
+        jenisProduk: String,
+        produk: String,
+        produkBatch: String,
+        penerima: String,
+        date: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID, batchId)
+            put(DatabaseContract.TransaksiColumns.COLUMN_STATUS, status)
+            put(DatabaseContract.TransaksiColumns.COLUMN_JENIS_PRODUK, jenisProduk)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK, produk)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH, produkBatch)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA, penerima)
+            put(DatabaseContract.TransaksiColumns.COLUMN_DATE, date)
+        }
         return database.insert(DATABASE_TABLE_TRANSAKSI, null, values)
     }
 
@@ -833,7 +853,38 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun insertAlurDistribusi(values: ContentValues?): Long {
+    fun insertAlurDistribusi(
+        batchId: String,
+        tahap: String,
+        status: String,
+        nama: String,
+        produk: String,
+        produkBatch: String,
+        jenisProduk: String,
+        totalYangDiterima: String,
+        kategoriPenerima: String,
+        distributor: String,
+        totalYangDiDistribusikan: String,
+        lokasiAsal: String,
+        lokasiTujuan: String,
+        date: String
+    ): Long {
+        val values = ContentValues().apply {
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID, batchId)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_TAHAP, tahap)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_STATUS, status)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_NAMA, nama)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_JENIS_PRODUK, jenisProduk)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_PRODUK, produk)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_PRODUK_BATCH, produkBatch)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DITERIMA, totalYangDiterima)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_KATEGORI_PENERIMA, kategoriPenerima)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_DISTRIBUTOR, distributor)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN, totalYangDiDistribusikan)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL, lokasiAsal)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN, lokasiTujuan)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_DATE, date)
+        }
         return database.insert(DATABASE_TABLE_ALUR_DISTRIBUSI, null, values)
     }
 

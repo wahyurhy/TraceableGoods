@@ -7,17 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
-import com.wahyurhy.traceablegoods.model.transaksi.TransaksiModel
+import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.model.transaksi.Item
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class TransaksiFragment : Fragment() {
+
+    private lateinit var adapter: TransaksiAdapter
 
     private lateinit var binding: FragmentTransaksiBinding
 
@@ -32,10 +38,71 @@ class TransaksiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAdapter()
 
         initClickListener()
-        rawListInit()
         hideFloatingActionButton()
+
+        if (savedInstanceState == null) {
+            // proses ambil data
+            loadDataTransaksi()
+        } else {
+            val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_TRANSAKSI)
+            if (list != null) {
+                adapter.mTransaksi = list
+            }
+        }
+    }
+
+    private fun loadDataTransaksi() {
+        lifecycleScope.launch {
+            binding.apply {
+                val traceableGoodHelper = TraceableGoodHelper.getInstance(requireContext())
+                traceableGoodHelper.open()
+
+                val deferredTransaksi = async(Dispatchers.IO) {
+                    val cursor = traceableGoodHelper.queryAllTransaksi()
+                    MappingHelper.mapCursorToArrayListTransaksi(cursor)
+                }
+
+                val transaksi = deferredTransaksi.await()
+
+                if (transaksi.size > 0) {
+                    adapter.mTransaksi = transaksi
+
+                    adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
+                        override fun onItemClick(itemView: View?, position: Int) {
+                            val produkBatch = transaksi[position].produkBatch
+                            Toast.makeText(
+                                requireContext(),
+                                "$produkBatch was clicked!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            if (transaksi[position].status == "selesai") {
+                                val intent =
+                                    Intent(requireContext(), TahapAlurDistribusiActivity::class.java)
+                                intent.putExtra("batch_id", transaksi[position].batchId)
+                                startActivity(intent)
+                            } else {
+                                val intent = Intent(requireContext(), TahapProdusenActivity::class.java)
+                                intent.putExtra("batch_id", transaksi[position].batchId)
+                                startActivity(intent)
+                            }
+                        }
+                    })
+                } else {
+                    adapter.mTransaksi = ArrayList()
+                    Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                traceableGoodHelper.close()
+            }
+        }
+    }
+
+    private fun setAdapter() {
+        adapter = TransaksiAdapter()
+        binding.rvTransaksi.adapter = adapter
     }
 
     private fun hideFloatingActionButton() {
@@ -53,36 +120,9 @@ class TransaksiFragment : Fragment() {
         }
     }
 
-    private fun rawListInit() {
-        val gson = Gson()
-        val i = requireContext().assets.open("transaksi.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, TransaksiModel::class.java)
-
-        bindData(dataList)
-    }
-
-    private fun bindData(dataList: TransaksiModel) {
-        dataList.result.forEach { result ->
-            val adapter = TransaksiAdapter(result.items)
-            binding.rvTransaksi.adapter = adapter
-            adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val produkBatch = result.items[position].produkBatch
-                    Toast.makeText(requireContext(), "$produkBatch was clicked!", Toast.LENGTH_SHORT).show()
-                    if (result.items[position].status == "selesai") {
-                        val intent =
-                            Intent(requireContext(), TahapAlurDistribusiActivity::class.java)
-                        intent.putExtra("batch_id", result.items[position].batchId)
-                        startActivity(intent)
-                    } else {
-                        val intent = Intent(requireContext(), TahapProdusenActivity::class.java)
-                        intent.putExtra("batch_id", result.items[position].batchId)
-                        startActivity(intent)
-                    }
-                }
-            })
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(EXTRA_TRANSAKSI, adapter.mTransaksi)
     }
 
     interface ScrollListener {

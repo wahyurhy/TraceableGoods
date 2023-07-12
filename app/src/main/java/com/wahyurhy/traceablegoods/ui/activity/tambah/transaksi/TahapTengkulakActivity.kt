@@ -30,10 +30,19 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
-            when (selectedTahapSelanjutnya.lowercase()) {
+            when (selectedTahapSelanjutnya) {
                 Utils.GUDANG -> startActivity(Intent(this, TahapGudangActivity::class.java))
-                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
+                Utils.TENGKULAK -> {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.tahap_sedang_dikerjakan, selectedTahapSelanjutnya),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
+                Utils.PENGEPUL -> startActivity(Intent(this, TahapPengepulActivity::class.java))
+                Utils.PABRIK_PENGOLAHAN -> startActivity(Intent(this, TahapPabrikPengolahanActivity::class.java))
+                Utils.PENERIMA -> startActivity(Intent(this, TahapPenerimaActivity::class.java))
             }
         }
     }
@@ -47,7 +56,6 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             when (binding.tahapSelanjutnyaSpinner.selectedItem) {
                 resources.getStringArray(R.array.tahap_spinner)[i].toString() -> {
                     selectedTahapSelanjutnya = resources.getStringArray(R.array.tahap_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedTahapSelanjutnya", Toast.LENGTH_SHORT).show()
                 }
             }
         }

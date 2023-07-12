@@ -20,6 +20,25 @@ object MappingHelper {
         return dataInfoList
     }
 
+    fun mapCursorToArrayListTransaksi(transaksiCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.transaksi.Item> {
+        val transaksiList = ArrayList<com.wahyurhy.traceablegoods.model.transaksi.Item>()
+
+        transaksiCursor?.apply {
+            while (moveToNext()) {
+                val transaksiId = getInt(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID))
+                val batchId = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID))
+                val date = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_DATE))
+                val jenisProduk = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_JENIS_PRODUK))
+                val penerima = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA))
+                val produk = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK))
+                val produkBatch = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH))
+                val status = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_STATUS))
+                transaksiList.add(com.wahyurhy.traceablegoods.model.transaksi.Item(transaksiId, batchId, date, jenisProduk, penerima, produk, produkBatch, status))
+            }
+        }
+        return transaksiList
+    }
+
     fun mapCursorToArrayListProduk(produkCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.produk.Item> {
         val produkList = ArrayList<com.wahyurhy.traceablegoods.model.produk.Item>()
 

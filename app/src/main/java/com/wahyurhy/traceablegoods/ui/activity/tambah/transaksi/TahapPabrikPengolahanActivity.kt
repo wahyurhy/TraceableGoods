@@ -7,18 +7,18 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityTahapGudangBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityTahapPabrikPengolahanBinding
 import com.wahyurhy.traceablegoods.utils.Utils
 
-class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var binding: ActivityTahapGudangBinding
+    private lateinit var binding: ActivityTahapPabrikPengolahanBinding
 
     private var selectedTahapSelanjutnya = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTahapGudangBinding.inflate(layoutInflater)
+        binding = ActivityTahapPabrikPengolahanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         fitStatusBar()
@@ -31,17 +31,17 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
-                Utils.GUDANG -> {
+                Utils.GUDANG -> startActivity(Intent(this, TahapGudangActivity::class.java))
+                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
+                Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
+                Utils.PENGEPUL -> startActivity(Intent(this, TahapPengepulActivity::class.java))
+                Utils.PABRIK_PENGOLAHAN -> {
                     Toast.makeText(
                         this,
                         getString(R.string.tahap_sedang_dikerjakan, selectedTahapSelanjutnya),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
-                Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
-                Utils.PENGEPUL -> startActivity(Intent(this, TahapPengepulActivity::class.java))
-                Utils.PABRIK_PENGOLAHAN -> startActivity(Intent(this, TahapPabrikPengolahanActivity::class.java))
                 Utils.PENERIMA -> startActivity(Intent(this, TahapPenerimaActivity::class.java))
             }
         }
@@ -56,6 +56,7 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             when (binding.tahapSelanjutnyaSpinner.selectedItem) {
                 resources.getStringArray(R.array.tahap_spinner)[i].toString() -> {
                     selectedTahapSelanjutnya = resources.getStringArray(R.array.tahap_spinner)[i].toString()
+                    Toast.makeText(this, "Hi $selectedTahapSelanjutnya", Toast.LENGTH_SHORT).show()
                 }
             }
         }

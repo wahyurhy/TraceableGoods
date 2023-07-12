@@ -66,7 +66,6 @@ class TambahDataMasterActivity : AppCompatActivity(), AdapterView.OnItemSelected
             when (binding.jenisDataSpinner.selectedItem) {
                 resources.getStringArray(R.array.jenis_data_spinner)[i].toString() -> {
                     selectedJenisData = resources.getStringArray(R.array.jenis_data_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedJenisData", Toast.LENGTH_SHORT).show()
                 }
             }
         }

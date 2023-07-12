@@ -25,6 +25,7 @@ object Utils {
     const val PABRIK_PENGOLAHAN = "Pabrik Pengolahan"
 
     const val EXTRA_DATA_INFO = "extra_data_info"
+    const val EXTRA_TRANSAKSI = "extra_transaksi"
     const val EXTRA_PRODUK = "extra_produk"
     const val EXTRA_PRODUSEN = "extra_produsen"
     const val EXTRA_DISTRIBUTOR = "extra_distributor"

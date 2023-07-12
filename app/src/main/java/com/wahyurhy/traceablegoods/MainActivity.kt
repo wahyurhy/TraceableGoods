@@ -33,11 +33,9 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
 
     private fun initClickListener() {
         binding.fbTambahData.setOnClickListener {
-            Toast.makeText(this, "Tambah Data", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, TambahDataMasterActivity::class.java))
         }
         binding.fbTambahTransaksi.setOnClickListener {
-            Toast.makeText(this, "Tambah Transaksi", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, TahapProdusenActivity::class.java))
         }
     }

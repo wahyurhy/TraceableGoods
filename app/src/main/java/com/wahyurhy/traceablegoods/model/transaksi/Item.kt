@@ -1,9 +1,14 @@
 package com.wahyurhy.traceablegoods.model.transaksi
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Item(
+    @SerializedName("transaksi_id")
+    var transaksiId: Int,
     @SerializedName("batch_id")
     var batchId: String,
     @SerializedName("date")
@@ -18,4 +23,4 @@ data class Item(
     var produkBatch: String,
     @SerializedName("status")
     var status: String
-)
+): Parcelable

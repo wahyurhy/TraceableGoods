@@ -60,6 +60,7 @@
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPengepulActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPenerimaActivity" />
         <activity android:name="com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity" />
+        <activity android:name="com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapPabrikPengolahanActivity" />
     </application>
 
 </manifest>
