@@ -788,7 +788,7 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} ASC",
+            "${DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID} DESC",
             null
         )
     }
@@ -825,6 +825,31 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.TransaksiColumns.COLUMN_DATE, date)
         }
         return database.insert(DATABASE_TABLE_TRANSAKSI, null, values)
+    }
+
+    fun updateTransaksi(
+        id: String,
+        batchId: String,
+        status: String,
+        jenisProduk: String,
+        produk: String,
+        produkBatch: String,
+        penerima: String,
+        date: String
+    ): Int {
+        val values = ContentValues().apply {
+            put(DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID, batchId)
+            put(DatabaseContract.TransaksiColumns.COLUMN_STATUS, status)
+            put(DatabaseContract.TransaksiColumns.COLUMN_JENIS_PRODUK, jenisProduk)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK, produk)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH, produkBatch)
+            put(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA, penerima)
+            put(DatabaseContract.TransaksiColumns.COLUMN_DATE, date)
+        }
+        return database.update(
+            DATABASE_TABLE_TRANSAKSI, values, "${DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID} = ?",
+            arrayOf(id)
+        )
     }
 
     fun queryAllAlurDistribusi(): Cursor {

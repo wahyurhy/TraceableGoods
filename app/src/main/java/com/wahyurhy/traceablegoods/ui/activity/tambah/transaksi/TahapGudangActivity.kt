@@ -2,32 +2,138 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapGudangBinding
+import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_BATCH_TRANSAKSI
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI_ID
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private lateinit var traceableGoodHelper: TraceableGoodHelper
+    private var isAllSet: Boolean = false
+    private lateinit var adapterGudang: ArrayAdapter<String>
+    private lateinit var adapterDistributor: ArrayAdapter<String>
+    private var gudangList = ArrayList<String>()
+    private var distributorList = ArrayList<String>()
 
     private lateinit var binding: ActivityTahapGudangBinding
 
     private var selectedTahapSelanjutnya = ""
+    private var selectedSatuanYangDiterima = ""
+    private var selectedSatuanYangDiDistribusikan = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTahapGudangBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
+        traceableGoodHelper.open()
+
+        // buat array dari nama gudang from db
+        loadDataGudang()
+        loadDataDistributor()
+
         fitStatusBar()
 
         initClickListener()
     }
 
+    private fun loadDataGudang() {
+        lifecycleScope.launch {
+            binding.apply {
+                val deferredGudang = async(Dispatchers.IO) {
+                    val cursor = traceableGoodHelper.queryAllGudang()
+                    MappingHelper.mapCursorToArrayListGudang(cursor)
+                }
+                val gudang = deferredGudang.await()
+                if (gudang.size > 0) {
+                    gudang.forEach {
+                        try {
+                            gudangList.add("${it.namaGudang} - ${it.kontakGudang.substring(0, 3)}***${it.kontakGudang.substring(it.kontakGudang.length - 3)}")
+                        } catch (e: Exception) {
+                            gudangList.add(it.namaGudang)
+                            Log.e("TahapGudangActivity", "Error: ${e.message}")
+                        }
+                    }
+                    adapterGudang = ArrayAdapter<String>(
+                        this@TahapGudangActivity,
+                        android.R.layout.simple_list_item_1,
+                        gudangList
+                    )
+                    edtNamaGudang.setAdapter(adapterGudang)
+                } else {
+                    gudangList = ArrayList()
+                    Toast.makeText(
+                        this@TahapGudangActivity,
+                        "Tidak ada data saat ini",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun loadDataDistributor() {
+        lifecycleScope.launch {
+            binding.apply {
+                val deferredDistributor = async(Dispatchers.IO) {
+                    val cursor = traceableGoodHelper.queryAllDistributor()
+                    MappingHelper.mapCursorToArrayListDistributor(cursor)
+                }
+                val distributor = deferredDistributor.await()
+                if (distributor.size > 0) {
+                    distributor.forEach {
+                        distributorList.add(it.namaDistributor)
+                    }
+                    adapterDistributor = ArrayAdapter<String>(
+                        this@TahapGudangActivity,
+                        android.R.layout.simple_list_item_1,
+                        distributorList
+                    )
+                    edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
+                } else {
+                    distributorList = ArrayList()
+                    Toast.makeText(
+                        this@TahapGudangActivity,
+                        "Tidak ada data saat ini",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+    }
+
     private fun initClickListener() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
+        binding.satuanDiterimaSpinner.onItemSelectedListener = this
+        binding.satuanDiDistibusikanSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
@@ -41,9 +147,134 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
                 Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
                 Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
                 Utils.PENGEPUL -> startActivity(Intent(this, TahapPengepulActivity::class.java))
-                Utils.PABRIK_PENGOLAHAN -> startActivity(Intent(this, TahapPabrikPengolahanActivity::class.java))
+                Utils.PABRIK_PENGOLAHAN -> startActivity(
+                    Intent(
+                        this,
+                        TahapPabrikPengolahanActivity::class.java
+                    )
+                )
                 Utils.PENERIMA -> startActivity(Intent(this, TahapPenerimaActivity::class.java))
             }
+        }
+
+        binding.btnSimpan.setOnClickListener {
+            binding.apply {
+                val satuanYangDiterima = selectedSatuanYangDiterima
+                val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
+                val status = selectedTahapSelanjutnya
+                val namaGudang = edtNamaGudang.text.toString()
+                val tahap = getString(R.string.gudang)
+                val namaDistributorSelanjutnya =
+                    edtNamaDistributorSelanjutnya.text.toString().trim()
+                val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
+                val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
+                val lokasiAsal = edtLokasiAsal.text.toString().trim()
+                val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
+
+                val transaksiIdExtra = intent.getIntExtra(EXTRA_TRANSAKSI_ID, 0)
+                val batchIdExtra = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
+                val jenisProdukExtra = intent.getStringExtra(EXTRA_JENIS_PRODUK_TRANSAKSI) ?: ""
+                val namaProdukExtra = intent.getStringExtra(EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+                val produkBatchExtra = intent.getStringExtra(EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
+
+                namaGudang.showErrorIfEmpty(
+                    binding.edtNamaGudang,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+                namaDistributorSelanjutnya.showErrorIfEmpty(
+                    binding.edtNamaDistributorSelanjutnya,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+                totalYangDiterima.showErrorIfEmpty(
+                    binding.edtTotalYangDiterima,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+                totalYangDiDistribusikan.showErrorIfEmpty(
+                    binding.edtTotalYangDidistribusikan,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+                lokasiAsal.showErrorIfEmpty(
+                    binding.edtLokasiAsal,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+                lokasiTujuan.showErrorIfEmpty(
+                    binding.edtLokasiTujuan,
+                    getString(R.string.tidak_boleh_kosong)
+                )
+
+                if (isAllSet) {
+                    val resultTransaksi = traceableGoodHelper.updateTransaksi(
+                        transaksiIdExtra.toString(),
+                        batchIdExtra,
+                        status,
+                        jenisProdukExtra,
+                        namaProdukExtra,
+                        produkBatchExtra,
+                        selectedTahapSelanjutnya,
+                        getCurrentDate() + " WIB"
+                    )
+                    val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
+                        batchIdExtra,
+                        tahap,
+                        status,
+                        namaGudang,
+                        "",
+                        "",
+                        "",
+                        "$totalYangDiterima $satuanYangDiterima",
+                        "",
+                        namaDistributorSelanjutnya,
+                        "$totalYangDiDistribusikan $satuanYangDiDistribusikan",
+                        lokasiAsal,
+                        lokasiTujuan,
+                        getCurrentDate() + " WIB"
+                    )
+
+                    if (resultTransaksi > 0) {
+                        if (resultAlurTransaksi > 0) {
+                            Toast.makeText(
+                                this@TahapGudangActivity,
+                                getString(R.string.berhasil_menambah_data, Utils.GUDANG),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@TahapGudangActivity,
+                            getString(R.string.gagal_menambah_data),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
+        val date = Date()
+
+        return dateFormat.format(date)
+    }
+
+    private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {
+        if (this.isEmpty()) {
+            isAllSet = false
+            binding.error = errorMessage
+        } else {
+            isAllSet = true
+            binding.error = null
+        }
+    }
+
+    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
+        if (this.isEmpty()) {
+            isAllSet = false
+            binding.error = errorMessage
+        } else {
+            isAllSet = true
+            binding.error = null
         }
     }
 
@@ -55,7 +286,32 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         for (i in 0..5) {
             when (binding.tahapSelanjutnyaSpinner.selectedItem) {
                 resources.getStringArray(R.array.tahap_spinner)[i].toString() -> {
-                    selectedTahapSelanjutnya = resources.getStringArray(R.array.tahap_spinner)[i].toString()
+                    selectedTahapSelanjutnya =
+                        resources.getStringArray(R.array.tahap_spinner)[i].toString()
+                }
+            }
+        }
+        for (i in 0..10) {
+            when (binding.satuanDiterimaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
+                    selectedSatuanYangDiterima =
+                        resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
+                    Toast.makeText(
+                        this,
+                        "diterima satuan: $selectedSatuanYangDiterima",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            when (binding.satuanDiDistibusikanSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
+                    selectedSatuanYangDiDistribusikan =
+                        resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
+                    Toast.makeText(
+                        this,
+                        "didistribusikan satuan: $selectedSatuanYangDiDistribusikan",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -67,8 +68,14 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val produsen = deferredProdusen.await()
                 if (produsen.size > 0) {
                     produsen.forEach {
-                        produsenList.add("${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}")
-                        mapProdusen["${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
+                        try {
+                            produsenList.add("${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}")
+                            mapProdusen["${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
+                        } catch (e: Exception) {
+                            produsenList.add(it.namaProdusen)
+                            mapProdusen[it.namaProdusen] = it.kategoriProdusen
+                            Log.e("TahapProdusenActivity", "Error: ${e.message}")
+                        }
                     }
                     adapterProdusen = ArrayAdapter<String>(
                         this@TahapProdusenActivity,
@@ -178,7 +185,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         binding.btnSimpan.setOnClickListener {
             binding.apply {
                 val satuan = selectedSatuan
-                val status = "belum selesai"
+                val status = selectedTahapSelanjutnya
                 val namaProdusen = edtNamaProdusen.text.toString()
                 val namaProduk = edtNamaProduk.text.toString().trim()
                 val tahap = mapProdusen[namaProdusen] ?: ""
@@ -187,7 +194,13 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
                 val lokasiAsal = edtLokasiAsal.text.toString().trim()
                 val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
-                val batchId = namaProdusen.substring(0, 2) + generateDateBatchId() + namaProdusen.length + lokasiAsal.substring(0, 3).uppercase()
+                var batchId = ""
+                try {
+                    batchId = namaProdusen.substring(0, 2) + generateDateBatchId() + namaProdusen.length + lokasiAsal.substring(0, 3).uppercase()
+                } catch (e: Exception) {
+                    batchId = namaProdusen + generateDateBatchId() + namaProdusen.length + lokasiAsal.uppercase()
+                    Log.e("TahapProdusenActivity", "Error: ${e.message}")
+                }
                 val produkBatch = "$namaProduk - $batchId"
 
                 namaProdusen.showErrorIfEmpty(

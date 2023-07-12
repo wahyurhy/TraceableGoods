@@ -172,6 +172,12 @@
     <string name="belum_ada">Belum ada</string>
     <string name="tambah_alur_distribusi">Tambah Alur Distribusi</string>
     <string name="tahap_pabrik_pengolahan">Tahap Pabrik Pengolahan</string>
+    <string name="gudang">Gudang</string>
+    <string name="tengkulak">Tengkulak</string>
+    <string name="penggiling">Penggiling</string>
+    <string name="pengepul">Pengepul</string>
+    <string name="pabrik_pengolahan">Pabrik Pengolahan</string>
+    <string name="penerima">Penerima</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

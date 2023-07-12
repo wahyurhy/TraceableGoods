@@ -9,10 +9,10 @@ object Utils {
     const val NELAYAN = "nelayan"
     const val PETERNAK = "peternak"
 
-    const val BIJIAN = "bijian"
-    const val BUAHAN = "buahan"
-    const val SAYURAN = "sayuran"
-    const val DAGING = "daging"
+    const val BIJIAN = "Bijian"
+    const val BUAHAN = "Buahan"
+    const val SAYURAN = "Sayuran"
+    const val DAGING = "Daging"
 
     const val PRODUK = "Produk"
     const val PRODUSEN = "Produsen"
@@ -79,6 +79,11 @@ object Utils {
     const val EXTRA_NAMA_PABRIK_PENGOLAHAN = "extra_nama_pabrik_pengolahan"
     const val EXTRA_KONTAK_PABRIK_PENGOLAHAN = "extra_kontak_pabrik_pengolahan"
     const val EXTRA_ALAMAT_PABRIK_PENGOLAHAN = "extra_alamat_pabrik_pengolahan"
+    const val EXTRA_TRANSAKSI_ID = "transaksi_id"
+    const val EXTRA_BATCH_ID = "batch_id"
+    const val EXTRA_JENIS_PRODUK_TRANSAKSI = "jenis_produk"
+    const val EXTRA_NAMA_PRODUK_TRANSAKSI = "nama_produk"
+    const val EXTRA_PRODUK_BATCH_TRANSAKSI = "produk_batch"
 
     const val PRODUK_ID = 0
     const val PRODUSEN_ID = 1

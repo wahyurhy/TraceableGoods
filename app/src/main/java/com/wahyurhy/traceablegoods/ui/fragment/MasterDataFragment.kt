@@ -69,7 +69,7 @@ class MasterDataFragment : Fragment() {
     private fun loadDataInfoAsync() {
         lifecycleScope.launch {
             binding.apply {
-                val traceableGoodHelper = TraceableGoodHelper.getInstance(requireContext())
+                val traceableGoodHelper = TraceableGoodHelper.getInstance(requireActivity().applicationContext)
                 traceableGoodHelper.open()
 
                 val deferredDataInfo = async(Dispatchers.IO) {
@@ -137,10 +137,12 @@ class MasterDataFragment : Fragment() {
                         tengkulakCount = tengkulak.size.toString()
                         pabrikPengolahanCount = pabrikPengolahan.size.toString()
                     }
+                    adapter.notifyDataSetChanged()
                     totalDataInfo = produk.size + produsen.size + distributor.size + penerima.size +
                             penggiling.size + pengepul.size + gudang.size + tengkulak.size + pabrikPengolahan.size
 
                     adapterCardInfo.totalDataInfo = totalDataInfo
+                    adapterCardInfo.notifyDataSetChanged()
                     adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
                         override fun onItemClick(itemView: View?, position: Int) {
                             val dataName = dataInfo[position].dataName
