@@ -18,10 +18,10 @@ import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_BATCH_TRANSAKSI
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_STATUS_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI_ID
 import kotlinx.coroutines.Dispatchers
@@ -95,6 +95,7 @@ class TransaksiFragment : Fragment() {
                                         putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
                                         putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
                                         putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
+                                        putExtra(EXTRA_STATUS_TRANSAKSI, transaksi[position].status)
                                     }
                                     startActivity(intent)
                                 }

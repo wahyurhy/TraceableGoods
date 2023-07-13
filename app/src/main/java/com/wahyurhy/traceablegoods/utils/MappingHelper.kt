@@ -3,6 +3,7 @@ package com.wahyurhy.traceablegoods.utils
 import android.database.Cursor
 import com.wahyurhy.traceablegoods.db.DatabaseContract
 import com.wahyurhy.traceablegoods.model.datainfo.Item
+import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
 
 object MappingHelper {
 
@@ -37,6 +38,31 @@ object MappingHelper {
             }
         }
         return transaksiList
+    }
+
+    fun mapCursorToArrayListAlurDistribusi(alurDistribusiCursor: Cursor?): ArrayList<Result> {
+        val alurDistribusiList = ArrayList<Result>()
+
+        alurDistribusiCursor?.apply {
+            while (moveToNext()) {
+                val batchId = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID))
+                val tahap = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_TAHAP))
+                val status = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_STATUS))
+                val nama = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_NAMA))
+                val produk = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_PRODUK))
+                val produkBatch = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_PRODUK_BATCH))
+                val jenisProduk = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_JENIS_PRODUK))
+                val totalYangDiterima = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DITERIMA))
+                val kategoriPenerima = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_KATEGORI_PENERIMA))
+                val distributor = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_DISTRIBUTOR))
+                val totalYangDiDistribusikan = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN))
+                val lokasiAsal = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL))
+                val lokasiTujuan = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN))
+                val date = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_DATE))
+                alurDistribusiList.add(Result(batchId, date, distributor, jenisProduk, kategoriPenerima, lokasiAsal, lokasiTujuan, nama, produk, produkBatch, status, tahap, totalYangDiDistribusikan, totalYangDiterima))
+            }
+        }
+        return alurDistribusiList
     }
 
     fun mapCursorToArrayListProduk(produkCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.produk.Item> {

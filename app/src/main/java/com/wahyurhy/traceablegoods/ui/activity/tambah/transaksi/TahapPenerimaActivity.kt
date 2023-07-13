@@ -100,7 +100,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val satuanYangDiterima = selectedSatuanYangDiterima
                 val status = getString(R.string.selesai)
                 val namaPenerima = edtNamaPenerima.text.toString()
-                val tahap = mapPenerima[namaPenerima] ?: ""
+                val tahap = getString(R.string.penerima)
                 val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
 
                 val transaksiIdExtra = intent.getIntExtra(Utils.EXTRA_TRANSAKSI_ID, 0)
@@ -108,6 +108,8 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val jenisProdukExtra = intent.getStringExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI) ?: ""
                 val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
                 val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
+
+                val kategoriPenerima = mapPenerima[namaPenerima] ?: ""
 
                 namaPenerima.showErrorIfEmpty(
                     binding.edtNamaPenerima,
@@ -136,9 +138,9 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         namaPenerima,
                         "",
                         "",
-                        "",
+                        namaProdukExtra,
                         "$totalYangDiterima $satuanYangDiterima",
-                        "",
+                        kategoriPenerima,
                         "",
                         "",
                         "",
@@ -200,7 +202,19 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+        for (i in 0..10) {
+            when (binding.satuanDiterimaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
+                    selectedSatuanYangDiterima =
+                        resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
+                    Toast.makeText(
+                        this,
+                        "diterima satuan: $selectedSatuanYangDiterima",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

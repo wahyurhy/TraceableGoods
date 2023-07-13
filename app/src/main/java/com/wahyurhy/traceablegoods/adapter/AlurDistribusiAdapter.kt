@@ -6,9 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.alurdistribusi.Record
+import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
 
-class AlurDistribusiAdapter(private val mRecord: List<Record>) : RecyclerView.Adapter<AlurDistribusiAdapter.ViewHolder>() {
+class AlurDistribusiAdapter : RecyclerView.Adapter<AlurDistribusiAdapter.ViewHolder>() {
+
+    var mResult = ArrayList<Result>()
+        set(mResult) {
+            if (mResult.size > 0) {
+                this.mResult.clear()
+            }
+            this.mResult.addAll(mResult)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)
@@ -23,27 +31,27 @@ class AlurDistribusiAdapter(private val mRecord: List<Record>) : RecyclerView.Ad
         return ViewHolder(alurDistribusiView)
     }
 
-    override fun getItemCount(): Int = mRecord.size
+    override fun getItemCount(): Int = mResult.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = mRecord[position]
+        val result = mResult[position]
         val tahap = holder.tahap
-        tahap.text = record.tahap
+        tahap.text = result.tahap
 
         val nama = holder.nama
-        nama.text  = record.detail.nama
+        nama.text  = result.nama
         val distributor = holder.distributor
-        distributor.text = record.detail.distributor
+        distributor.text = result.distributor
         val totalYangDiterima = holder.totalYangDiterima
-        totalYangDiterima.text = record.detail.totalYangDiterima
+        totalYangDiterima.text = result.totalYangDiterima
         val totalDistribusi = holder.totalDistribusi
-        totalDistribusi.text = record.detail.totalYangDidistribusikan
+        totalDistribusi.text = result.totalYangDidistribusikan
         val lokasiAsal = holder.lokasiAsal
-        lokasiAsal.text = record.detail.lokasiAsal
+        lokasiAsal.text = result.lokasiAsal
         val lokasiTujuan = holder.lokasiTujuan
-        lokasiTujuan.text = record.detail.lokasiTujuan
+        lokasiTujuan.text = result.lokasiTujuan
         val date = holder.date
-        date.text = record.detail.date
+        date.text = result.date
 
     }
 

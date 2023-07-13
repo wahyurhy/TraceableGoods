@@ -865,12 +865,25 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
-    fun queryAlurDistribusiById(id: String): Cursor {
+    fun queryAlurDistribusiByIdAndJenisProduk(id: String, jenisProduk: String): Cursor {
         return database.query(
             DATABASE_TABLE_ALUR_DISTRIBUSI,
             null,
-            "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} = ? AND ${DatabaseContract.AlurDistribusiColumns.COLUMN_JENIS_PRODUK} = ?",
+            arrayOf(id, jenisProduk),
+            null,
+            null,
+            null,
+            null
+        )
+    }
+
+    fun queryAlurDistribusiByIdAndStatus(id: String, status: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_ALUR_DISTRIBUSI,
+            null,
+            "${DatabaseContract.AlurDistribusiColumns.COLUMN_BATCH_ID} = ? AND ${DatabaseContract.AlurDistribusiColumns.COLUMN_STATUS} = ?",
+            arrayOf(id, status),
             null,
             null,
             null,

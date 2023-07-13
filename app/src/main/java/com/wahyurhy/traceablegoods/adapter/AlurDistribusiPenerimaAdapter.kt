@@ -6,9 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.alurdistribusi.Detail
+import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
 
-class AlurDistribusiPenerimaAdapter(private val detail: Detail, private val tahap: String) : RecyclerView.Adapter<AlurDistribusiPenerimaAdapter.ViewHolder>() {
+class AlurDistribusiPenerimaAdapter : RecyclerView.Adapter<AlurDistribusiPenerimaAdapter.ViewHolder>() {
+
+    var mResult = ArrayList<Result>()
+        set(mResult) {
+            if (mResult.size > 0) {
+                this.mResult.clear()
+            }
+            this.mResult.addAll(mResult)
+        }
 
     interface OnItemClickListener {
         fun onItemClick(itemView: View?, position: Int)
@@ -23,21 +31,21 @@ class AlurDistribusiPenerimaAdapter(private val detail: Detail, private val taha
         return ViewHolder(alurDistribusiView)
     }
 
-    override fun getItemCount(): Int = 1
+    override fun getItemCount(): Int = mResult.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val result = mResult[position]
         val produsen = holder.penerima
-        produsen.text = tahap
+        produsen.text = result.tahap
 
         val kategori = holder.kategori
-        kategori.text = detail.kategoriPanerima
+        kategori.text = result.kategoriPanerima
         val nama = holder.nama
-        nama.text  = detail.nama
+        nama.text  = result.nama
         val totalDiterima = holder.totalDitarima
-        totalDiterima.text = detail.totalYangDiterima
+        totalDiterima.text = result.totalYangDiterima
         val date = holder.date
-        date.text = detail.date
+        date.text = result.date
 
     }
 
