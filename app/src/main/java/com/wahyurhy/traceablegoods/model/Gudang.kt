@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.model.gudang
+package com.wahyurhy.traceablegoods.model
 
 
 import android.os.Parcelable
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Item(
+data class Gudang(
     @SerializedName("alamat_gudang")
     val alamatGudang: String,
     @SerializedName("gudang_id")

@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
+import com.wahyurhy.traceablegoods.model.AlurDistribusi
 
 class AlurDistribusiProdusenAdapter : RecyclerView.Adapter<AlurDistribusiProdusenAdapter.ViewHolder>() {
 
-    var mResult = ArrayList<Result>()
+    var mAlurDistribusi = ArrayList<AlurDistribusi>()
         set(mResult) {
             if (mResult.size > 0) {
-                this.mResult.clear()
+                this.mAlurDistribusi.clear()
             }
-            this.mResult.addAll(mResult)
+            this.mAlurDistribusi.addAll(mResult)
         }
 
     interface OnItemClickListener {
@@ -31,10 +31,10 @@ class AlurDistribusiProdusenAdapter : RecyclerView.Adapter<AlurDistribusiProduse
         return ViewHolder(alurDistribusiView)
     }
 
-    override fun getItemCount(): Int = mResult.size
+    override fun getItemCount(): Int = mAlurDistribusi.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val result = mResult[position]
+        val result = mAlurDistribusi[position]
         val produsen = holder.produsen
         produsen.text = result.tahap
         val nama = holder.nama

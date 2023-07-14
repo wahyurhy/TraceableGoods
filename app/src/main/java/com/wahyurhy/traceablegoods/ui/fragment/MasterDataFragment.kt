@@ -13,7 +13,7 @@ import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
 import com.wahyurhy.traceablegoods.adapter.DataInfoCardInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.datainfo.Item
+import com.wahyurhy.traceablegoods.model.DataInformasi
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_DATA_INFO
@@ -49,7 +49,7 @@ class MasterDataFragment : Fragment() {
             // proses ambil data
             loadDataInfoAsync()
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_DATA_INFO)
+            val list = savedInstanceState.getParcelableArrayList<DataInformasi>(EXTRA_DATA_INFO)
             val totalDataInfoExtra = savedInstanceState.getInt(EXTRA_TOTAL_DATA_INFO)
             Toast.makeText(requireContext(), "hei $totalDataInfoExtra", Toast.LENGTH_SHORT).show()
             if (list != null) {

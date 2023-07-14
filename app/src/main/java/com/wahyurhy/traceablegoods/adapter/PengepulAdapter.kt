@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.pengepul.Item
+import com.wahyurhy.traceablegoods.model.Pengepul
 
 class PengepulAdapter : RecyclerView.Adapter<PengepulAdapter.ViewHolder>() {
 
-    var mPengepul = ArrayList<Item>()
+    var mPengepul = ArrayList<Pengepul>()
         set(mPengepul) {
             if (mPengepul.size > 0) {
                 this.mPengepul.clear()

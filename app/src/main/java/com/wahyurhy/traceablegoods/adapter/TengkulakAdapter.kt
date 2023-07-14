@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.tengkulak.Item
+import com.wahyurhy.traceablegoods.model.Tengkulak
 
 class TengkulakAdapter : RecyclerView.Adapter<TengkulakAdapter.ViewHolder>() {
 
-    var mTengkulak = ArrayList<Item>()
+    var mTengkulak = ArrayList<Tengkulak>()
         set(mTengkulak) {
             if (mTengkulak.size > 0) {
                 this.mTengkulak.clear()

@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.datainfo.Item
+import com.wahyurhy.traceablegoods.model.DataInformasi
 import com.wahyurhy.traceablegoods.utils.Utils
 
 class DataInfoAdapter : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
 
-    var mDataInfo = ArrayList<Item>()
+    var mDataInfo = ArrayList<DataInformasi>()
         set(mDataInfo) {
             if (mDataInfo.size > 0) {
                 this.mDataInfo.clear()

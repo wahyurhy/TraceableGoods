@@ -2,27 +2,26 @@ package com.wahyurhy.traceablegoods.utils
 
 import android.database.Cursor
 import com.wahyurhy.traceablegoods.db.DatabaseContract
-import com.wahyurhy.traceablegoods.model.datainfo.Item
-import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
+import com.wahyurhy.traceablegoods.model.*
 
 object MappingHelper {
 
-    fun mapCursorToArrayListDataInfo(dataInfoCursor: Cursor?): ArrayList<Item> {
-        val dataInfoList = ArrayList<Item>()
+    fun mapCursorToArrayListDataInfo(dataInfoCursor: Cursor?): ArrayList<DataInformasi> {
+        val dataInfoList = ArrayList<DataInformasi>()
 
         dataInfoCursor?.apply {
             while (moveToNext()) {
                 val id = getInt(getColumnIndexOrThrow(DatabaseContract.DataInformasiColumns.COLUMN_ID))
                 val dataName = getString(getColumnIndexOrThrow(DatabaseContract.DataInformasiColumns.COLUMN_DATA_NAME))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.DataInformasiColumns.COLUMN_TIMESTAMP))
-                dataInfoList.add(Item(id, dataName, timeStamp))
+                dataInfoList.add(DataInformasi(id, dataName, timeStamp))
             }
         }
         return dataInfoList
     }
 
-    fun mapCursorToArrayListTransaksi(transaksiCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.transaksi.Item> {
-        val transaksiList = ArrayList<com.wahyurhy.traceablegoods.model.transaksi.Item>()
+    fun mapCursorToArrayListTransaksi(transaksiCursor: Cursor?): ArrayList<Transaksi> {
+        val transaksiList = ArrayList<Transaksi>()
 
         transaksiCursor?.apply {
             while (moveToNext()) {
@@ -34,14 +33,14 @@ object MappingHelper {
                 val produk = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK))
                 val produkBatch = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH))
                 val status = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_STATUS))
-                transaksiList.add(com.wahyurhy.traceablegoods.model.transaksi.Item(transaksiId, batchId, date, jenisProduk, penerima, produk, produkBatch, status))
+                transaksiList.add(Transaksi(transaksiId, batchId, date, jenisProduk, penerima, produk, produkBatch, status))
             }
         }
         return transaksiList
     }
 
-    fun mapCursorToArrayListAlurDistribusi(alurDistribusiCursor: Cursor?): ArrayList<Result> {
-        val alurDistribusiList = ArrayList<Result>()
+    fun mapCursorToArrayListAlurDistribusi(alurDistribusiCursor: Cursor?): ArrayList<AlurDistribusi> {
+        val alurDistribusiList = ArrayList<AlurDistribusi>()
 
         alurDistribusiCursor?.apply {
             while (moveToNext()) {
@@ -59,14 +58,14 @@ object MappingHelper {
                 val lokasiAsal = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL))
                 val lokasiTujuan = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN))
                 val date = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_DATE))
-                alurDistribusiList.add(Result(batchId, date, distributor, jenisProduk, kategoriPenerima, lokasiAsal, lokasiTujuan, nama, produk, produkBatch, status, tahap, totalYangDiDistribusikan, totalYangDiterima))
+                alurDistribusiList.add(AlurDistribusi(batchId, date, distributor, jenisProduk, kategoriPenerima, lokasiAsal, lokasiTujuan, nama, produk, produkBatch, status, tahap, totalYangDiDistribusikan, totalYangDiterima))
             }
         }
         return alurDistribusiList
     }
 
-    fun mapCursorToArrayListProduk(produkCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.produk.Item> {
-        val produkList = ArrayList<com.wahyurhy.traceablegoods.model.produk.Item>()
+    fun mapCursorToArrayListProduk(produkCursor: Cursor?): ArrayList<Produk> {
+        val produkList = ArrayList<Produk>()
 
         produkCursor?.apply {
             while (moveToNext()) {
@@ -79,14 +78,14 @@ object MappingHelper {
                 val tanggalKadaluarsa = getString(getColumnIndexOrThrow(DatabaseContract.ProdukColumns.COLUMN_TANGGAL_KADALUARSA))
                 val deskripsi = getString(getColumnIndexOrThrow(DatabaseContract.ProdukColumns.COLUMN_DESKRIPSI))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.ProdukColumns.COLUMN_TIMESTAMP))
-                produkList.add(com.wahyurhy.traceablegoods.model.produk.Item(deskripsi, jenisProduk, merek, namaProduk, noLot, produkId, tanggalKadaluarsa, tanggalProduksi, timeStamp))
+                produkList.add(Produk(deskripsi, jenisProduk, merek, namaProduk, noLot, produkId, tanggalKadaluarsa, tanggalProduksi, timeStamp))
             }
         }
         return produkList
     }
 
-    fun mapCursorToArrayListProdusen(produsenCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.produsen.Item> {
-        val produsenList = ArrayList<com.wahyurhy.traceablegoods.model.produsen.Item>()
+    fun mapCursorToArrayListProdusen(produsenCursor: Cursor?): ArrayList<Produsen> {
+        val produsenList = ArrayList<Produsen>()
 
         produsenCursor?.apply {
             while (moveToNext()) {
@@ -97,14 +96,14 @@ object MappingHelper {
                 val kontakProdusen = getString(getColumnIndexOrThrow(DatabaseContract.ProdusenColumns.COLUMN_KONTAK_PRODUSEN))
                 val noNPWP = getString(getColumnIndexOrThrow(DatabaseContract.ProdusenColumns.COLUMN_NO_NPWP))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.ProdusenColumns.COLUMN_TIMESTAMP))
-                produsenList.add(com.wahyurhy.traceablegoods.model.produsen.Item(alamatProdusen, kategoriProdusen, kontakProdusen, namaProdusen, noNPWP, produsenId, timeStamp))
+                produsenList.add(Produsen(alamatProdusen, kategoriProdusen, kontakProdusen, namaProdusen, noNPWP, produsenId, timeStamp))
             }
         }
         return produsenList
     }
 
-    fun mapCursorToArrayListDistributor(distributorCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.distributor.Item> {
-        val distributorList = ArrayList<com.wahyurhy.traceablegoods.model.distributor.Item>()
+    fun mapCursorToArrayListDistributor(distributorCursor: Cursor?): ArrayList<Distributor> {
+        val distributorList = ArrayList<Distributor>()
 
         distributorCursor?.apply {
             while (moveToNext()) {
@@ -113,14 +112,14 @@ object MappingHelper {
                 val alamatDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR))
                 val kontakDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_TIMESTAMP))
-                distributorList.add(com.wahyurhy.traceablegoods.model.distributor.Item(alamatDistributor, distributorId, kontakDistributor, namaDistributor, timeStamp))
+                distributorList.add(Distributor(alamatDistributor, distributorId, kontakDistributor, namaDistributor, timeStamp))
             }
         }
         return distributorList
     }
 
-    fun mapCursorToArrayListPenerima(penerimaCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.penerima.Item> {
-        val penerimaList = ArrayList<com.wahyurhy.traceablegoods.model.penerima.Item>()
+    fun mapCursorToArrayListPenerima(penerimaCursor: Cursor?): ArrayList<Penerima> {
+        val penerimaList = ArrayList<Penerima>()
 
         penerimaCursor?.apply {
             while (moveToNext()) {
@@ -130,14 +129,14 @@ object MappingHelper {
                 val alamatPenerima = getString(getColumnIndexOrThrow(DatabaseContract.PenerimaColumns.COLUMN_ALAMAT_PENERIMA))
                 val kontakPenerima = getString(getColumnIndexOrThrow(DatabaseContract.PenerimaColumns.COLUMN_KONTAK_PENERIMA))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.PenerimaColumns.COLUMN_TIMESTAMP))
-                penerimaList.add(com.wahyurhy.traceablegoods.model.penerima.Item(alamatPenerima, kategoriPenerima, kontakPenerima, namaPenerima, penerimaId, timeStamp))
+                penerimaList.add(Penerima(alamatPenerima, kategoriPenerima, kontakPenerima, namaPenerima, penerimaId, timeStamp))
             }
         }
         return penerimaList
     }
 
-    fun mapCursorToArrayListPenggiling(penggilingCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.penggiling.Item> {
-        val penggilingList = ArrayList<com.wahyurhy.traceablegoods.model.penggiling.Item>()
+    fun mapCursorToArrayListPenggiling(penggilingCursor: Cursor?): ArrayList<Penggiling> {
+        val penggilingList = ArrayList<Penggiling>()
 
         penggilingCursor?.apply {
             while (moveToNext()) {
@@ -146,14 +145,14 @@ object MappingHelper {
                 val alamatPenggiling = getString(getColumnIndexOrThrow(DatabaseContract.PenggilingColumns.COLUMN_ALAMAT_PENGGILING))
                 val kontakPenggiling = getString(getColumnIndexOrThrow(DatabaseContract.PenggilingColumns.COLUMN_KONTAK_PENGGILING))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.PenggilingColumns.COLUMN_TIMESTAMP))
-                penggilingList.add(com.wahyurhy.traceablegoods.model.penggiling.Item(alamatPenggiling, kontakPenggiling, namaPenggiling, penggilingId, timeStamp))
+                penggilingList.add(Penggiling(alamatPenggiling, kontakPenggiling, namaPenggiling, penggilingId, timeStamp))
             }
         }
         return penggilingList
     }
 
-    fun mapCursorToArrayListPengepul(pengepulCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.pengepul.Item> {
-        val pengepulList = ArrayList<com.wahyurhy.traceablegoods.model.pengepul.Item>()
+    fun mapCursorToArrayListPengepul(pengepulCursor: Cursor?): ArrayList<Pengepul> {
+        val pengepulList = ArrayList<Pengepul>()
 
         pengepulCursor?.apply {
             while (moveToNext()) {
@@ -162,14 +161,14 @@ object MappingHelper {
                 val alamatPengepul = getString(getColumnIndexOrThrow(DatabaseContract.PengepulColumns.COLUMN_ALAMAT_PENGEPUL))
                 val kontakPengepul = getString(getColumnIndexOrThrow(DatabaseContract.PengepulColumns.COLUMN_KONTAK_PENGEPUL))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.PengepulColumns.COLUMN_TIMESTAMP))
-                pengepulList.add(com.wahyurhy.traceablegoods.model.pengepul.Item(alamatPengepul, kontakPengepul, namaPengepul, pengepulId, timeStamp))
+                pengepulList.add(Pengepul(alamatPengepul, kontakPengepul, namaPengepul, pengepulId, timeStamp))
             }
         }
         return pengepulList
     }
 
-    fun mapCursorToArrayListGudang(gudangCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.gudang.Item> {
-        val gudangList = ArrayList<com.wahyurhy.traceablegoods.model.gudang.Item>()
+    fun mapCursorToArrayListGudang(gudangCursor: Cursor?): ArrayList<Gudang> {
+        val gudangList = ArrayList<Gudang>()
 
         gudangCursor?.apply {
             while (moveToNext()) {
@@ -178,14 +177,14 @@ object MappingHelper {
                 val alamatGudang = getString(getColumnIndexOrThrow(DatabaseContract.GudangColumns.COLUMN_ALAMAT_GUDANG))
                 val kontakGudang = getString(getColumnIndexOrThrow(DatabaseContract.GudangColumns.COLUMN_KONTAK_GUDANG))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.GudangColumns.COLUMN_TIMESTAMP))
-                gudangList.add(com.wahyurhy.traceablegoods.model.gudang.Item(alamatGudang, gudangId, kontakGudang, namaGudang, timeStamp))
+                gudangList.add(Gudang(alamatGudang, gudangId, kontakGudang, namaGudang, timeStamp))
             }
         }
         return gudangList
     }
 
-    fun mapCursorToArrayListTengkulak(tengkulakCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.tengkulak.Item> {
-        val tengkulakList = ArrayList<com.wahyurhy.traceablegoods.model.tengkulak.Item>()
+    fun mapCursorToArrayListTengkulak(tengkulakCursor: Cursor?): ArrayList<Tengkulak> {
+        val tengkulakList = ArrayList<Tengkulak>()
 
         tengkulakCursor?.apply {
             while (moveToNext()) {
@@ -194,14 +193,14 @@ object MappingHelper {
                 val alamatTengkulak = getString(getColumnIndexOrThrow(DatabaseContract.TengkulakColumns.COLUMN_ALAMAT_TENGKULAK))
                 val kontakTengkulak = getString(getColumnIndexOrThrow(DatabaseContract.TengkulakColumns.COLUMN_KONTAK_TENGKULAK))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.TengkulakColumns.COLUMN_TIMESTAMP))
-                tengkulakList.add(com.wahyurhy.traceablegoods.model.tengkulak.Item(alamatTengkulak, kontakTengkulak, namaTengkulak, tengkulakId, timeStamp))
+                tengkulakList.add(Tengkulak(alamatTengkulak, kontakTengkulak, namaTengkulak, tengkulakId, timeStamp))
             }
         }
         return tengkulakList
     }
 
-    fun mapCursorToArrayListPabrikPengolahan(pabrikCursor: Cursor?): ArrayList<com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item> {
-        val pabrikList = ArrayList<com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item>()
+    fun mapCursorToArrayListPabrikPengolahan(pabrikCursor: Cursor?): ArrayList<PabrikPengolahan> {
+        val pabrikList = ArrayList<PabrikPengolahan>()
 
         pabrikCursor?.apply {
             while (moveToNext()) {
@@ -210,7 +209,7 @@ object MappingHelper {
                 val alamatPabrikPengolahan = getString(getColumnIndexOrThrow(DatabaseContract.PabrikPengolahanColumns.COLUMN_ALAMAT_PABRIK))
                 val kontakPabrikPengolahan = getString(getColumnIndexOrThrow(DatabaseContract.PabrikPengolahanColumns.COLUMN_KONTAK_PABRIK))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.PabrikPengolahanColumns.COLUMN_TIMESTAMP))
-                pabrikList.add(com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item(alamatPabrikPengolahan, kontakPabrikPengolahan, namaPabrikPengolahan, pabrikId, timeStamp))
+                pabrikList.add(PabrikPengolahan(alamatPabrikPengolahan, kontakPabrikPengolahan, namaPabrikPengolahan, pabrikId, timeStamp))
             }
         }
         return pabrikList

@@ -10,6 +10,7 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.*
 import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.model.*
 import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper
@@ -114,55 +115,55 @@ class ListActivity : AppCompatActivity() {
         } else {
             when (nameList) {
                 Utils.PRODUK -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.produk.Item>(EXTRA_PRODUK)
+                    val list = savedInstanceState.getParcelableArrayList<Produk>(EXTRA_PRODUK)
                     if (list != null) {
                         adapterProduk.mProduk = list
                     }
                 }
                 Utils.PRODUSEN -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.produsen.Item>(EXTRA_PRODUSEN)
+                    val list = savedInstanceState.getParcelableArrayList<Produsen>(EXTRA_PRODUSEN)
                     if (list != null) {
                         adapterProdusen.mProdusen = list
                     }
                 }
                 Utils.DISTRIBUTOR -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.distributor.Item>(EXTRA_DISTRIBUTOR)
+                    val list = savedInstanceState.getParcelableArrayList<Distributor>(EXTRA_DISTRIBUTOR)
                     if (list != null) {
                         adapterDistributor.mDistributor = list
                     }
                 }
                 Utils.PENERIMA -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.penerima.Item>(EXTRA_PENERIMA)
+                    val list = savedInstanceState.getParcelableArrayList<Penerima>(EXTRA_PENERIMA)
                     if (list != null) {
                         adapterPenerima.mPenerima = list
                     }
                 }
                 Utils.PENGGILING -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.penggiling.Item>(EXTRA_PENGGILING)
+                    val list = savedInstanceState.getParcelableArrayList<Penggiling>(EXTRA_PENGGILING)
                     if (list != null) {
                         adapterPenggiling.mPenggiling = list
                     }
                 }
                 Utils.PENGEPUL -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.pengepul.Item>(EXTRA_PENGEPUL)
+                    val list = savedInstanceState.getParcelableArrayList<Pengepul>(EXTRA_PENGEPUL)
                     if (list != null) {
                         adapterPengepul.mPengepul = list
                     }
                 }
                 Utils.GUDANG -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.gudang.Item>(EXTRA_GUDANG)
+                    val list = savedInstanceState.getParcelableArrayList<Gudang>(EXTRA_GUDANG)
                     if (list != null) {
                         adapterGudang.mGudang = list
                     }
                 }
                 Utils.TENGKULAK -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.tengkulak.Item>(EXTRA_TENGKULAK)
+                    val list = savedInstanceState.getParcelableArrayList<Tengkulak>(EXTRA_TENGKULAK)
                     if (list != null) {
                         adapterTengkulak.mTengkulak = list
                     }
                 }
                 Utils.PABRIK_PENGOLAHAN -> {
-                    val list = savedInstanceState.getParcelableArrayList<com.wahyurhy.traceablegoods.model.pabrikpengolahan.Item>(EXTRA_PABRIK_PENGOLAHAN)
+                    val list = savedInstanceState.getParcelableArrayList<PabrikPengolahan>(EXTRA_PABRIK_PENGOLAHAN)
                     if (list != null) {
                         adapterPabrikPengolahan.mPabrikPengolahan = list
                     }

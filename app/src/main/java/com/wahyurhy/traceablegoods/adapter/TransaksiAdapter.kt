@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.transaksi.Item
+import com.wahyurhy.traceablegoods.model.Transaksi
 import com.wahyurhy.traceablegoods.utils.Utils.BIJIAN
 import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.DAGING
@@ -16,7 +16,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.SAYURAN
 
 class TransaksiAdapter : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
-    var mTransaksi = ArrayList<Item>()
+    var mTransaksi = ArrayList<Transaksi>()
         set(mTransaksi) {
             if (mTransaksi.size > 0) {
                 this.mTransaksi.clear()

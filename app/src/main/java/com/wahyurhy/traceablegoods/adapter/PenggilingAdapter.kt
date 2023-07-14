@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.penggiling.Item
+import com.wahyurhy.traceablegoods.model.Penggiling
 
 class PenggilingAdapter : RecyclerView.Adapter<PenggilingAdapter.ViewHolder>() {
 
-    var mPenggiling = ArrayList<Item>()
+    var mPenggiling = ArrayList<Penggiling>()
         set(mPenggiling) {
             if (mPenggiling.size > 0) {
                 this.mPenggiling.clear()

@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.penerima.Item
+import com.wahyurhy.traceablegoods.model.Penerima
 
 class PenerimaAdapter : RecyclerView.Adapter<PenerimaAdapter.ViewHolder>() {
 
-    var mPenerima = ArrayList<Item>()
+    var mPenerima = ArrayList<Penerima>()
         set(mPenerima) {
             if (mPenerima.size > 0) {
                 this.mPenerima.clear()

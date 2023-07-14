@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.distributor.Item
+import com.wahyurhy.traceablegoods.model.Distributor
 
 class DistributorAdapter : RecyclerView.Adapter<DistributorAdapter.ViewHolder>() {
 
-    var mDistributor = ArrayList<Item>()
+    var mDistributor = ArrayList<Distributor>()
         set(mDistributor) {
             if (mDistributor.size > 0) {
                 this.mDistributor.clear()

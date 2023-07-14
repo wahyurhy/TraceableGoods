@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.produk.Item
+import com.wahyurhy.traceablegoods.model.Produk
 
 class ProdukAdapter : RecyclerView.Adapter<ProdukAdapter.ViewHolder>() {
 
-    var mProduk = ArrayList<Item>()
+    var mProduk = ArrayList<Produk>()
         set(mProduk) {
             if (mProduk.size > 0) {
                 this.mProduk.clear()

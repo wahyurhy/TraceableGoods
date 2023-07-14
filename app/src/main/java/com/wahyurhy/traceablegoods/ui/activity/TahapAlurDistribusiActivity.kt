@@ -10,7 +10,7 @@ import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiProdusenAdapter
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapAlurDistribusiBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.alurdistribusi.Result
+import com.wahyurhy.traceablegoods.model.AlurDistribusi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
@@ -48,17 +48,17 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
             loadDataAlurDistribusiDistributor()
             loadDataAlurDistribusiPenerima()
         } else {
-            val listAlurProdusen = savedInstanceState.getParcelableArrayList<Result>(Utils.EXTRA_ALUR_PRODUSEN)
-            val listAlurDistributor = savedInstanceState.getParcelableArrayList<Result>(Utils.EXTRA_ALUR_DISTRIBUTOR)
-            val listAlurPenerima = savedInstanceState.getParcelableArrayList<Result>(Utils.EXTRA_ALUR_PENERIMA)
+            val listAlurProdusen = savedInstanceState.getParcelableArrayList<AlurDistribusi>(Utils.EXTRA_ALUR_PRODUSEN)
+            val listAlurDistributor = savedInstanceState.getParcelableArrayList<AlurDistribusi>(Utils.EXTRA_ALUR_DISTRIBUTOR)
+            val listAlurPenerima = savedInstanceState.getParcelableArrayList<AlurDistribusi>(Utils.EXTRA_ALUR_PENERIMA)
             if (listAlurProdusen != null) {
-                adapterProdusenAdapter.mResult = listAlurProdusen
+                adapterProdusenAdapter.mAlurDistribusi = listAlurProdusen
             }
             if (listAlurDistributor != null) {
-                adapterDistributorAdapter.mResult = listAlurDistributor
+                adapterDistributorAdapter.mAlurDistribusi = listAlurDistributor
             }
             if (listAlurPenerima != null) {
-                adapterPenerimaAdapter.mResult = listAlurPenerima
+                adapterPenerimaAdapter.mAlurDistribusi = listAlurPenerima
             }
         }
     }
@@ -96,7 +96,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 val alurDistribusi = deferredAlurDistribusi.await()
 
                 if (alurDistribusi.size > 0) {
-                    adapterProdusenAdapter.mResult = alurDistribusi
+                    adapterProdusenAdapter.mAlurDistribusi = alurDistribusi
                     adapterProdusenAdapter.notifyDataSetChanged()
 
                     adapterProdusenAdapter.setOnClickedListener(object : AlurDistribusiProdusenAdapter.OnItemClickListener {
@@ -110,7 +110,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                         }
                     })
                 } else {
-                    adapterProdusenAdapter.mResult = ArrayList()
+                    adapterProdusenAdapter.mAlurDistribusi = ArrayList()
                     Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -134,7 +134,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 val alurDistribusi = deferredAlurDistribusi.await()
 
                 if (alurDistribusi.size > 0) {
-                    adapterDistributorAdapter.mResult = alurDistribusi
+                    adapterDistributorAdapter.mAlurDistribusi = alurDistribusi
                     adapterDistributorAdapter.notifyDataSetChanged()
 
                     adapterDistributorAdapter.setOnClickedListener(object : AlurDistribusiAdapter.OnItemClickListener {
@@ -148,7 +148,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                         }
                     })
                 } else {
-                    adapterDistributorAdapter.mResult = ArrayList()
+                    adapterDistributorAdapter.mAlurDistribusi = ArrayList()
                     Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -173,7 +173,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 val alurDistribusi = deferredAlurDistribusi.await()
 
                 if (alurDistribusi.size > 0) {
-                    adapterPenerimaAdapter.mResult = alurDistribusi
+                    adapterPenerimaAdapter.mAlurDistribusi = alurDistribusi
                     adapterPenerimaAdapter.notifyDataSetChanged()
 
                     adapterPenerimaAdapter.setOnClickedListener(object : AlurDistribusiPenerimaAdapter.OnItemClickListener {
@@ -187,7 +187,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                         }
                     })
                 } else {
-                    adapterPenerimaAdapter.mResult = ArrayList()
+                    adapterPenerimaAdapter.mAlurDistribusi = ArrayList()
                     Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -198,9 +198,9 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(Utils.EXTRA_ALUR_PRODUSEN, adapterProdusenAdapter.mResult)
-        outState.putParcelableArrayList(Utils.EXTRA_ALUR_DISTRIBUTOR, adapterDistributorAdapter.mResult)
-        outState.putParcelableArrayList(Utils.EXTRA_ALUR_PENERIMA, adapterPenerimaAdapter.mResult)
+        outState.putParcelableArrayList(Utils.EXTRA_ALUR_PRODUSEN, adapterProdusenAdapter.mAlurDistribusi)
+        outState.putParcelableArrayList(Utils.EXTRA_ALUR_DISTRIBUTOR, adapterDistributorAdapter.mAlurDistribusi)
+        outState.putParcelableArrayList(Utils.EXTRA_ALUR_PENERIMA, adapterPenerimaAdapter.mAlurDistribusi)
     }
 
 

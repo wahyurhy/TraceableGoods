@@ -15,7 +15,7 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.transaksi.Item
+import com.wahyurhy.traceablegoods.model.Transaksi
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
 import com.wahyurhy.traceablegoods.utils.MappingHelper
@@ -64,7 +64,7 @@ class TransaksiFragment : Fragment() {
             // proses ambil data
             loadDataTransaksi(traceableGoodHelper)
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_TRANSAKSI)
+            val list = savedInstanceState.getParcelableArrayList<Transaksi>(EXTRA_TRANSAKSI)
             if (list != null) {
                 adapter.mTransaksi = list
             }
@@ -109,7 +109,7 @@ class TransaksiFragment : Fragment() {
         }
     }
 
-    private fun setTransaksiData(transaksi: ArrayList<Item>) {
+    private fun setTransaksiData(transaksi: ArrayList<Transaksi>) {
         if (transaksi.size > 0) {
             adapter.mTransaksi = transaksi
             adapter.notifyDataSetChanged()

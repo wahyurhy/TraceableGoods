@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.gudang.Item
+import com.wahyurhy.traceablegoods.model.Gudang
 
 class GudangAdapter : RecyclerView.Adapter<GudangAdapter.ViewHolder>() {
 
-    var mGudang = ArrayList<Item>()
+    var mGudang = ArrayList<Gudang>()
         set(mGudang) {
             if (mGudang.size > 0) {
                 this.mGudang.clear()

@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.model.alurdistribusi
+package com.wahyurhy.traceablegoods.model
 
 
 import android.os.Parcelable
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Result(
+data class AlurDistribusi(
     @SerializedName("batch_id")
     val batchId: String,
     @SerializedName("date")
