@@ -14,8 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapProdusenBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdukActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdusenActivity
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -26,6 +30,9 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
     private var isAllSet: Boolean = false
+    private var isTambahDataProdusenClicked: Boolean = false
+    private var isTambahDataProdukClicked: Boolean = false
+    private var isTambahDataDistributorClicked: Boolean = false
     private lateinit var adapterProdusen: ArrayAdapter<String>
     private lateinit var adapterProduk: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
@@ -68,8 +75,20 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 if (produsen.size > 0) {
                     produsen.forEach {
                         try {
-                            produsenList.add("${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}")
-                            mapProdusen["${it.namaProdusen} - ${it.noNpwp.substring(0, 3)}***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
+                            produsenList.add(
+                                "${it.namaProdusen} - ${
+                                    it.noNpwp.substring(
+                                        0,
+                                        3
+                                    )
+                                }***${it.noNpwp.substring(it.noNpwp.length - 3)}"
+                            )
+                            mapProdusen["${it.namaProdusen} - ${
+                                it.noNpwp.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
                         } catch (e: Exception) {
                             produsenList.add(it.namaProdusen)
                             mapProdusen[it.namaProdusen] = it.kategoriProdusen
@@ -137,7 +156,19 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val distributor = deferredDistributor.await()
                 if (distributor.size > 0) {
                     distributor.forEach {
-                        distributorList.add(it.namaDistributor)
+                        try {
+                            distributorList.add(
+                                "${it.namaDistributor} - ${
+                                    it.kontakDistributor.substring(
+                                        0,
+                                        3
+                                    )
+                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                            )
+                        } catch (e: Exception) {
+                            distributorList.add(it.namaDistributor)
+                            Log.e("TahapProdusenActivity", "Error: ${e.message}")
+                        }
                     }
                     adapterDistributor = ArrayAdapter<String>(
                         this@TahapProdusenActivity,
@@ -163,22 +194,62 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             finish()
         }
 
+        binding.btnTambahProdusen.setOnClickListener {
+            val intentTambahProdusen = Intent(this, TambahProdusenActivity::class.java).apply {
+                val namaProdusen = binding.edtNamaProdusen.text.toString()
+                putExtra(Utils.EXTRA_NAMA_PRODUSEN, namaProdusen)
+            }
+            startActivity(intentTambahProdusen)
+            isTambahDataProdusenClicked = true
+        }
+
+        binding.btnTambahProduk.setOnClickListener {
+            val intentTambahProduk = Intent(this, TambahProdukActivity::class.java).apply {
+                val namaProduk = binding.edtNamaProduk.text.toString()
+                putExtra(Utils.EXTRA_NAMA_PRODUK, namaProduk)
+            }
+            startActivity(intentTambahProduk)
+            isTambahDataProdukClicked = true
+        }
+
+        binding.btnTambahDistributor.setOnClickListener {
+            val intentTambahDistributor = Intent(this, TambahDistributorActivity::class.java).apply {
+                val namaDistributor = binding.edtNamaDistributor.text.toString()
+                putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
+            }
+            startActivity(intentTambahDistributor)
+            isTambahDataDistributorClicked = true
+        }
+
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
         binding.satuanSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
-                Utils.GUDANG -> startActivity(Intent(this, TahapGudangActivity::class.java))
-                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
-                Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
-                Utils.PENGEPUL -> startActivity(Intent(this, TahapPengepulActivity::class.java))
-                Utils.PABRIK_PENGOLAHAN -> startActivity(
-                    Intent(
-                        this,
-                        TahapPabrikPengolahanActivity::class.java
-                    )
-                )
-                Utils.PENERIMA -> startActivity(Intent(this, TahapPenerimaActivity::class.java))
+                Utils.GUDANG -> {
+                    startActivity(Intent(this, TahapGudangActivity::class.java))
+                    finish()
+                }
+                Utils.TENGKULAK -> {
+                    startActivity(Intent(this, TahapTengkulakActivity::class.java))
+                    finish()
+                }
+                Utils.PENGGILING -> {
+                    startActivity(Intent(this, TahapPenggilingActivity::class.java))
+                    finish()
+                }
+                Utils.PENGEPUL -> {
+                    startActivity(Intent(this, TahapPengepulActivity::class.java))
+                    finish()
+                }
+                Utils.PABRIK_PENGOLAHAN -> {
+                    startActivity(Intent(this, TahapPabrikPengolahanActivity::class.java))
+                    finish()
+                }
+                Utils.PENERIMA -> {
+                    startActivity(Intent(this, TahapPenerimaActivity::class.java))
+                    finish()
+                }
             }
         }
         binding.btnSimpan.setOnClickListener {
@@ -187,99 +258,123 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val status = selectedTahapSelanjutnya
                 val namaProdusen = edtNamaProdusen.text.toString()
                 val namaProduk = edtNamaProduk.text.toString().trim()
-                val tahap = mapProdusen[namaProdusen] ?: ""
-                val jenisProduk = mapProduk[namaProduk] ?: ""
+                val tahap = mapProdusen[namaProdusen] ?: Utils.PRODUSEN
+                val jenisProduk = mapProduk[namaProduk] ?: Utils.BIJIAN
                 val namaDistributor = edtNamaDistributor.text.toString().trim()
                 val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
                 val lokasiAsal = edtLokasiAsal.text.toString().trim()
                 val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
-                var batchId = ""
+                var batchId: String
                 try {
-                    batchId = namaProdusen.substring(0, 2) + generateDateBatchId() + namaProdusen.length + lokasiAsal.substring(0, 3).uppercase()
+                    batchId = namaProdusen.substring(0, 2) + generateDateBatchId() + namaProdusen.length + lokasiAsal.substring(0, 3).uppercase().replace("[,./]".toRegex(), "")
                 } catch (e: Exception) {
-                    batchId = namaProdusen + generateDateBatchId() + namaProdusen.length + lokasiAsal.uppercase()
+                    batchId =
+                        namaProdusen + generateDateBatchId() + namaProdusen.length + lokasiAsal.uppercase().replace("[,./]".toRegex(), "")
                     Log.e("TahapProdusenActivity", "Error: ${e.message}")
                 }
                 val produkBatch = "$namaProduk - $batchId"
 
-                namaProdusen.showErrorIfEmpty(
-                    binding.edtNamaProdusen,
-                    getString(R.string.tidak_boleh_kosong)
+                saveToDatabase(
+                    namaProdusen,
+                    namaProduk,
+                    namaDistributor,
+                    totalYangDiDistribusikan,
+                    lokasiAsal,
+                    lokasiTujuan,
+                    batchId,
+                    status,
+                    jenisProduk,
+                    produkBatch,
+                    tahap,
+                    satuan
                 )
-                namaProduk.showErrorIfEmpty(
-                    binding.edtNamaProduk,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                namaDistributor.showErrorIfEmpty(
-                    binding.edtNamaDistributor,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                totalYangDiDistribusikan.showErrorIfEmpty(
-                    binding.edtTotalYangDidistribusikan,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                lokasiAsal.showErrorIfEmpty(
-                    binding.edtLokasiAsal,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                lokasiTujuan.showErrorIfEmpty(
-                    binding.edtLokasiTujuan,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-
-                if (isAllSet) {
-                    val resultTransaksi = traceableGoodHelper.insertTransaksi(
-                        batchId,
-                        status,
-                        jenisProduk,
-                        namaProduk,
-                        produkBatch,
-                        selectedTahapSelanjutnya,
-                        getCurrentDate() + " WIB"
-                    )
-                    val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
-                        batchId,
-                        tahap,
-                        status,
-                        namaProdusen,
-                        namaProduk,
-                        produkBatch,
-                        jenisProduk,
-                        "",
-                        "",
-                        namaDistributor,
-                        "$totalYangDiDistribusikan $satuan",
-                        lokasiAsal,
-                        lokasiTujuan,
-                        getCurrentDate() + " WIB"
-                    )
-
-                    if (resultTransaksi > 0) {
-                        if (resultAlurTransaksi > 0) {
-                            Toast.makeText(
-                                this@TahapProdusenActivity,
-                                getString(R.string.berhasil_menambah_data, Utils.PRODUSEN),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            finish()
-                        }
-                    } else {
-                        Toast.makeText(
-                            this@TahapProdusenActivity,
-                            getString(R.string.gagal_menambah_data),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
             }
         }
     }
 
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
+    private fun saveToDatabase(
+        namaProdusen: String,
+        namaProduk: String,
+        namaDistributor: String,
+        totalYangDiDistribusikan: String,
+        lokasiAsal: String,
+        lokasiTujuan: String,
+        batchId: String,
+        status: String,
+        jenisProduk: String,
+        produkBatch: String,
+        tahap: String,
+        satuan: String
+    ) {
+        namaProdusen.showErrorIfEmpty(
+            binding.edtNamaProdusen,
+            getString(R.string.tidak_boleh_kosong)
+        )
+        namaProduk.showErrorIfEmpty(
+            binding.edtNamaProduk,
+            getString(R.string.tidak_boleh_kosong)
+        )
+        namaDistributor.showErrorIfEmpty(
+            binding.edtNamaDistributor,
+            getString(R.string.tidak_boleh_kosong)
+        )
+        totalYangDiDistribusikan.showErrorIfEmpty(
+            binding.edtTotalYangDidistribusikan,
+            getString(R.string.tidak_boleh_kosong)
+        )
+        lokasiAsal.showErrorIfEmpty(
+            binding.edtLokasiAsal,
+            getString(R.string.tidak_boleh_kosong)
+        )
+        lokasiTujuan.showErrorIfEmpty(
+            binding.edtLokasiTujuan,
+            getString(R.string.tidak_boleh_kosong)
+        )
 
-        return dateFormat.format(date)
+        if (isAllSet) {
+            val resultTransaksi = traceableGoodHelper.insertTransaksi(
+                batchId,
+                status,
+                jenisProduk,
+                namaProduk,
+                produkBatch,
+                selectedTahapSelanjutnya,
+                getCurrentDate() + " WIB"
+            )
+            val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
+                batchId,
+                tahap,
+                status,
+                namaProdusen,
+                namaProduk,
+                produkBatch,
+                jenisProduk,
+                "",
+                "",
+                namaDistributor,
+                "$totalYangDiDistribusikan $satuan",
+                lokasiAsal,
+                lokasiTujuan,
+                getCurrentDate() + " WIB"
+            )
+
+            if (resultTransaksi > 0) {
+                if (resultAlurTransaksi > 0) {
+                    Toast.makeText(
+                        this@TahapProdusenActivity,
+                        getString(R.string.berhasil_menambah_data, Utils.PRODUSEN),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                }
+            } else {
+                Toast.makeText(
+                    this@TahapProdusenActivity,
+                    getString(R.string.gagal_menambah_data),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun generateDateBatchId(): String {
@@ -334,6 +429,27 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isTambahDataProdusenClicked) {
+            produsenList = ArrayList<String>()
+            mapProdusen = mutableMapOf()
+            binding.edtNamaProdusen.setText("")
+            loadDataProdusen()
+        }
+        if (isTambahDataProdukClicked) {
+            produkList = ArrayList<String>()
+            mapProduk = mutableMapOf()
+            binding.edtNamaProduk.setText("")
+            loadDataProduk()
+        }
+        if (isTambahDataDistributorClicked) {
+            distributorList = ArrayList<String>()
+            binding.edtNamaDistributor.setText("")
+            loadDataDistributor()
+        }
     }
 
 }

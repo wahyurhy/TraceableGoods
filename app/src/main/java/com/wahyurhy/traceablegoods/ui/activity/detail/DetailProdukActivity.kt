@@ -19,8 +19,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NO_LOT_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_KADALUARSA_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_PRODUKSI_PRODUK
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 
 class DetailProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -155,13 +154,6 @@ class DetailProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 alertDialog.show()
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun initDataExtras() {

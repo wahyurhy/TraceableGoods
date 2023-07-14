@@ -797,8 +797,8 @@ class TraceableGoodHelper(context: Context) {
         return database.query(
             DATABASE_TABLE_TRANSAKSI,
             null,
-            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} LIKE ?",
+            arrayOf("%$id%"),
             null,
             null,
             null,

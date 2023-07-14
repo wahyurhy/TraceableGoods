@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiProdusenAdapter
-import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapAlurDistribusiBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.alurdistribusi.Result

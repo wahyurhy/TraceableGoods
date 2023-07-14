@@ -10,8 +10,7 @@ import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PABRIK_PENGOLAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.PABRIK_PENGOLAHAN_ID
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 
 class TambahPabrikPengolahanActivity : AppCompatActivity() {
 
@@ -68,13 +67,6 @@ class TambahPabrikPengolahanActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {

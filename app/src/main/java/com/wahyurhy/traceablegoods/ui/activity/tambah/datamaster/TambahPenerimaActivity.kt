@@ -12,8 +12,7 @@ import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PENERIMA
 import com.wahyurhy.traceablegoods.utils.Utils.PENERIMA_ID
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 
 class TambahPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -75,13 +74,6 @@ class TambahPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 }
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {

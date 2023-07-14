@@ -16,11 +16,10 @@ import com.wahyurhy.traceablegoods.databinding.ActivityTahapPabrikPengolahanBind
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -237,13 +236,6 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                 }
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {

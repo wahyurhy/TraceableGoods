@@ -8,12 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK_ID
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 
 class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -33,7 +31,13 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val produk = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK) ?: ""
+        binding.edtNamaProduk.setText(produk)
     }
 
     private fun initClickListener() {
@@ -76,13 +80,6 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 }
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String) {

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +32,8 @@ import kotlinx.coroutines.launch
 
 class TransaksiFragment : Fragment() {
 
+    private lateinit var traceableGoodHelper: TraceableGoodHelper
+
     private lateinit var adapter: TransaksiAdapter
 
     private lateinit var binding: FragmentTransaksiBinding
@@ -45,14 +49,18 @@ class TransaksiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        traceableGoodHelper = TraceableGoodHelper.getInstance(requireActivity().applicationContext)
+        traceableGoodHelper.open()
+
         setAdapter()
 
         initClickListener()
         hideFloatingActionButton()
+        setSearchViewListener(traceableGoodHelper)
 
         if (savedInstanceState == null) {
             // proses ambil data
-            loadDataTransaksi()
+            loadDataTransaksi(traceableGoodHelper)
         } else {
             val list = savedInstanceState.getParcelableArrayList<Item>(EXTRA_TRANSAKSI)
             if (list != null) {
@@ -61,12 +69,32 @@ class TransaksiFragment : Fragment() {
         }
     }
 
-    private fun loadDataTransaksi() {
+    private fun setSearchViewListener(traceableGoodHelper: TraceableGoodHelper) {
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener,
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText != "") {
+                    val cursor = traceableGoodHelper.queryTransaksiById(newText.trim())
+                    val transaksiCursor = MappingHelper.mapCursorToArrayListTransaksi(cursor)
+
+                    val transaksi = transaksiCursor
+
+                    setTransaksiData(transaksi)
+                } else {
+                    loadDataTransaksi(traceableGoodHelper)
+                }
+                return true
+            }
+        })
+    }
+
+    private fun loadDataTransaksi(traceableGoodHelper: TraceableGoodHelper) {
         lifecycleScope.launch {
             binding.apply {
-                val traceableGoodHelper = TraceableGoodHelper.getInstance(requireActivity().applicationContext)
-                traceableGoodHelper.open()
-
                 val deferredTransaksi = async(Dispatchers.IO) {
                     val cursor = traceableGoodHelper.queryAllTransaksi()
                     MappingHelper.mapCursorToArrayListTransaksi(cursor)
@@ -74,118 +102,173 @@ class TransaksiFragment : Fragment() {
 
                 val transaksi = deferredTransaksi.await()
 
-                if (transaksi.size > 0) {
-                    adapter.mTransaksi = transaksi
-                    adapter.notifyDataSetChanged()
-
-                    adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
-                        override fun onItemClick(itemView: View?, position: Int) {
-                            val batchId = transaksi[position].batchId
-                            Toast.makeText(
-                                requireContext(),
-                                "$batchId was clicked!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            when (transaksi[position].status) {
-                                getString(R.string.selesai) -> {
-                                    val intent = Intent(requireContext(), TahapAlurDistribusiActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                        putExtra(EXTRA_STATUS_TRANSAKSI, transaksi[position].status)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.gudang) -> {
-                                    val intent = Intent(requireContext(), TahapGudangActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.tengkulak) -> {
-                                    val intent = Intent(requireContext(), TahapTengkulakActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.penggiling) -> {
-                                    val intent = Intent(requireContext(), TahapPenggilingActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.pengepul) -> {
-                                    val intent = Intent(requireContext(), TahapPengepulActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.pabrik_pengolahan) -> {
-                                    val intent = Intent(requireContext(), TahapPabrikPengolahanActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                getString(R.string.penerima) -> {
-                                    val intent = Intent(requireContext(), TahapPenerimaActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    val intent = Intent(requireContext(), TahapProdusenActivity::class.java)
-                                    intent.apply {
-                                        putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
-                                        putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
-                                        putExtra(EXTRA_JENIS_PRODUK_TRANSAKSI, transaksi[position].jenisProduk)
-                                        putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
-                                        putExtra(EXTRA_PRODUK_BATCH_TRANSAKSI, transaksi[position].produkBatch)
-                                    }
-                                    startActivity(intent)
-                                }
-                            }
-                        }
-                    })
-                } else {
-                    adapter.mTransaksi = ArrayList()
-                    Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                traceableGoodHelper.close()
+                setTransaksiData(transaksi)
             }
+        }
+    }
+
+    private fun setTransaksiData(transaksi: ArrayList<Item>) {
+        if (transaksi.size > 0) {
+            adapter.mTransaksi = transaksi
+            adapter.notifyDataSetChanged()
+
+            adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val batchId = transaksi[position].batchId
+                    Toast.makeText(
+                        requireContext(),
+                        "$batchId was clicked!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    when (transaksi[position].status) {
+                        getString(R.string.selesai) -> {
+                            val intent =
+                                Intent(requireContext(), TahapAlurDistribusiActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                                putExtra(EXTRA_STATUS_TRANSAKSI, transaksi[position].status)
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.gudang) -> {
+                            val intent = Intent(requireContext(), TahapGudangActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.tengkulak) -> {
+                            val intent =
+                                Intent(requireContext(), TahapTengkulakActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.penggiling) -> {
+                            val intent =
+                                Intent(requireContext(), TahapPenggilingActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.pengepul) -> {
+                            val intent = Intent(requireContext(), TahapPengepulActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.pabrik_pengolahan) -> {
+                            val intent =
+                                Intent(requireContext(), TahapPabrikPengolahanActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        getString(R.string.penerima) -> {
+                            val intent = Intent(requireContext(), TahapPenerimaActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                        else -> {
+                            val intent = Intent(requireContext(), TahapProdusenActivity::class.java)
+                            intent.apply {
+                                putExtra(EXTRA_TRANSAKSI_ID, transaksi[position].transaksiId)
+                                putExtra(EXTRA_BATCH_ID, transaksi[position].batchId)
+                                putExtra(
+                                    EXTRA_JENIS_PRODUK_TRANSAKSI,
+                                    transaksi[position].jenisProduk
+                                )
+                                putExtra(EXTRA_NAMA_PRODUK_TRANSAKSI, transaksi[position].produk)
+                                putExtra(
+                                    EXTRA_PRODUK_BATCH_TRANSAKSI,
+                                    transaksi[position].produkBatch
+                                )
+                            }
+                            startActivity(intent)
+                        }
+                    }
+                }
+            })
+        } else {
+            adapter.mTransaksi = ArrayList()
+            Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -222,6 +305,11 @@ class TransaksiFragment : Fragment() {
 
     fun setScrollListener(listener: ScrollListener) {
         scrollListener = listener
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        traceableGoodHelper.close()
     }
 
 }

@@ -10,8 +10,7 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdusenBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 
 class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -31,7 +30,13 @@ class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val produsen = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUSEN) ?: ""
+        binding.edtNamaProdusen.setText(produsen)
     }
 
     private fun initClickListener() {
@@ -91,13 +96,6 @@ class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
     private fun fitStatusBar() {
         Utils.setSystemBarFitWindow(this)
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {

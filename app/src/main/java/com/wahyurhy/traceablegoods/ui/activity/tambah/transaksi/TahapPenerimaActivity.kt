@@ -17,11 +17,10 @@ import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -109,7 +108,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
                 val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-                val kategoriPenerima = mapPenerima[namaPenerima] ?: ""
+                val kategoriPenerima = mapPenerima[namaPenerima] ?: tahap
 
                 namaPenerima.showErrorIfEmpty(
                     binding.edtNamaPenerima,
@@ -128,7 +127,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         jenisProdukExtra,
                         namaProdukExtra,
                         produkBatchExtra,
-                        tahap,
+                        kategoriPenerima,
                         getCurrentDate() + " WIB"
                     )
                     val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
@@ -155,7 +154,18 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                                 getString(R.string.berhasil_menambah_data, Utils.PABRIK_PENGOLAHAN),
                                 Toast.LENGTH_SHORT
                             ).show()
-                            startActivity(Intent(this@TahapPenerimaActivity, TahapAlurDistribusiActivity::class.java))
+                            val intent = Intent(this@TahapPenerimaActivity, TahapAlurDistribusiActivity::class.java).apply {
+                                val batchId = intent.getStringExtra(Utils.EXTRA_BATCH_ID) ?: ""
+                                val jenisProduk = intent.getStringExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI) ?: ""
+                                val namaProduk = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+                                val produkBatch = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
+                                putExtra(Utils.EXTRA_BATCH_ID, batchId)
+                                putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProduk)
+                                putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProduk)
+                                putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatch)
+                                putExtra(Utils.EXTRA_STATUS_TRANSAKSI, status)
+                            }
+                            startActivity(intent)
                             finish()
                         }
                     } else {
@@ -168,13 +178,6 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 }
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", Locale.getDefault())
-        val date = Date()
-
-        return dateFormat.format(date)
     }
 
     private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {

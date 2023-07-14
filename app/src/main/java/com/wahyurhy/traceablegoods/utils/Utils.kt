@@ -2,6 +2,8 @@ package com.wahyurhy.traceablegoods.utils
 
 import android.app.Activity
 import android.view.WindowManager
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
 
@@ -111,5 +113,13 @@ object Utils {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             )
         }
+    }
+
+    fun getCurrentDate(): String {
+        val locale = Locale("id", "ID")
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy - HH:mm", locale)
+        val date = Date()
+
+        return dateFormat.format(date)
     }
 }
