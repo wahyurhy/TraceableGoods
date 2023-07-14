@@ -84,6 +84,16 @@ class ListActivity : AppCompatActivity() {
 
     private var nameList = ""
 
+    private var isAdapterProdukClicked: Boolean = false
+    private var isAdapterProdusenClicked: Boolean = false
+    private var isAdapterDistributorClicked: Boolean = false
+    private var isAdapterPenerimaClicked: Boolean = false
+    private var isAdapterPenggilingClicked: Boolean = false
+    private var isAdapterPengepulClicked: Boolean = false
+    private var isAdapterGudangClicked: Boolean = false
+    private var isAdapterTengkulakClicked: Boolean = false
+    private var isAdapterPabrikPengolahanClicked: Boolean = false
+
     private lateinit var binding: ActivityListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -217,6 +227,7 @@ class ListActivity : AppCompatActivity() {
                         val produk = deferredProduk.await()
                         if (produk.size > 0) {
                             adapterProduk.mProduk = produk
+                            adapterProduk.notifyDataSetChanged()
                             adapterProduk.setOnClickedListener(object : ProdukAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailProduk = Intent(this@ListActivity, DetailProdukActivity::class.java)
@@ -231,6 +242,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_DESKRIPSI_PRODUK, produk[position].deskripsi)
                                     }
                                     startActivity(intentDetailProduk)
+                                    isAdapterProdukClicked = true
                                 }
                             })
                         } else {
@@ -248,6 +260,7 @@ class ListActivity : AppCompatActivity() {
                         val produsen = deferredProdusen.await()
                         if (produsen.size > 0) {
                             adapterProdusen.mProdusen = produsen
+                            adapterProdusen.notifyDataSetChanged()
                             adapterProdusen.setOnClickedListener(object : ProdusenAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailProdusen = Intent(this@ListActivity, DetailProdusenActivity::class.java)
@@ -260,6 +273,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_PRODUSEN, produsen[position].alamatProdusen)
                                     }
                                     startActivity(intentDetailProdusen)
+                                    isAdapterProdusenClicked = true
                                 }
                             })
                         } else {
@@ -277,6 +291,7 @@ class ListActivity : AppCompatActivity() {
                         val distributor = deferredDistributor.await()
                         if (distributor.size > 0) {
                             adapterDistributor.mDistributor = distributor
+                            adapterDistributor.notifyDataSetChanged()
                             adapterDistributor.setOnClickedListener(object : DistributorAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailDistributor = Intent(this@ListActivity, DetailDistributorActivity::class.java)
@@ -287,6 +302,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_DISTRIBUTOR, distributor[position].alamatDistributor)
                                     }
                                     startActivity(intentDetailDistributor)
+                                    isAdapterDistributorClicked = true
                                 }
                             })
                         } else {
@@ -304,6 +320,7 @@ class ListActivity : AppCompatActivity() {
                         val penerima = deferredPenerima.await()
                         if (penerima.size > 0) {
                             adapterPenerima.mPenerima = penerima
+                            adapterPenerima.notifyDataSetChanged()
                             adapterPenerima.setOnClickedListener(object : PenerimaAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPenerima = Intent(this@ListActivity, DetailPenerimaActivity::class.java)
@@ -315,6 +332,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_PENERIMA, penerima[position].alamatPenerima)
                                     }
                                     startActivity(intentDetailPenerima)
+                                    isAdapterPenerimaClicked = true
                                 }
                             })
                         } else {
@@ -332,6 +350,7 @@ class ListActivity : AppCompatActivity() {
                         val penggiling = deferredPenggiling.await()
                         if (penggiling.size > 0) {
                             adapterPenggiling.mPenggiling = penggiling
+                            adapterPenggiling.notifyDataSetChanged()
                             adapterPenggiling.setOnClickedListener(object : PenggilingAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPenggiling = Intent(this@ListActivity, DetailPenggilingActivity::class.java)
@@ -342,6 +361,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_PENGGILING, penggiling[position].alamatPenggiling)
                                     }
                                     startActivity(intentDetailPenggiling)
+                                    isAdapterPenggilingClicked = true
                                 }
                             })
                         } else {
@@ -359,6 +379,7 @@ class ListActivity : AppCompatActivity() {
                         val pengepul = deferredPengepul.await()
                         if (pengepul.size > 0) {
                             adapterPengepul.mPengepul = pengepul
+                            adapterPengepul.notifyDataSetChanged()
                             adapterPengepul.setOnClickedListener(object : PengepulAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPengepul = Intent(this@ListActivity, DetailPengepulActivity::class.java)
@@ -369,6 +390,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_PENGEPUL, pengepul[position].alamatPengepul)
                                     }
                                     startActivity(intentDetailPengepul)
+                                    isAdapterPengepulClicked = true
                                 }
                             })
                         } else {
@@ -386,6 +408,7 @@ class ListActivity : AppCompatActivity() {
                         val gudang = deferredGudang.await()
                         if (gudang.size > 0) {
                             adapterGudang.mGudang = gudang
+                            adapterGudang.notifyDataSetChanged()
                             adapterGudang.setOnClickedListener(object : GudangAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailGudang = Intent(this@ListActivity, DetailGudangActivity::class.java)
@@ -396,6 +419,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_GUDANG, gudang[position].alamatGudang)
                                     }
                                     startActivity(intentDetailGudang)
+                                    isAdapterGudangClicked = true
                                 }
                             })
                         } else {
@@ -413,6 +437,7 @@ class ListActivity : AppCompatActivity() {
                         val tengkulak = deferredTengkulak.await()
                         if (tengkulak.size > 0) {
                             adapterTengkulak.mTengkulak = tengkulak
+                            adapterTengkulak.notifyDataSetChanged()
                             adapterTengkulak.setOnClickedListener(object : TengkulakAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailTengkulak = Intent(this@ListActivity, DetailTengkulakActivity::class.java)
@@ -423,6 +448,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_TENGKULAK, tengkulak[position].alamatTengkulak)
                                     }
                                     startActivity(intentDetailTengkulak)
+                                    isAdapterTengkulakClicked = true
                                 }
                             })
                         } else {
@@ -440,6 +466,7 @@ class ListActivity : AppCompatActivity() {
                         val pabrikPengolahan = deferredPabrikPengolahan.await()
                         if (pabrikPengolahan.size > 0) {
                             adapterPabrikPengolahan.mPabrikPengolahan = pabrikPengolahan
+                            adapterPabrikPengolahan.notifyDataSetChanged()
                             adapterPabrikPengolahan.setOnClickedListener(object : PabrikPengolahanAdapter.OnItemClickListener {
                                 override fun onItemClick(itemView: View?, position: Int) {
                                     val intentDetailPabrikPengolahan = Intent(this@ListActivity, DetailPabrikPengolahanActivity::class.java)
@@ -450,6 +477,7 @@ class ListActivity : AppCompatActivity() {
                                         putExtra(EXTRA_ALAMAT_PABRIK_PENGOLAHAN, pabrikPengolahan[position].alamatPabrikPengolahan)
                                     }
                                     startActivity(intentDetailPabrikPengolahan)
+                                    isAdapterProdukClicked = true
                                 }
                             })
                         } else {
@@ -509,6 +537,46 @@ class ListActivity : AppCompatActivity() {
             Utils.PABRIK_PENGOLAHAN -> {
                 outState.putParcelableArrayList(EXTRA_PABRIK_PENGOLAHAN, adapterPabrikPengolahan.mPabrikPengolahan)
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isAdapterProdukClicked) {
+            adapterProduk.mProduk = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterProdusenClicked) {
+            adapterProdusen.mProdusen = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterDistributorClicked) {
+            adapterDistributor.mDistributor = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterPenerimaClicked) {
+            adapterPenerima.mPenerima = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterPenggilingClicked) {
+            adapterPenggiling.mPenggiling = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterPengepulClicked) {
+            adapterPengepul.mPengepul = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterGudangClicked) {
+            adapterGudang.mGudang = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterTengkulakClicked) {
+            adapterTengkulak.mTengkulak = ArrayList()
+            loadData(nameList)
+        }
+        if (isAdapterPabrikPengolahanClicked) {
+            adapterPabrikPengolahan.mPabrikPengolahan = ArrayList()
+            loadData(nameList)
         }
     }
 }

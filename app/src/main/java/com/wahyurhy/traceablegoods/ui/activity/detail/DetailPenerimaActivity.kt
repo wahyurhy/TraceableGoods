@@ -141,6 +141,8 @@ class DetailPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         val kontakPenerima = intent.getStringExtra(Utils.EXTRA_KONTAK_PENERIMA)
         val alamatPenerima = intent.getStringExtra(Utils.EXTRA_ALAMAT_PENERIMA)
 
+        selectedKategoriPenerima = kategoriPenerima ?: getString(R.string.tokopengecer)
+
 
         val selectedPosition = kategoriPenerimaArray.indexOf(kategoriPenerima)
         Toast.makeText(this, "kategori penerima: $penerimaId", Toast.LENGTH_SHORT).show()

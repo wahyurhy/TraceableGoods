@@ -168,6 +168,8 @@ class DetailProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         var tanggalKadaluarsaProduk = intent.getStringExtra(EXTRA_TGL_KADALUARSA_PRODUK)
         var deskripsiProduk = intent.getStringExtra(EXTRA_DESKRIPSI_PRODUK)
 
+        selectedJenisProduk = jenisProduk ?: Utils.BIJIAN
+
         merekProduk = merekProduk.orDefault(getString(R.string.belum_ada))
         noLotProduk = noLotProduk.orDefault(getString(R.string.belum_ada))
         tanggalProduksiProduk = tanggalProduksiProduk.orDefault(getString(R.string.belum_ada))

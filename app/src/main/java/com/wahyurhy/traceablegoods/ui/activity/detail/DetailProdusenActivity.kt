@@ -139,6 +139,8 @@ class DetailProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         val kontakProdusen = intent.getStringExtra(Utils.EXTRA_KONTAK_PRODUSEN)
         val alamatProdusen = intent.getStringExtra(Utils.EXTRA_ALAMAT_PRODUSEN)
 
+        selectedKategoriProdusen = kategoriProdusen ?: getString(R.string.petani)
+
 
         val selectedPosition = kategoriProdusenArray.indexOf(kategoriProdusen)
         Toast.makeText(this, "kategori produsen: $produsenId", Toast.LENGTH_SHORT).show()

@@ -178,6 +178,8 @@
     <string name="pengepul">Pengepul</string>
     <string name="pabrik_pengolahan">Pabrik Pengolahan</string>
     <string name="penerima">Penerima</string>
+    <string name="petani">Petani</string>
+    <string name="tokopengecer">Toko / Pengecer</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

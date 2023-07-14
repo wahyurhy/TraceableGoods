@@ -29,6 +29,7 @@ class MasterDataFragment : Fragment() {
     private lateinit var adapterCardInfo: DataInfoCardInfoAdapter
 
     private var totalDataInfo = 0
+    private var isFirstLaunched = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -182,6 +183,16 @@ class MasterDataFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(EXTRA_DATA_INFO, adapter.mDataInfo)
         outState.putInt(EXTRA_TOTAL_DATA_INFO, totalDataInfo)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstLaunched) {
+            adapter.mDataInfo = ArrayList()
+            adapterCardInfo.totalDataInfo = 0
+            loadDataInfoAsync()
+        }
+        isFirstLaunched = true
     }
 
     companion object {
