@@ -88,17 +88,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.ProdukColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.ProdukColumns.COLUMN_NAMA_PRODUK} ASC",
             null
         )
     }
 
-    fun queryProdukById(id: String): Cursor {
+    fun queryProdukByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PRODUK,
             null,
-            "${DatabaseContract.ProdukColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.ProdukColumns.COLUMN_NAMA_PRODUK} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -177,17 +177,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.ProdusenColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.ProdusenColumns.COLUMN_NAMA_PRODUSEN} ASC",
             null
         )
     }
 
-    fun queryProdusenById(id: String): Cursor {
+    fun queryProdusenByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PRODUSEN,
             null,
-            "${DatabaseContract.ProdusenColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.ProdusenColumns.COLUMN_NAMA_PRODUSEN} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -258,17 +258,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.DistributorColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR} ASC",
             null
         )
     }
 
-    fun queryDistributorById(id: String): Cursor {
+    fun queryDistributorByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_DISTRIBUTOR,
             null,
-            "${DatabaseContract.DistributorColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -331,17 +331,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.PenerimaColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.PenerimaColumns.COLUMN_NAMA_PENERIMA} ASC",
             null
         )
     }
 
-    fun queryPenerimaById(id: String): Cursor {
+    fun queryPenerimaByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PENERIMA,
             null,
-            "${DatabaseContract.PenerimaColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.PenerimaColumns.COLUMN_NAMA_PENERIMA} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -408,17 +408,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.PenggilingColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.PenggilingColumns.COLUMN_NAMA_PENGGILING} ASC",
             null
         )
     }
 
-    fun queryPenggilingById(id: String): Cursor {
+    fun queryPenggilingByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PENGGILING,
             null,
-            "${DatabaseContract.PenggilingColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.PenggilingColumns.COLUMN_NAMA_PENGGILING} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -481,17 +481,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.PengepulColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.PengepulColumns.COLUMN_NAMA_PENGEPUL} ASC",
             null
         )
     }
 
-    fun queryPengepulById(id: String): Cursor {
+    fun queryPengepulByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PENGEPUL,
             null,
-            "${DatabaseContract.PengepulColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.PengepulColumns.COLUMN_NAMA_PENGEPUL} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -554,17 +554,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.GudangColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.GudangColumns.COLUMN_NAMA_GUDANG} ASC",
             null
         )
     }
 
-    fun queryGudangById(id: String): Cursor {
+    fun queryGudangByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_GUDANG,
             null,
-            "${DatabaseContract.GudangColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.GudangColumns.COLUMN_NAMA_GUDANG} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -627,17 +627,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.TengkulakColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.TengkulakColumns.COLUMN_NAMA_TENGKULAK} ASC",
             null
         )
     }
 
-    fun queryTengkulakById(id: String): Cursor {
+    fun queryTengkulakByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_TENGKULAK,
             null,
-            "${DatabaseContract.TengkulakColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.TengkulakColumns.COLUMN_NAMA_TENGKULAK} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
@@ -700,17 +700,17 @@ class TraceableGoodHelper(context: Context) {
             null,
             null,
             null,
-            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} ASC",
+            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_NAMA_PABRIK} ASC",
             null
         )
     }
 
-    fun queryPabrikPengolahanById(id: String): Cursor {
+    fun queryPabrikPengolahanByName(name: String): Cursor {
         return database.query(
             DATABASE_TABLE_PABRIK_PENGOLAHAN,
             null,
-            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_ID} = ?",
-            arrayOf(id),
+            "${DatabaseContract.PabrikPengolahanColumns.COLUMN_NAMA_PABRIK} LIKE ?",
+            arrayOf("%$name%"),
             null,
             null,
             null,
