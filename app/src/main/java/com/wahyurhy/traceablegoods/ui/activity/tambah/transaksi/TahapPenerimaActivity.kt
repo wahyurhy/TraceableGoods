@@ -98,7 +98,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             binding.apply {
                 val satuanYangDiterima = selectedSatuanYangDiterima
                 val status = getString(R.string.selesai)
-                val namaPenerima = edtNamaPenerima.text.toString()
+                val namaPenerima = edtNamaPenerima.text.toString().trim()
                 val tahap = getString(R.string.penerima)
                 val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
 

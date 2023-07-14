@@ -36,6 +36,8 @@ class TransaksiFragment : Fragment() {
 
     private lateinit var adapter: TransaksiAdapter
 
+    private var isFirstLaunched = false
+
     private lateinit var binding: FragmentTransaksiBinding
 
     override fun onCreateView(
@@ -310,6 +312,15 @@ class TransaksiFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         traceableGoodHelper.close()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstLaunched) {
+            adapter.mTransaksi = ArrayList()
+            loadDataTransaksi(traceableGoodHelper)
+        }
+        isFirstLaunched = true
     }
 
 }

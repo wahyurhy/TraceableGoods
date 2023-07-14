@@ -98,7 +98,19 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 val distributor = deferredDistributor.await()
                 if (distributor.size > 0) {
                     distributor.forEach {
-                        distributorList.add(it.namaDistributor)
+                        try {
+                            distributorList.add(
+                                "${it.namaDistributor} - ${
+                                    it.kontakDistributor.substring(
+                                        0,
+                                        3
+                                    )
+                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                            )
+                        } catch (e: Exception) {
+                            distributorList.add(it.namaDistributor)
+                            Log.e("TahapPengepulActivity", "Error: ${e.message}")
+                        }
                     }
                     adapterDistributor = ArrayAdapter<String>(
                         this@TahapPengepulActivity,
@@ -130,9 +142,15 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
-                Utils.GUDANG -> startActivity(Intent(this, TahapGudangActivity::class.java))
-                Utils.TENGKULAK -> startActivity(Intent(this, TahapTengkulakActivity::class.java))
-                Utils.PENGGILING -> startActivity(Intent(this, TahapPenggilingActivity::class.java))
+                Utils.GUDANG -> {
+                    simpanData(Utils.GUDANG)
+                }
+                Utils.TENGKULAK -> {
+                    simpanData(Utils.TENGKULAK)
+                }
+                Utils.PENGGILING -> {
+                    simpanData(Utils.PENGGILING)
+                }
                 Utils.PENGEPUL -> {
                     Toast.makeText(
                         this,
@@ -140,99 +158,168 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                Utils.PABRIK_PENGOLAHAN -> startActivity(Intent(this, TahapPabrikPengolahanActivity::class.java))
-                Utils.PENERIMA -> startActivity(Intent(this, TahapPenerimaActivity::class.java))
+                Utils.PABRIK_PENGOLAHAN -> {
+                    simpanData(Utils.PABRIK_PENGOLAHAN)
+                }
+                Utils.PENERIMA -> {
+                    simpanData(Utils.PENERIMA)
+                }
             }
         }
         binding.btnSimpan.setOnClickListener {
-            binding.apply {
-                val satuanYangDiterima = selectedSatuanYangDiterima
-                val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
-                val status = selectedTahapSelanjutnya
-                val namaPengepul = edtNamaPengepul.text.toString()
-                val tahap = getString(R.string.pengepul)
-                val namaDistributorSelanjutnya =
-                    edtNamaDistributorSelanjutnya.text.toString().trim()
-                val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
-                val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
-                val lokasiAsal = edtLokasiAsal.text.toString().trim()
-                val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
+            simpanData(getString(R.string.simpan))
+        }
+    }
 
-                val transaksiIdExtra = intent.getIntExtra(Utils.EXTRA_TRANSAKSI_ID, 0)
-                val batchIdExtra = intent.getStringExtra(Utils.EXTRA_BATCH_ID) ?: ""
-                val jenisProdukExtra = intent.getStringExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI) ?: ""
-                val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
-                val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
+    private fun simpanData(tahapSelanjutnya: String) {
+        binding.apply {
+            val satuanYangDiterima = selectedSatuanYangDiterima
+            val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
+            val status = selectedTahapSelanjutnya
+            val namaPengepul = edtNamaPengepul.text.toString().trim()
+            val tahap = getString(R.string.pengepul)
+            val namaDistributorSelanjutnya =
+                edtNamaDistributorSelanjutnya.text.toString().trim()
+            val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
+            val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
+            val lokasiAsal = edtLokasiAsal.text.toString().trim()
+            val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
 
-                namaPengepul.showErrorIfEmpty(
-                    binding.edtNamaPengepul,
-                    getString(R.string.tidak_boleh_kosong)
+            val transaksiIdExtra = intent.getIntExtra(Utils.EXTRA_TRANSAKSI_ID, 0)
+            val batchIdExtra = intent.getStringExtra(Utils.EXTRA_BATCH_ID) ?: ""
+            val jenisProdukExtra = intent.getStringExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI) ?: ""
+            val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+            val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
+
+            namaPengepul.showErrorIfEmpty(
+                binding.edtNamaPengepul,
+                getString(R.string.tidak_boleh_kosong)
+            )
+            namaDistributorSelanjutnya.showErrorIfEmpty(
+                binding.edtNamaDistributorSelanjutnya,
+                getString(R.string.tidak_boleh_kosong)
+            )
+            totalYangDiterima.showErrorIfEmpty(
+                binding.edtTotalYangDiterima,
+                getString(R.string.tidak_boleh_kosong)
+            )
+            totalYangDiDistribusikan.showErrorIfEmpty(
+                binding.edtTotalYangDidistribusikan,
+                getString(R.string.tidak_boleh_kosong)
+            )
+            lokasiAsal.showErrorIfEmpty(
+                binding.edtLokasiAsal,
+                getString(R.string.tidak_boleh_kosong)
+            )
+            lokasiTujuan.showErrorIfEmpty(
+                binding.edtLokasiTujuan,
+                getString(R.string.tidak_boleh_kosong)
+            )
+
+            if (isAllSet) {
+                val resultTransaksi = traceableGoodHelper.updateTransaksi(
+                    transaksiIdExtra.toString(),
+                    batchIdExtra,
+                    status,
+                    jenisProdukExtra,
+                    namaProdukExtra,
+                    produkBatchExtra,
+                    selectedTahapSelanjutnya,
+                    getCurrentDate() + " WIB"
                 )
-                namaDistributorSelanjutnya.showErrorIfEmpty(
-                    binding.edtNamaDistributorSelanjutnya,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                totalYangDiterima.showErrorIfEmpty(
-                    binding.edtTotalYangDiterima,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                totalYangDiDistribusikan.showErrorIfEmpty(
-                    binding.edtTotalYangDidistribusikan,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                lokasiAsal.showErrorIfEmpty(
-                    binding.edtLokasiAsal,
-                    getString(R.string.tidak_boleh_kosong)
-                )
-                lokasiTujuan.showErrorIfEmpty(
-                    binding.edtLokasiTujuan,
-                    getString(R.string.tidak_boleh_kosong)
+                val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
+                    batchIdExtra,
+                    tahap,
+                    status,
+                    namaPengepul,
+                    "",
+                    "",
+                    "",
+                    "$totalYangDiterima $satuanYangDiterima",
+                    "",
+                    namaDistributorSelanjutnya,
+                    "$totalYangDiDistribusikan $satuanYangDiDistribusikan",
+                    lokasiAsal,
+                    lokasiTujuan,
+                    getCurrentDate() + " WIB"
                 )
 
-                if (isAllSet) {
-                    val resultTransaksi = traceableGoodHelper.updateTransaksi(
-                        transaksiIdExtra.toString(),
-                        batchIdExtra,
-                        status,
-                        jenisProdukExtra,
-                        namaProdukExtra,
-                        produkBatchExtra,
-                        selectedTahapSelanjutnya,
-                        getCurrentDate() + " WIB"
-                    )
-                    val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
-                        batchIdExtra,
-                        tahap,
-                        status,
-                        namaPengepul,
-                        "",
-                        "",
-                        "",
-                        "$totalYangDiterima $satuanYangDiterima",
-                        "",
-                        namaDistributorSelanjutnya,
-                        "$totalYangDiDistribusikan $satuanYangDiDistribusikan",
-                        lokasiAsal,
-                        lokasiTujuan,
-                        getCurrentDate() + " WIB"
-                    )
-
-                    if (resultTransaksi > 0) {
-                        if (resultAlurTransaksi > 0) {
-                            Toast.makeText(
-                                this@TahapPengepulActivity,
-                                getString(R.string.berhasil_menambah_data, Utils.PENGEPUL),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            finish()
-                        }
-                    } else {
+                if (resultTransaksi > 0) {
+                    if (resultAlurTransaksi > 0) {
                         Toast.makeText(
                             this@TahapPengepulActivity,
-                            getString(R.string.gagal_menambah_data),
+                            getString(R.string.berhasil_menambah_data, Utils.PENGEPUL),
                             Toast.LENGTH_SHORT
                         ).show()
+                        when (tahapSelanjutnya) {
+                            Utils.GUDANG -> {
+                                val intentGudang = Intent(this@TahapPengepulActivity, TahapGudangActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentGudang)
+                                finish()
+
+                            }
+                            Utils.TENGKULAK -> {
+                                val intentTengkulak = Intent(this@TahapPengepulActivity, TahapTengkulakActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentTengkulak)
+                                finish()
+                            }
+                            Utils.PENGGILING -> {
+                                val intentPenggiling = Intent(this@TahapPengepulActivity, TahapPenggilingActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentPenggiling)
+                                finish()
+                            }
+                            Utils.PABRIK_PENGOLAHAN -> {
+                                val intentPabrikPengolahan = Intent(this@TahapPengepulActivity, TahapPabrikPengolahanActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentPabrikPengolahan)
+                                finish()
+                            }
+                            Utils.PENERIMA -> {
+                                val intentPenerima = Intent(this@TahapPengepulActivity, TahapPenerimaActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentPenerima)
+                                finish()
+                            }
+                            getString(R.string.selesai) -> {
+                                finish()
+                            }
+                        }
+                        finish()
                     }
+                } else {
+                    Toast.makeText(
+                        this@TahapPengepulActivity,
+                        getString(R.string.gagal_menambah_data),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
