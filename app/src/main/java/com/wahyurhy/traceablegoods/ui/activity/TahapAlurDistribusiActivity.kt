@@ -1,10 +1,16 @@
 package com.wahyurhy.traceablegoods.ui.activity
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiProdusenAdapter
@@ -41,6 +47,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
         fitStatusBar()
 
         initClickListener()
+        generateQRCode(batchId)
 
         if (savedInstanceState == null) {
             // proses ambil data
@@ -61,6 +68,15 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 adapterPenerimaAdapter.mAlurDistribusi = listAlurPenerima
             }
         }
+    }
+
+    private fun generateQRCode(batchId: String) {
+        val writer = MultiFormatWriter()
+        val matrix = writer.encode(batchId, BarcodeFormat.QR_CODE, 200, 200)
+
+        val encoder = BarcodeEncoder()
+        val bitmap = encoder.createBitmap(matrix)
+        binding.qrCode.setImageBitmap(bitmap)
     }
 
     private fun initClickListener() {

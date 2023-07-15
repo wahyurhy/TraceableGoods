@@ -60,4 +60,7 @@ dependencies {
 
     // lottie
     implementation 'com.airbnb.android:lottie:6.0.0'
+
+    // qrcode
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 }

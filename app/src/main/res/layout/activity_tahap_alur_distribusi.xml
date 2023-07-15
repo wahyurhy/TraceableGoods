@@ -73,8 +73,8 @@
 
         <ImageView
             android:id="@+id/qr_code"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/ic_qr_raw"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,11 +84,10 @@
             android:id="@+id/batch_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Batch_su65ya1"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/qr_code"
             app:layout_constraintStart_toStartOf="@+id/qr_code"
             app:layout_constraintTop_toBottomOf="@+id/qr_code" />
