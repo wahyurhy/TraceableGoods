@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.fragment
+package com.wahyurhy.traceablegoods.ui.fragment.transaksi
 
 import android.content.Intent
 import android.os.Bundle
@@ -97,14 +97,28 @@ class TransaksiFragment : Fragment() {
     private fun loadDataTransaksi(traceableGoodHelper: TraceableGoodHelper) {
         lifecycleScope.launch {
             binding.apply {
-                val deferredTransaksi = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllTransaksi()
-                    MappingHelper.mapCursorToArrayListTransaksi(cursor)
+                val batchId = arguments?.getString(EXTRA_BATCH_ID) ?: ""
+
+                if (batchId != "") {
+                    val deferredTransaksi = async(Dispatchers.IO) {
+                        val cursor = traceableGoodHelper.queryTransaksiById(batchId)
+                        MappingHelper.mapCursorToArrayListTransaksi(cursor)
+                    }
+                    val transaksi = deferredTransaksi.await()
+                    setTransaksiData(transaksi)
+
+                    binding.rvTransaksi.post {
+                        binding.rvTransaksi.findViewHolderForAdapterPosition(0)?.itemView?.performClick()
+                    }
+                    arguments = null
+                } else {
+                    val deferredTransaksi = async(Dispatchers.IO) {
+                        val cursor = traceableGoodHelper.queryAllTransaksi()
+                        MappingHelper.mapCursorToArrayListTransaksi(cursor)
+                    }
+                    val transaksi = deferredTransaksi.await()
+                    setTransaksiData(transaksi)
                 }
-
-                val transaksi = deferredTransaksi.await()
-
-                setTransaksiData(transaksi)
             }
         }
     }
@@ -116,12 +130,6 @@ class TransaksiFragment : Fragment() {
 
             adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
-                    val batchId = transaksi[position].batchId
-                    Toast.makeText(
-                        requireContext(),
-                        "$batchId was clicked!",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     when (transaksi[position].status) {
                         getString(R.string.selesai) -> {
                             val intent =
@@ -269,8 +277,14 @@ class TransaksiFragment : Fragment() {
             })
         } else {
             adapter.mTransaksi = ArrayList()
-            Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
-                .show()
+            if (arguments != null) {
+                Toast.makeText(requireContext(), "Data tidak ditemukan!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Tidak ada data saat ini", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            arguments = null
+            loadDataTransaksi(traceableGoodHelper)
         }
     }
 

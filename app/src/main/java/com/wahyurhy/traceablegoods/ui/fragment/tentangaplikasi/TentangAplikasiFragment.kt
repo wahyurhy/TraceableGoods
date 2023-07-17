@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.fragment
+package com.wahyurhy.traceablegoods.ui.fragment.tentangaplikasi
 
 import android.os.Bundle
 import android.view.LayoutInflater

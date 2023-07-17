@@ -13,7 +13,7 @@ import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.*
 import com.wahyurhy.traceablegoods.ui.activity.detail.*
-import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment.Companion.NAME_LIST
+import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_ALAMAT_DISTRIBUTOR

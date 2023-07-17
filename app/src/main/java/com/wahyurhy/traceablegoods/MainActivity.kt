@@ -3,16 +3,15 @@ package com.wahyurhy.traceablegoods
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.databinding.ActivityMainBinding
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDataMasterActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity
-import com.wahyurhy.traceablegoods.ui.fragment.MasterDataFragment
-import com.wahyurhy.traceablegoods.ui.fragment.ProfileFragment
-import com.wahyurhy.traceablegoods.ui.fragment.TransaksiFragment
+import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment
+import com.wahyurhy.traceablegoods.ui.fragment.profile.ProfileFragment
+import com.wahyurhy.traceablegoods.ui.fragment.transaksi.TransaksiFragment
 import com.wahyurhy.traceablegoods.utils.Utils
 
 class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,

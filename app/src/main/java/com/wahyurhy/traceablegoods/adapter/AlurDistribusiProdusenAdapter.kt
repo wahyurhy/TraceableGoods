@@ -18,12 +18,6 @@ class AlurDistribusiProdusenAdapter : RecyclerView.Adapter<AlurDistribusiProduse
             this.mAlurDistribusi.addAll(mResult)
         }
 
-    interface OnItemClickListener {
-        fun onItemClick(itemView: View?, position: Int)
-    }
-
-    private lateinit var listener: OnItemClickListener
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
@@ -54,10 +48,6 @@ class AlurDistribusiProdusenAdapter : RecyclerView.Adapter<AlurDistribusiProduse
 
     }
 
-    fun setOnClickedListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val produsen = itemView.findViewById<TextView>(R.id.tv_produsen)
         val nama = itemView.findViewById<TextView>(R.id.tv_nama)
@@ -67,15 +57,5 @@ class AlurDistribusiProdusenAdapter : RecyclerView.Adapter<AlurDistribusiProduse
         val lokasiAsal = itemView.findViewById<TextView>(R.id.tv_lokasi_asal)
         val lokasiTujuan = itemView.findViewById<TextView>(R.id.tv_lokasi_tujuan)
         val date = itemView.findViewById<TextView>(R.id.tv_date)
-
-
-            init {
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(itemView, position)
-                }
-            }
-        }
     }
 }

@@ -148,6 +148,7 @@
     <string name="tahap_penerima">Tahap Penerima</string>
     <string name="tidak_ada_penerima">Tidak ada penerima?</string>
     <string name="selesai">Selesai</string>
+    <string name="flash_on">Naikan volume untuk menyalakan flash</string>
     <string name="cetak">Cetak</string>
     <string name="alur_distribusi">Alur Distribusi</string>
     <string name="masuk_sebagai_pengamat">Masuk sebagai Pengamat</string>
@@ -180,6 +181,7 @@
     <string name="penerima">Penerima</string>
     <string name="petani">Petani</string>
     <string name="tokopengecer">Toko / Pengecer</string>
+    <string name="scan_qr_code_for_batch_id">Scan QR-Code for Batch ID</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

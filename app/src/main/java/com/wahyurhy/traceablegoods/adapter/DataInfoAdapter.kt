@@ -17,6 +17,7 @@ class DataInfoAdapter : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {
                 this.mDataInfo.clear()
             }
             this.mDataInfo.addAll(mDataInfo)
+            notifyDataSetChanged()
         }
 
     var produkCount = "0"

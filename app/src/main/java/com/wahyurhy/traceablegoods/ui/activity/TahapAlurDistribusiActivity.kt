@@ -1,15 +1,14 @@
 package com.wahyurhy.traceablegoods.ui.activity
 
-import android.graphics.Rect
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
@@ -18,6 +17,7 @@ import com.wahyurhy.traceablegoods.databinding.ActivityTahapAlurDistribusiBindin
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.AlurDistribusi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.utils.PrintBluetooth
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
@@ -25,6 +25,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_STATUS_TRANSAKSI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+
 
 class TahapAlurDistribusiActivity : AppCompatActivity() {
 
@@ -79,9 +80,38 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
         binding.qrCode.setImageBitmap(bitmap)
     }
 
+    private fun printQRCode(textToQR: String): Bitmap {
+        val multiFormatWriter = MultiFormatWriter()
+        try {
+            val bitMatrix: BitMatrix = multiFormatWriter.encode(textToQR, BarcodeFormat.QR_CODE, 300, 300)
+            val barcodeEncoder = BarcodeEncoder()
+            return barcodeEncoder.createBitmap(bitMatrix)
+        } catch (e: WriterException) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnPrint.setOnClickListener {
+            Toast.makeText(this, "printIdnya belum gan!", Toast.LENGTH_SHORT).show()
+            val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
+            val printBluetooth = PrintBluetooth()
+            printBluetooth.printId = "AB-321M"
+            val qrBit: Bitmap = printQRCode(batchId)
+            try {
+                printBluetooth.findBT()
+                printBluetooth.openBT()
+                printBluetooth.printQrCode(qrBit)
+                printBluetooth.printText("Test Print Bluetooth $batchId", "Batch ID : $batchId", "ALHAMDULILLAH")
+                printBluetooth.closeBT()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -114,21 +144,8 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 if (alurDistribusi.size > 0) {
                     adapterProdusenAdapter.mAlurDistribusi = alurDistribusi
                     adapterProdusenAdapter.notifyDataSetChanged()
-
-                    adapterProdusenAdapter.setOnClickedListener(object : AlurDistribusiProdusenAdapter.OnItemClickListener {
-                        override fun onItemClick(itemView: View?, position: Int) {
-                            val batchId = alurDistribusi[position].batchId
-                            Toast.makeText(
-                                this@TahapAlurDistribusiActivity,
-                                "$batchId was clicked!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
                 } else {
                     adapterProdusenAdapter.mAlurDistribusi = ArrayList()
-                    Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 traceableGoodHelper.close()
             }
@@ -152,21 +169,8 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 if (alurDistribusi.size > 0) {
                     adapterDistributorAdapter.mAlurDistribusi = alurDistribusi
                     adapterDistributorAdapter.notifyDataSetChanged()
-
-                    adapterDistributorAdapter.setOnClickedListener(object : AlurDistribusiAdapter.OnItemClickListener {
-                        override fun onItemClick(itemView: View?, position: Int) {
-                            val batchId = alurDistribusi[position].batchId
-                            Toast.makeText(
-                                this@TahapAlurDistribusiActivity,
-                                "$batchId was clicked!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
                 } else {
                     adapterDistributorAdapter.mAlurDistribusi = ArrayList()
-                    Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 traceableGoodHelper.close()
             }
@@ -191,21 +195,8 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 if (alurDistribusi.size > 0) {
                     adapterPenerimaAdapter.mAlurDistribusi = alurDistribusi
                     adapterPenerimaAdapter.notifyDataSetChanged()
-
-                    adapterPenerimaAdapter.setOnClickedListener(object : AlurDistribusiPenerimaAdapter.OnItemClickListener {
-                        override fun onItemClick(itemView: View?, position: Int) {
-                            val batchId = alurDistribusi[position].batchId
-                            Toast.makeText(
-                                this@TahapAlurDistribusiActivity,
-                                "$batchId was clicked!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
                 } else {
                     adapterPenerimaAdapter.mAlurDistribusi = ArrayList()
-                    Toast.makeText(this@TahapAlurDistribusiActivity, "Tidak ada data saat ini", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 traceableGoodHelper.close()
             }
