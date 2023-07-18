@@ -164,6 +164,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                                 putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProduk)
                                 putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatch)
                                 putExtra(Utils.EXTRA_STATUS_TRANSAKSI, status)
+                                putExtra(Utils.EXTRA_AFTER_TAHAP_PENERIMA, status)
                             }
                             startActivity(intent)
                             finish()

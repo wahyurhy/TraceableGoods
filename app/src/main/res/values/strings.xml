@@ -182,6 +182,10 @@
     <string name="petani">Petani</string>
     <string name="tokopengecer">Toko / Pengecer</string>
     <string name="scan_qr_code_for_batch_id">Scan QR-Code for Batch ID</string>
+    <string name="alur_distribusi_struk">ALUR DISTRIBUSI</string>
+    <string name="sedang_mencetak_batch_id">Sedang mencetak Batch ID</string>
+    <string name="berhasil_mencetak_batch_id">Berhasil mencetak Batch ID</string>
+    <string name="printer_belum_terkoneksi">Printer belum terkoneksi</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

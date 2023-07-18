@@ -90,6 +90,7 @@ object Utils {
     const val EXTRA_ALUR_PRODUSEN = "alur_produsen_extra"
     const val EXTRA_ALUR_DISTRIBUTOR= "alur_distributor_extra"
     const val EXTRA_ALUR_PENERIMA = "alur_penerima_extra"
+    const val EXTRA_AFTER_TAHAP_PENERIMA = "after_tahap_penerima_extra"
 
     const val PRODUK_ID = 0
     const val PRODUSEN_ID = 1

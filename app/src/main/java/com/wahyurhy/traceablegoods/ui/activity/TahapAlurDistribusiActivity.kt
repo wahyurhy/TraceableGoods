@@ -4,13 +4,12 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Base64
+import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +17,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.dantsu.escposprinter.EscPosPrinter
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
-import com.google.zxing.WriterException
-import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.wahyurhy.traceablegoods.MainActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
@@ -34,6 +33,7 @@ import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.AlurDistribusi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_AFTER_TAHAP_PENERIMA
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
@@ -42,7 +42,6 @@ import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 
 
 class TahapAlurDistribusiActivity : AppCompatActivity() {
@@ -60,6 +59,7 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
+        val afterTahapPenerima = intent.getStringExtra(EXTRA_AFTER_TAHAP_PENERIMA) ?: ""
         binding.batchId.text = batchId
 
         setAdapter()
@@ -88,6 +88,12 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 adapterPenerimaAdapter.mAlurDistribusi = listAlurPenerima
             }
         }
+
+        if (afterTahapPenerima != "") {
+            Handler(Looper.getMainLooper()).postDelayed({
+                setPrintStruk()
+            }, 2000)
+        }
     }
 
     private fun generateQRCode(batchId: String) {
@@ -99,72 +105,94 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
         binding.qrCode.setImageBitmap(bitmap)
     }
 
-    private fun printQRCode(textToQR: String): Bitmap {
-        val multiFormatWriter = MultiFormatWriter()
-        try {
-            val bitMatrix: BitMatrix = multiFormatWriter.encode(textToQR, BarcodeFormat.QR_CODE, 300, 300)
-            val barcodeEncoder = BarcodeEncoder()
-            return barcodeEncoder.createBitmap(bitMatrix)
-        } catch (e: WriterException) {
-            e.printStackTrace()
-            throw e
-        }
-    }
-
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
         }
 
         binding.btnPrint.setOnClickListener {
-            val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
-            val namaProduk = intent.getStringExtra(EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
-            val qrBit: Bitmap = printQRCode(batchId)
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
-                if (Build.VERSION.SDK_INT >= 31) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), PERMISSION_BLUETOOTH)
-                }
-            }
-
-            val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-
-            if (Build.VERSION.SDK_INT >= 31) {
-                bluetoothAdapter = bluetoothManager.adapter
-            } else {
-                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-            }
-
-            if (bluetoothAdapter.isEnabled) {
-                val connection = BluetoothPrintersConnections.selectFirstPaired()
-                if (connection != null) {
-                    val printer = EscPosPrinter(connection, 203, 48f, 32)
-
-                    val text = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.applicationContext.resources.getDrawableForDensity(R.drawable.logo_struk, DisplayMetrics.DENSITY_LOW, theme))+"</img>\n" +
-                            "[C]---------------------------\n" +
-                            "[C]<font size='big-2'>ALUR DISTRIBUSI</font>\n" +
-                            "[C]<font size='big'>${namaProduk.uppercase()}</font>\n" +
-                            "[C]${getCurrentDate()} WIB\n" +
-                            "[L]\n" +
-                            "[C]<qrcode size='29'>$batchId</qrcode>\n" +
-                            "[C]<b>$batchId</b>\n" +
-                            "[L]\n" +
-                            "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.applicationContext.resources.getDrawableForDensity(R.drawable.border_bottom, DisplayMetrics.DENSITY_LOW, theme))+"</img>\n" +
-                            "[L]"
-
-                    Toast.makeText(this, "Sedang mencetak Batch ID", Toast.LENGTH_SHORT).show()
-                    printer.printFormattedText(text)
-                    Toast.makeText(this, "Berhasil mencetak Batch ID", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Printer belum terkoneksi",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
+            setPrintStruk()
         }
+    }
+
+    private fun setPrintStruk() {
+        val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
+        val namaProduk = intent.getStringExtra(EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            if (Build.VERSION.SDK_INT >= 31) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                    PERMISSION_BLUETOOTH
+                )
+            }
+        }
+
+        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+
+        if (Build.VERSION.SDK_INT >= 31) {
+            bluetoothAdapter = bluetoothManager.adapter
+        } else {
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        }
+
+        if (bluetoothAdapter.isEnabled) {
+            val connection = BluetoothPrintersConnections.selectFirstPaired()
+            if (connection != null) {
+                printStruk(connection, namaProduk, batchId)
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.printer_belum_terkoneksi),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun printStruk(
+        connection: BluetoothConnection?,
+        namaProduk: String,
+        batchId: String
+    ) {
+        val printer = EscPosPrinter(connection, 203, 48f, 32)
+
+        val text = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+            printer,
+            this.applicationContext.resources.getDrawableForDensity(
+                R.drawable.logo_struk,
+                DisplayMetrics.DENSITY_LOW,
+                theme
+            )
+        ) + "</img>\n" +
+                "[C]---------------------------\n" +
+                "[C]<font size='big-2'>${getString(R.string.alur_distribusi_struk)}</font>\n" +
+                "[C]<font size='big'>${namaProduk.uppercase()}</font>\n" +
+                "[C]${getCurrentDate()} WIB\n" +
+                "[L]\n" +
+                "[C]<qrcode size='29'>$batchId</qrcode>\n" +
+                "[C]<b>$batchId</b>\n" +
+                "[L]\n" +
+                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+            printer,
+            this.applicationContext.resources.getDrawableForDensity(
+                R.drawable.border_bottom,
+                DisplayMetrics.DENSITY_LOW,
+                theme
+            )
+        ) + "</img>\n" +
+                "[L]"
+
+        Toast.makeText(this, getString(R.string.sedang_mencetak_batch_id), Toast.LENGTH_SHORT)
+            .show()
+        printer.printFormattedText(text)
+        Toast.makeText(this, getString(R.string.berhasil_mencetak_batch_id), Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun setAdapter() {
