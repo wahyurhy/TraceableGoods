@@ -9,7 +9,7 @@ import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
@@ -18,17 +18,12 @@ import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.Transaksi
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
-import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_BATCH_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_STATUS_TRANSAKSI
-import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI_ID
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class TransaksiFragment : Fragment() {
 
@@ -39,6 +34,10 @@ class TransaksiFragment : Fragment() {
     private var isFirstLaunched = false
 
     private lateinit var binding: FragmentTransaksiBinding
+
+    private lateinit var viewModel: TransaksiViewModel
+
+    private var batchId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +50,8 @@ class TransaksiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this)[TransaksiViewModel::class.java]
+
         traceableGoodHelper = TraceableGoodHelper.getInstance(requireActivity().applicationContext)
         traceableGoodHelper.open()
 
@@ -60,13 +61,17 @@ class TransaksiFragment : Fragment() {
         hideFloatingActionButton()
         setSearchViewListener(traceableGoodHelper)
 
-        if (savedInstanceState == null) {
-            // proses ambil data
-            loadDataTransaksi(traceableGoodHelper)
-        } else {
-            val list = savedInstanceState.getParcelableArrayList<Transaksi>(EXTRA_TRANSAKSI)
-            if (list != null) {
-                adapter.mTransaksi = list
+        batchId = arguments?.getString(EXTRA_BATCH_ID) ?: ""
+        viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+
+        // Observasi mTransaksi
+        viewModel.transaksiList.observe(viewLifecycleOwner) { transaksiList ->
+            setTransaksiData(transaksiList)
+            if (batchId != "") {
+                binding.rvTransaksi.post {
+                    binding.rvTransaksi.findViewHolderForAdapterPosition(0)?.itemView?.performClick()
+                }
+                batchId = ""
             }
         }
     }
@@ -80,53 +85,18 @@ class TransaksiFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 if (newText != "") {
-                    val cursor = traceableGoodHelper.queryTransaksiById(newText.trim())
-                    val transaksiCursor = MappingHelper.mapCursorToArrayListTransaksi(cursor)
-
-                    val transaksi = transaksiCursor
-
-                    setTransaksiData(transaksi)
+                    viewModel.loadDataTransaksi(traceableGoodHelper, newText.trim())
                 } else {
-                    loadDataTransaksi(traceableGoodHelper)
+                    viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
                 }
                 return true
             }
         })
     }
 
-    private fun loadDataTransaksi(traceableGoodHelper: TraceableGoodHelper) {
-        lifecycleScope.launch {
-            binding.apply {
-                val batchId = arguments?.getString(EXTRA_BATCH_ID) ?: ""
-
-                if (batchId != "") {
-                    val deferredTransaksi = async(Dispatchers.IO) {
-                        val cursor = traceableGoodHelper.queryTransaksiById(batchId)
-                        MappingHelper.mapCursorToArrayListTransaksi(cursor)
-                    }
-                    val transaksi = deferredTransaksi.await()
-                    setTransaksiData(transaksi)
-
-                    binding.rvTransaksi.post {
-                        binding.rvTransaksi.findViewHolderForAdapterPosition(0)?.itemView?.performClick()
-                    }
-                    arguments = null
-                } else {
-                    val deferredTransaksi = async(Dispatchers.IO) {
-                        val cursor = traceableGoodHelper.queryAllTransaksi()
-                        MappingHelper.mapCursorToArrayListTransaksi(cursor)
-                    }
-                    val transaksi = deferredTransaksi.await()
-                    setTransaksiData(transaksi)
-                }
-            }
-        }
-    }
-
     private fun setTransaksiData(transaksi: ArrayList<Transaksi>) {
         if (transaksi.size > 0) {
             adapter.mTransaksi = transaksi
-            adapter.notifyDataSetChanged()
 
             adapter.setOnClickedListener(object : TransaksiAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
@@ -284,7 +254,7 @@ class TransaksiFragment : Fragment() {
                     .show()
             }
             arguments = null
-            loadDataTransaksi(traceableGoodHelper)
+            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
         }
     }
 
@@ -308,11 +278,6 @@ class TransaksiFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(EXTRA_TRANSAKSI, adapter.mTransaksi)
-    }
-
     interface ScrollListener {
         fun onScrollChanged(scrollY: Int, recyclerView: RecyclerView)
     }
@@ -332,7 +297,7 @@ class TransaksiFragment : Fragment() {
         super.onResume()
         if (isFirstLaunched) {
             adapter.mTransaksi = ArrayList()
-            loadDataTransaksi(traceableGoodHelper)
+            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
         }
         isFirstLaunched = true
     }

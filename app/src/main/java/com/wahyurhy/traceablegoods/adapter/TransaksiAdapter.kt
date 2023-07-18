@@ -22,6 +22,7 @@ class TransaksiAdapter : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
                 this.mTransaksi.clear()
             }
             this.mTransaksi.addAll(mTransaksi)
+            notifyDataSetChanged()
         }
 
     interface OnItemClickListener {
