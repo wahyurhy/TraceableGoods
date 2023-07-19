@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.databinding.ActivityMainBinding
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDataMasterActivity
-import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.TahapProdusenActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapprodusen.TahapProdusenActivity
 import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment
 import com.wahyurhy.traceablegoods.ui.fragment.profile.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.transaksi.TransaksiFragment

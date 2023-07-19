@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
+package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapprodusen
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,19 +10,16 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapProdusenBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdukActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdusenActivity
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,6 +40,8 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private var mapProduk: MutableMap<String, String> = mutableMapOf()
 
     private lateinit var binding: ActivityTahapProdusenBinding
+    private lateinit var viewModel: TahapProdusenViewModel
+
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuan = ""
@@ -52,141 +51,130 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         binding = ActivityTahapProdusenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this)[TahapProdusenViewModel::class.java]
+
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        loadDataProdusen()
-        loadDataProduk()
-        loadDataDistributor()
+        viewModel.apply {
+            loadDataProdusen(traceableGoodHelper)
+            loadDataProduk(traceableGoodHelper)
+            loadDataDistributor(traceableGoodHelper)
+        }
 
-        fitStatusBar()
-
-        initClickListener()
-    }
-
-    private fun loadDataProdusen() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredProdusen = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllProdusen()
-                    MappingHelper.mapCursorToArrayListProdusen(cursor)
-                }
-                val produsen = deferredProdusen.await()
-                if (produsen.size > 0) {
-                    produsen.forEach {
-                        try {
-                            produsenList.add(
-                                "${it.namaProdusen} - ${
-                                    it.noNpwp.substring(
-                                        0,
-                                        3
-                                    )
-                                }***${it.noNpwp.substring(it.noNpwp.length - 3)}"
-                            )
-                            mapProdusen["${it.namaProdusen} - ${
+        viewModel.produsenList.observe(this) { produsen ->
+            if (produsen.isNotEmpty()) {
+                produsen.forEach {
+                    try {
+                        produsenList.add(
+                            "${it.namaProdusen} - ${
                                 it.noNpwp.substring(
                                     0,
                                     3
                                 )
-                            }***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
-                        } catch (e: Exception) {
-                            produsenList.add(it.namaProdusen)
-                            mapProdusen[it.namaProdusen] = it.kategoriProdusen
-                            Log.e("TahapProdusenActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterProdusen = ArrayAdapter<String>(
-                        this@TahapProdusenActivity,
-                        android.R.layout.simple_list_item_1,
-                        produsenList
-                    )
-                    edtNamaProdusen.setAdapter(adapterProdusen)
-                } else {
-                    produsenList = ArrayList()
-                    Toast.makeText(
-                        this@TahapProdusenActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun loadDataProduk() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredProduk = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllProduk()
-                    MappingHelper.mapCursorToArrayListProduk(cursor)
-                }
-                val produk = deferredProduk.await()
-                if (produk.size > 0) {
-                    produk.forEach {
-                        produkList.add(it.namaProduk)
-                        mapProduk[it.namaProduk] = it.jenisProduk
-                    }
-                    adapterProduk = ArrayAdapter<String>(
-                        this@TahapProdusenActivity,
-                        android.R.layout.simple_list_item_1,
-                        produkList
-                    )
-                    edtNamaProduk.setAdapter(adapterProduk)
-                } else {
-                    produkList = ArrayList()
-                    Toast.makeText(
-                        this@TahapProdusenActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun loadDataDistributor() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredDistributor = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllDistributor()
-                    MappingHelper.mapCursorToArrayListDistributor(cursor)
-                }
-                val distributor = deferredDistributor.await()
-                if (distributor.size > 0) {
-                    distributor.forEach {
-                        try {
-                            distributorList.add(
-                                "${it.namaDistributor} - ${
-                                    it.kontakDistributor.substring(
-                                        0,
-                                        3
-                                    )
-                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                            }***${it.noNpwp.substring(it.noNpwp.length - 3)}"
+                        )
+                        mapProdusen["${it.namaProdusen} - ${
+                            it.noNpwp.substring(
+                                0,
+                                3
                             )
-                        } catch (e: Exception) {
-                            distributorList.add(it.namaDistributor)
-                            Log.e("TahapProdusenActivity", "Error: ${e.message}")
-                        }
+                        }***${it.noNpwp.substring(it.noNpwp.length - 3)}"] = it.kategoriProdusen
+                    } catch (e: Exception) {
+                        produsenList.add(it.namaProdusen)
+                        mapProdusen[it.namaProdusen] = it.kategoriProdusen
+                        Log.e("TahapProdusenActivity", "Error: ${e.message}")
                     }
-                    adapterDistributor = ArrayAdapter<String>(
-                        this@TahapProdusenActivity,
-                        android.R.layout.simple_list_item_1,
-                        distributorList
-                    )
-                    edtNamaDistributor.setAdapter(adapterDistributor)
-                } else {
-                    distributorList = ArrayList()
-                    Toast.makeText(
-                        this@TahapProdusenActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
                 }
+                adapterProdusen = ArrayAdapter<String>(
+                    this@TahapProdusenActivity,
+                    android.R.layout.simple_list_item_1,
+                    produsenList
+                )
+                binding.edtNamaProdusen.setAdapter(adapterProdusen)
+            } else {
+                produsenList = ArrayList()
+                Toast.makeText(
+                    this@TahapProdusenActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
+
+        viewModel.produkList.observe(this) { produk ->
+            if (produk.isNotEmpty()) {
+                produk.forEach {
+                    produkList.add(it.namaProduk)
+                    mapProduk[it.namaProduk] = it.jenisProduk
+                }
+                adapterProduk = ArrayAdapter<String>(
+                    this@TahapProdusenActivity,
+                    android.R.layout.simple_list_item_1,
+                    produkList
+                )
+                binding.edtNamaProduk.setAdapter(adapterProduk)
+            } else {
+                produkList = ArrayList()
+                Toast.makeText(
+                    this@TahapProdusenActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.distributorList.observe(this) { distributor ->
+            if (distributor.isNotEmpty()) {
+                distributor.forEach {
+                    try {
+                        distributorList.add(
+                            "${it.namaDistributor} - ${
+                                it.kontakDistributor.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                        )
+                    } catch (e: Exception) {
+                        distributorList.add(it.namaDistributor)
+                        Log.e("TahapProdusenActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterDistributor = ArrayAdapter<String>(
+                    this@TahapProdusenActivity,
+                    android.R.layout.simple_list_item_1,
+                    distributorList
+                )
+                binding.edtNamaDistributor.setAdapter(adapterDistributor)
+            } else {
+                distributorList = ArrayList()
+                Toast.makeText(
+                    this@TahapProdusenActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.apply {
+            isTambahProdusenClicked.observe(this@TahapProdusenActivity) {
+                isTambahDataProdusenClicked = it
+            }
+            isTambahProdukClicked.observe(this@TahapProdusenActivity) {
+                isTambahDataProdukClicked = it
+            }
+            isTambahDistributorClicked.observe(this@TahapProdusenActivity) {
+                isTambahDataDistributorClicked = it
+            }
+        }
+
+        fitStatusBar()
+
+        initClickListener()
     }
 
     private fun initClickListener() {
@@ -200,7 +188,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 putExtra(Utils.EXTRA_NAMA_PRODUSEN, namaProdusen)
             }
             startActivity(intentTambahProdusen)
-            isTambahDataProdusenClicked = true
+            viewModel.setTambahProdusenClicked(true)
         }
 
         binding.btnTambahProduk.setOnClickListener {
@@ -209,7 +197,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 putExtra(Utils.EXTRA_NAMA_PRODUK, namaProduk)
             }
             startActivity(intentTambahProduk)
-            isTambahDataProdukClicked = true
+            viewModel.setTambahProdukClicked(true)
         }
 
         binding.btnTambahDistributor.setOnClickListener {
@@ -218,7 +206,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
             }
             startActivity(intentTambahDistributor)
-            isTambahDataDistributorClicked = true
+            viewModel.setTambahDistributorClicked(true)
         }
 
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
@@ -481,19 +469,16 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         if (isTambahDataProdusenClicked) {
             produsenList = ArrayList<String>()
             mapProdusen = mutableMapOf()
-            binding.edtNamaProdusen.setText("")
-            loadDataProdusen()
+            viewModel.loadDataProdusen(traceableGoodHelper)
         }
         if (isTambahDataProdukClicked) {
             produkList = ArrayList<String>()
             mapProduk = mutableMapOf()
-            binding.edtNamaProduk.setText("")
-            loadDataProduk()
+            viewModel.loadDataProduk(traceableGoodHelper)
         }
         if (isTambahDataDistributorClicked) {
             distributorList = ArrayList<String>()
-            binding.edtNamaDistributor.setText("")
-            loadDataDistributor()
+            viewModel.loadDataDistributor(traceableGoodHelper)
         }
     }
 
