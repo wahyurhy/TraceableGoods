@@ -28,7 +28,13 @@ class TambahTengkulakActivity : AppCompatActivity() {
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val tengkulak = intent.getStringExtra(Utils.EXTRA_NAMA_TENGKULAK) ?: ""
+        binding.edtNamaTengkulak.setText(tengkulak)
     }
 
     private fun initClickListener() {

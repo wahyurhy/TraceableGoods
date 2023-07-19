@@ -676,6 +676,7 @@ class ListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        setAdapter(nameList)
         if (isAdapterProdukClicked) {
             adapterProduk.mProduk = ArrayList()
             loadData(nameList)

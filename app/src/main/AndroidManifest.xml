@@ -58,12 +58,12 @@
         <activity android:name=".ui.activity.tambah.datamaster.TambahPabrikPengolahanActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.tahapprodusen.TahapProdusenActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapTengkulakActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapPenggilingActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapPengepulActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapPenerimaActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahappengepul.TahapPengepulActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahappenerima.TahapPenerimaActivity" />
         <activity android:name=".ui.activity.TahapAlurDistribusiActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapPabrikPengolahanActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity" />
         <activity
             android:name=".utils.CaptureAct"
             android:screenOrientation="portrait"

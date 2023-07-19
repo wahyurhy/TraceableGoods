@@ -27,7 +27,6 @@ class TahapProdusenViewModel : ViewModel() {
     val isTambahProdusenClicked: LiveData<Boolean> = _isTambahProdusenClicked
 
     private val _isTambahProdukClicked = MutableLiveData<Boolean>()
-
     val isTambahProdukClicked: LiveData<Boolean> = _isTambahProdukClicked
 
     private val _isTambahDistributorClicked = MutableLiveData<Boolean>()

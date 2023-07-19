@@ -28,7 +28,13 @@ class TambahPabrikPengolahanActivity : AppCompatActivity() {
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val gudang = intent.getStringExtra(Utils.EXTRA_NAMA_PABRIK_PENGOLAHAN) ?: ""
+        binding.edtNamaPabrikPengolahan.setText(gudang)
     }
 
     private fun initClickListener() {

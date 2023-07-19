@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
+package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,28 +10,32 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityTahapPengepulBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityTahapPenggilingBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenggilingActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima.TahapPenerimaActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappengepul.TahapPengepulActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
-class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class TahapPenggilingActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
     private var isAllSet: Boolean = false
-    private lateinit var adapterPengepul: ArrayAdapter<String>
+    private var isTambahDataPenggilingClicked: Boolean = false
+    private var isTambahDataDistributorClicked: Boolean = false
+    private lateinit var adapterPenggiling: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
-    private var pengepulList = ArrayList<String>()
+    private var penggilingList = ArrayList<String>()
     private var distributorList = ArrayList<String>()
 
-    private lateinit var binding: ActivityTahapPengepulBinding
+    private lateinit var binding: ActivityTahapPenggilingBinding
+    private lateinit var viewModel: TahapPenggilingViewModel
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuanYangDiterima = ""
@@ -39,102 +43,115 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTahapPengepulBinding.inflate(layoutInflater)
+        binding = ActivityTahapPenggilingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this) [TahapPenggilingViewModel::class.java]
 
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        loadDataPengepul()
-        loadDataDistributor()
+        viewModel.apply {
+            loadDataPenggiling(traceableGoodHelper)
+            loadDataDistributor(traceableGoodHelper)
+        }
+
+        viewModel.penggilingList.observe(this) { penggiling ->
+            if (penggiling.isNotEmpty()) {
+                penggiling.forEach {
+                    try {
+                        penggilingList.add("${it.namaPenggiling} - ${it.kontakPenggiling.substring(0, 3)}***${it.kontakPenggiling.substring(it.kontakPenggiling.length - 3)}")
+                    } catch (e: Exception) {
+                        penggilingList.add(it.namaPenggiling)
+                        Log.e("TahapPenggilingActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterPenggiling = ArrayAdapter<String>(
+                    this@TahapPenggilingActivity,
+                    android.R.layout.simple_list_item_1,
+                    penggilingList
+                )
+                binding.edtNamaPenggiling.setAdapter(adapterPenggiling)
+            } else {
+                penggilingList = ArrayList()
+                Toast.makeText(
+                    this@TahapPenggilingActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.distributorList.observe(this) { distributor ->
+            if (distributor.isNotEmpty()) {
+                distributor.forEach {
+                    try {
+                        distributorList.add(
+                            "${it.namaDistributor} - ${
+                                it.kontakDistributor.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                        )
+                    } catch (e: Exception) {
+                        distributorList.add(it.namaDistributor)
+                        Log.e("TahapPenggilingActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterDistributor = ArrayAdapter<String>(
+                    this@TahapPenggilingActivity,
+                    android.R.layout.simple_list_item_1,
+                    distributorList
+                )
+                binding.edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
+            } else {
+                distributorList = ArrayList()
+                Toast.makeText(
+                    this@TahapPenggilingActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.apply {
+            isTambahPenggilingClicked.observe(this@TahapPenggilingActivity) {
+                isTambahDataPenggilingClicked = it
+            }
+            isTambahDistributorClicked.observe(this@TahapPenggilingActivity) {
+                isTambahDataDistributorClicked = it
+            }
+        }
 
         fitStatusBar()
 
         initClickListener()
     }
 
-    private fun loadDataPengepul() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredPengepul = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllPengepul()
-                    MappingHelper.mapCursorToArrayListPengepul(cursor)
-                }
-                val pengepul = deferredPengepul.await()
-                if (pengepul.size > 0) {
-                    pengepul.forEach {
-                        try {
-                            pengepulList.add("${it.namaPengepul} - ${it.kontakPengepul.substring(0, 3)}***${it.kontakPengepul.substring(it.kontakPengepul.length - 3)}")
-                        } catch (e: Exception) {
-                            pengepulList.add(it.namaPengepul)
-                            Log.e("TahapPengepulActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterPengepul = ArrayAdapter<String>(
-                        this@TahapPengepulActivity,
-                        android.R.layout.simple_list_item_1,
-                        pengepulList
-                    )
-                    edtNamaPengepul.setAdapter(adapterPengepul)
-                } else {
-                    pengepulList = ArrayList()
-                    Toast.makeText(
-                        this@TahapPengepulActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun loadDataDistributor() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredDistributor = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllDistributor()
-                    MappingHelper.mapCursorToArrayListDistributor(cursor)
-                }
-                val distributor = deferredDistributor.await()
-                if (distributor.size > 0) {
-                    distributor.forEach {
-                        try {
-                            distributorList.add(
-                                "${it.namaDistributor} - ${
-                                    it.kontakDistributor.substring(
-                                        0,
-                                        3
-                                    )
-                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
-                            )
-                        } catch (e: Exception) {
-                            distributorList.add(it.namaDistributor)
-                            Log.e("TahapPengepulActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterDistributor = ArrayAdapter<String>(
-                        this@TahapPengepulActivity,
-                        android.R.layout.simple_list_item_1,
-                        distributorList
-                    )
-                    edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
-                } else {
-                    distributorList = ArrayList()
-                    Toast.makeText(
-                        this@TahapPengepulActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnTambahPenggiling.setOnClickListener {
+            val intentTambahPenggiling = Intent(this, TambahPenggilingActivity::class.java).apply {
+                val namaPenggiling = binding.edtNamaPenggiling.text.toString()
+                putExtra(Utils.EXTRA_NAMA_PENGGILING, namaPenggiling)
+            }
+            startActivity(intentTambahPenggiling)
+            viewModel.setTambahPenggilingClicked(true)
+        }
+
+        binding.btnTambahDistributor.setOnClickListener {
+            val intentTambahDistributor = Intent(this, TambahDistributorActivity::class.java).apply {
+                val namaDistributor = binding.edtNamaDistributorSelanjutnya.text.toString()
+                putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
+            }
+            startActivity(intentTambahDistributor)
+            viewModel.setTambahDistributorClicked(true)
         }
 
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
@@ -150,14 +167,14 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     simpanData(Utils.TENGKULAK)
                 }
                 Utils.PENGGILING -> {
-                    simpanData(Utils.PENGGILING)
-                }
-                Utils.PENGEPUL -> {
                     Toast.makeText(
                         this,
                         getString(R.string.tahap_sedang_dikerjakan, selectedTahapSelanjutnya),
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+                Utils.PENGEPUL -> {
+                    simpanData(Utils.PENGEPUL)
                 }
                 Utils.PABRIK_PENGOLAHAN -> {
                     simpanData(Utils.PABRIK_PENGOLAHAN)
@@ -177,8 +194,8 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             val satuanYangDiterima = selectedSatuanYangDiterima
             val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
             val status = selectedTahapSelanjutnya
-            val namaPengepul = edtNamaPengepul.text.toString().trim()
-            val tahap = getString(R.string.pengepul)
+            val namaPenggiling = edtNamaPenggiling.text.toString().trim()
+            val tahap = getString(R.string.penggiling)
             val namaDistributorSelanjutnya =
                 edtNamaDistributorSelanjutnya.text.toString().trim()
             val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
@@ -192,8 +209,8 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
             val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-            namaPengepul.showErrorIfEmpty(
-                binding.edtNamaPengepul,
+            namaPenggiling.showErrorIfEmpty(
+                binding.edtNamaPenggiling,
                 getString(R.string.tidak_boleh_kosong)
             )
             namaDistributorSelanjutnya.showErrorIfEmpty(
@@ -232,7 +249,7 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     batchIdExtra,
                     tahap,
                     status,
-                    namaPengepul,
+                    namaPenggiling,
                     "",
                     "",
                     "",
@@ -248,25 +265,25 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 if (resultTransaksi > 0) {
                     if (resultAlurTransaksi > 0) {
                         Toast.makeText(
-                            this@TahapPengepulActivity,
-                            getString(R.string.berhasil_menambah_data, Utils.PENGEPUL),
+                            this@TahapPenggilingActivity,
+                            getString(R.string.berhasil_menambah_data, Utils.PENGGILING),
                             Toast.LENGTH_SHORT
                         ).show()
                         when (tahapSelanjutnya) {
                             Utils.GUDANG -> {
-                                val intentGudang = Intent(this@TahapPengepulActivity, TahapGudangActivity::class.java).apply {
+                                val intentPenggiling = Intent(this@TahapPenggilingActivity, TahapPenggilingActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
                                     putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
                                     putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
                                 }
-                                startActivity(intentGudang)
+                                startActivity(intentPenggiling)
                                 finish()
 
                             }
                             Utils.TENGKULAK -> {
-                                val intentTengkulak = Intent(this@TahapPengepulActivity, TahapTengkulakActivity::class.java).apply {
+                                val intentTengkulak = Intent(this@TahapPenggilingActivity, TahapTengkulakActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -276,19 +293,19 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                                 startActivity(intentTengkulak)
                                 finish()
                             }
-                            Utils.PENGGILING -> {
-                                val intentPenggiling = Intent(this@TahapPengepulActivity, TahapPenggilingActivity::class.java).apply {
+                            Utils.PENGEPUL -> {
+                                val intentPengepul = Intent(this@TahapPenggilingActivity, TahapPengepulActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
                                     putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
                                     putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
                                 }
-                                startActivity(intentPenggiling)
+                                startActivity(intentPengepul)
                                 finish()
                             }
                             Utils.PABRIK_PENGOLAHAN -> {
-                                val intentPabrikPengolahan = Intent(this@TahapPengepulActivity, TahapPabrikPengolahanActivity::class.java).apply {
+                                val intentPabrikPengolahan = Intent(this@TahapPenggilingActivity, TahapPabrikPengolahanActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -299,7 +316,7 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                                 finish()
                             }
                             Utils.PENERIMA -> {
-                                val intentPenerima = Intent(this@TahapPengepulActivity, TahapPenerimaActivity::class.java).apply {
+                                val intentPenerima = Intent(this@TahapPenggilingActivity, TahapPenerimaActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -317,7 +334,7 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     }
                 } else {
                     Toast.makeText(
-                        this@TahapPengepulActivity,
+                        this@TahapPenggilingActivity,
                         getString(R.string.gagal_menambah_data),
                         Toast.LENGTH_SHORT
                     ).show()
@@ -386,6 +403,18 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isTambahDataPenggilingClicked) {
+            penggilingList = ArrayList()
+            viewModel.loadDataPenggiling(traceableGoodHelper)
+        }
+        if (isTambahDataDistributorClicked) {
+            distributorList = ArrayList()
+            viewModel.loadDataDistributor(traceableGoodHelper)
+        }
     }
 
 }

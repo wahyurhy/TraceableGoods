@@ -32,7 +32,13 @@ class TambahPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val penerima = intent.getStringExtra(Utils.EXTRA_NAMA_PENERIMA) ?: ""
+        binding.edtNamaPenerima.setText(penerima)
     }
 
     private fun initClickListener() {

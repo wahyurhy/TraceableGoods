@@ -26,7 +26,13 @@ class TambahPengepulActivity : AppCompatActivity() {
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val pengepul = intent.getStringExtra(Utils.EXTRA_NAMA_PENGEPUL) ?: ""
+        binding.edtNamaPengepul.setText(pengepul)
     }
 
     private fun initClickListener() {

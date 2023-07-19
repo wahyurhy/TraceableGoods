@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.model.DataInformasi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MasterDataViewModel(private val application: Application) : AndroidViewModel(application) {
 
@@ -112,12 +110,21 @@ class MasterDataViewModel(private val application: Application) : AndroidViewMod
                 _penerima.value = penerima.size.toString()
                 _penggiling.value = penggiling.size.toString()
                 _pengepul.value = pengepul.size.toString()
-                _gudang.value = pengepul.size.toString()
+                _gudang.value = gudang.size.toString()
                 _tengkulak.value = tengkulak.size.toString()
                 _pabrikPengolahan.value = pabrikPengolahan.size.toString()
                 val totalDataInfo = produk.size + produsen.size + distributor.size + penerima.size +
                         penggiling.size + pengepul.size + gudang.size + tengkulak.size + pabrikPengolahan.size
-                _totalDataInfo.value = totalDataInfo
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    var delayTime = 200L
+
+                    for (i in 0..totalDataInfo) {
+                        _totalDataInfo.value = i
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
             } else {
                 _dataInfoList.value = ArrayList()
                 _totalDataInfo.value = 0

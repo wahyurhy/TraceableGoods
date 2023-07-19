@@ -153,7 +153,7 @@
                     android:background="@drawable/bg_outline_gray"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_npwp_produsen"
-                    android:inputType="textCapWords"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
                     android:textSize="16sp"
@@ -185,6 +185,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_kontak_produsen"
                     android:maxLines="1"
+                    android:inputType="text"
                     android:paddingHorizontal="15dp"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />

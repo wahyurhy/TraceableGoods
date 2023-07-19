@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
+package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,27 +10,26 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapPenerimaBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenerimaActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
     private var isAllSet: Boolean = false
+    private var isTambahDataPenerimaClicked: Boolean = false
     private lateinit var adapterPenerima: ArrayAdapter<String>
     private var penerimaList = ArrayList<String>()
     private var mapPenerima: MutableMap<String, String> = mutableMapOf()
 
     private lateinit var binding: ActivityTahapPenerimaBinding
+    private lateinit var viewModel: TahapPenerimaViewModel
 
     private var selectedSatuanYangDiterima = ""
 
@@ -39,57 +38,67 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         binding = ActivityTahapPenerimaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this) [TahapPenerimaViewModel::class.java]
+
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        loadDataPenerima()
+        viewModel.apply {
+            loadDataPenerima(traceableGoodHelper)
+        }
+
+        viewModel.penerimaList.observe(this) { penerima ->
+            if (penerima.isNotEmpty()) {
+                penerima.forEach {
+                    try {
+                        penerimaList.add("${it.namaPenerima} - ${it.kontakPenerima.substring(0, 3)}***${it.kontakPenerima.substring(it.kontakPenerima.length - 3)}")
+                        mapPenerima["${it.namaPenerima} - ${it.kontakPenerima.substring(0, 3)}***${it.kontakPenerima.substring(it.kontakPenerima.length - 3)}"] = it.kategoriPenerima
+                    } catch (e: Exception) {
+                        penerimaList.add(it.namaPenerima)
+                        mapPenerima[it.namaPenerima] = it.kategoriPenerima
+                        Log.e("TahapPenerimaActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterPenerima = ArrayAdapter<String>(
+                    this@TahapPenerimaActivity,
+                    android.R.layout.simple_list_item_1,
+                    penerimaList
+                )
+                binding.edtNamaPenerima.setAdapter(adapterPenerima)
+            } else {
+                penerimaList = ArrayList()
+                Toast.makeText(
+                    this@TahapPenerimaActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.apply {
+            isTambahPenerimaClicked.observe(this@TahapPenerimaActivity) {
+                isTambahDataPenerimaClicked = it
+            }
+        }
 
         fitStatusBar()
 
         initClickListener()
     }
 
-    private fun loadDataPenerima() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredPenerima = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllPenerima()
-                    MappingHelper.mapCursorToArrayListPenerima(cursor)
-                }
-                val penerima = deferredPenerima.await()
-                if (penerima.size > 0) {
-                    penerima.forEach {
-                        try {
-                            penerimaList.add("${it.namaPenerima} - ${it.kontakPenerima.substring(0, 3)}***${it.kontakPenerima.substring(it.kontakPenerima.length - 3)}")
-                            mapPenerima["${it.namaPenerima} - ${it.kontakPenerima.substring(0, 3)}***${it.kontakPenerima.substring(it.kontakPenerima.length - 3)}"] = it.kategoriPenerima
-                        } catch (e: Exception) {
-                            penerimaList.add(it.namaPenerima)
-                            mapPenerima[it.namaPenerima] = it.kategoriPenerima
-                            Log.e("TahapPabrikActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterPenerima = ArrayAdapter<String>(
-                        this@TahapPenerimaActivity,
-                        android.R.layout.simple_list_item_1,
-                        penerimaList
-                    )
-                    edtNamaPenerima.setAdapter(adapterPenerima)
-                } else {
-                    penerimaList = ArrayList()
-                    Toast.makeText(
-                        this@TahapPenerimaActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnTambahPenerima.setOnClickListener {
+            val intentTambahPenerima = Intent(this, TambahPenerimaActivity::class.java).apply {
+                val namaPenerima = binding.edtNamaPenerima.text.toString()
+                putExtra(Utils.EXTRA_NAMA_PENERIMA, namaPenerima)
+            }
+            startActivity(intentTambahPenerima)
+            viewModel.setTambahPenerimaClicked(true)
         }
 
         binding.satuanDiterimaSpinner.onItemSelectedListener = this
@@ -223,6 +232,14 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isTambahDataPenerimaClicked) {
+            penerimaList = ArrayList()
+            viewModel.loadDataPenerima(traceableGoodHelper)
+        }
     }
 
 }

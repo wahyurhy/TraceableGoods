@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.tambah.transaksi.TahapPengepulActivity">
+    tools:context=".ui.activity.tambah.transaksi.tahappengepul.TahapPengepulActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                         android:fontFamily="@font/poppins_regular" />
 
                     <TextView
-                        android:id="@+id/btn_tambah_pengepul"
+                        android:id="@+id/btn_tambah_pabrik_pengolahan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tambah_data"

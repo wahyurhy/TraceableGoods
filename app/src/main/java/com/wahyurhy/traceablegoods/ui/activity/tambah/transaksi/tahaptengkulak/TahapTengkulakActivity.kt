@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
+package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,28 +10,32 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.databinding.ActivityTahapPabrikPengolahanBinding
+import com.wahyurhy.traceablegoods.databinding.ActivityTahapTengkulakBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahTengkulakActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima.TahapPenerimaActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappengepul.TahapPengepulActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
-class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
     private var isAllSet: Boolean = false
-    private lateinit var adapterPabrikPengolahan: ArrayAdapter<String>
+    private var isTambahDataTengkulakClicked: Boolean = false
+    private var isTambahDataDistributorClicked: Boolean = false
+    private lateinit var adapterTengkulak: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
-    private var pabrikPengolahanList = ArrayList<String>()
+    private var tengkulakList = ArrayList<String>()
     private var distributorList = ArrayList<String>()
 
-    private lateinit var binding: ActivityTahapPabrikPengolahanBinding
+    private lateinit var binding: ActivityTahapTengkulakBinding
+    private lateinit var viewModel: TahapTengkulakViewModel
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuanYangDiterima = ""
@@ -39,102 +43,115 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTahapPabrikPengolahanBinding.inflate(layoutInflater)
+        binding = ActivityTahapTengkulakBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this) [TahapTengkulakViewModel::class.java]
 
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        loadDataPabrikPengolahan()
-        loadDataDistributor()
+        viewModel.apply {
+            loadDataTengkulak(traceableGoodHelper)
+            loadDataDistributor(traceableGoodHelper)
+        }
+
+        viewModel.tengkulakList.observe(this) { tengkulak ->
+            if (tengkulak.isNotEmpty()) {
+                tengkulak.forEach {
+                    try {
+                        tengkulakList.add("${it.namaTengkulak} - ${it.kontakTengkulak.substring(0, 3)}***${it.kontakTengkulak.substring(it.kontakTengkulak.length - 3)}")
+                    } catch (e: Exception) {
+                        tengkulakList.add(it.namaTengkulak)
+                        Log.e("TahapTengkulakActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterTengkulak = ArrayAdapter<String>(
+                    this@TahapTengkulakActivity,
+                    android.R.layout.simple_list_item_1,
+                    tengkulakList
+                )
+                binding.edtNamaTengkulak.setAdapter(adapterTengkulak)
+            } else {
+                tengkulakList = ArrayList()
+                Toast.makeText(
+                    this@TahapTengkulakActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.distributorList.observe(this) { distributor ->
+            if (distributor.isNotEmpty()) {
+                distributor.forEach {
+                    try {
+                        distributorList.add(
+                            "${it.namaDistributor} - ${
+                                it.kontakDistributor.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                        )
+                    } catch (e: Exception) {
+                        distributorList.add(it.namaDistributor)
+                        Log.e("TahapTengkulakActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterDistributor = ArrayAdapter<String>(
+                    this@TahapTengkulakActivity,
+                    android.R.layout.simple_list_item_1,
+                    distributorList
+                )
+                binding.edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
+            } else {
+                distributorList = ArrayList()
+                Toast.makeText(
+                    this@TahapTengkulakActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.apply {
+            isTambahTengkulakClicked.observe(this@TahapTengkulakActivity) {
+                isTambahDataTengkulakClicked = it
+            }
+            isTambahDistributorClicked.observe(this@TahapTengkulakActivity) {
+                isTambahDataDistributorClicked = it
+            }
+        }
 
         fitStatusBar()
 
         initClickListener()
     }
 
-    private fun loadDataPabrikPengolahan() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredPabrikPengolahan = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllPabrikPengolahan()
-                    MappingHelper.mapCursorToArrayListPabrikPengolahan(cursor)
-                }
-                val pabrikPengolahan = deferredPabrikPengolahan.await()
-                if (pabrikPengolahan.size > 0) {
-                    pabrikPengolahan.forEach {
-                        try {
-                            pabrikPengolahanList.add("${it.namaPabrikPengolahan} - ${it.kontakPabrikPengolahan.substring(0, 3)}***${it.kontakPabrikPengolahan.substring(it.kontakPabrikPengolahan.length - 3)}")
-                        } catch (e: Exception) {
-                            pabrikPengolahanList.add(it.namaPabrikPengolahan)
-                            Log.e("TahapPabrikActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterPabrikPengolahan = ArrayAdapter<String>(
-                        this@TahapPabrikPengolahanActivity,
-                        android.R.layout.simple_list_item_1,
-                        pabrikPengolahanList
-                    )
-                    edtNamaPabrikPengolahan.setAdapter(adapterPabrikPengolahan)
-                } else {
-                    pabrikPengolahanList = ArrayList()
-                    Toast.makeText(
-                        this@TahapPabrikPengolahanActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun loadDataDistributor() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredDistributor = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllDistributor()
-                    MappingHelper.mapCursorToArrayListDistributor(cursor)
-                }
-                val distributor = deferredDistributor.await()
-                if (distributor.size > 0) {
-                    distributor.forEach {
-                        try {
-                            distributorList.add(
-                                "${it.namaDistributor} - ${
-                                    it.kontakDistributor.substring(
-                                        0,
-                                        3
-                                    )
-                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
-                            )
-                        } catch (e: Exception) {
-                            distributorList.add(it.namaDistributor)
-                            Log.e("TahapPabrikActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterDistributor = ArrayAdapter<String>(
-                        this@TahapPabrikPengolahanActivity,
-                        android.R.layout.simple_list_item_1,
-                        distributorList
-                    )
-                    edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
-                } else {
-                    distributorList = ArrayList()
-                    Toast.makeText(
-                        this@TahapPabrikPengolahanActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnTambahTengkulak.setOnClickListener {
+            val intentTambahTengkulak = Intent(this, TambahTengkulakActivity::class.java).apply {
+                val namaTengkulak = binding.edtNamaTengkulak.text.toString()
+                putExtra(Utils.EXTRA_NAMA_TENGKULAK, namaTengkulak)
+            }
+            startActivity(intentTambahTengkulak)
+            viewModel.setTambahTengkulakClicked(true)
+        }
+
+        binding.btnTambahDistributor.setOnClickListener {
+            val intentTambahDistributor = Intent(this, TambahDistributorActivity::class.java).apply {
+                val namaDistributor = binding.edtNamaDistributorSelanjutnya.text.toString()
+                putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
+            }
+            startActivity(intentTambahDistributor)
+            viewModel.setTambahDistributorClicked(true)
         }
 
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
@@ -147,7 +164,11 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     simpanData(Utils.GUDANG)
                 }
                 Utils.TENGKULAK -> {
-                    simpanData(Utils.TENGKULAK)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.tahap_sedang_dikerjakan, selectedTahapSelanjutnya),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 Utils.PENGGILING -> {
                     simpanData(Utils.PENGGILING)
@@ -156,17 +177,14 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     simpanData(Utils.PENGEPUL)
                 }
                 Utils.PABRIK_PENGOLAHAN -> {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.tahap_sedang_dikerjakan, selectedTahapSelanjutnya),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    simpanData(Utils.PABRIK_PENGOLAHAN)
                 }
                 Utils.PENERIMA -> {
                     simpanData(Utils.PENERIMA)
                 }
             }
         }
+
         binding.btnSimpan.setOnClickListener {
             simpanData(getString(R.string.simpan))
         }
@@ -177,8 +195,8 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
             val satuanYangDiterima = selectedSatuanYangDiterima
             val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
             val status = selectedTahapSelanjutnya
-            val namaPabrikPengolahan = edtNamaPabrikPengolahan.text.toString().trim()
-            val tahap = getString(R.string.pabrik_pengolahan)
+            val namaTengkulak = edtNamaTengkulak.text.toString().trim()
+            val tahap = getString(R.string.tengkulak)
             val namaDistributorSelanjutnya =
                 edtNamaDistributorSelanjutnya.text.toString().trim()
             val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
@@ -192,8 +210,8 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
             val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
             val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-            namaPabrikPengolahan.showErrorIfEmpty(
-                binding.edtNamaPabrikPengolahan,
+            namaTengkulak.showErrorIfEmpty(
+                binding.edtNamaTengkulak,
                 getString(R.string.tidak_boleh_kosong)
             )
             namaDistributorSelanjutnya.showErrorIfEmpty(
@@ -232,7 +250,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     batchIdExtra,
                     tahap,
                     status,
-                    namaPabrikPengolahan,
+                    namaTengkulak,
                     "",
                     "",
                     "",
@@ -248,25 +266,13 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                 if (resultTransaksi > 0) {
                     if (resultAlurTransaksi > 0) {
                         Toast.makeText(
-                            this@TahapPabrikPengolahanActivity,
-                            getString(R.string.berhasil_menambah_data, Utils.PABRIK_PENGOLAHAN),
+                            this@TahapTengkulakActivity,
+                            getString(R.string.berhasil_menambah_data, Utils.TENGKULAK),
                             Toast.LENGTH_SHORT
                         ).show()
                         when (tahapSelanjutnya) {
                             Utils.GUDANG -> {
-                                val intentGudang = Intent(this@TahapPabrikPengolahanActivity, TahapGudangActivity::class.java).apply {
-                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
-                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
-                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
-                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
-                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
-                                }
-                                startActivity(intentGudang)
-                                finish()
-
-                            }
-                            Utils.TENGKULAK -> {
-                                val intentTengkulak = Intent(this@TahapPabrikPengolahanActivity, TahapTengkulakActivity::class.java).apply {
+                                val intentTengkulak = Intent(this@TahapTengkulakActivity, TahapTengkulakActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -275,9 +281,10 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                                 }
                                 startActivity(intentTengkulak)
                                 finish()
+
                             }
                             Utils.PENGGILING -> {
-                                val intentPenggiling = Intent(this@TahapPabrikPengolahanActivity, TahapPenggilingActivity::class.java).apply {
+                                val intentPenggiling = Intent(this@TahapTengkulakActivity, TahapPenggilingActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -288,7 +295,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                                 finish()
                             }
                             Utils.PENGEPUL -> {
-                                val intentPengepul = Intent(this@TahapPabrikPengolahanActivity, TahapPengepulActivity::class.java).apply {
+                                val intentPengepul = Intent(this@TahapTengkulakActivity, TahapPengepulActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -298,8 +305,19 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                                 startActivity(intentPengepul)
                                 finish()
                             }
+                            Utils.PABRIK_PENGOLAHAN -> {
+                                val intentPabrikPengolahan = Intent(this@TahapTengkulakActivity, TahapPabrikPengolahanActivity::class.java).apply {
+                                    putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
+                                    putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
+                                    putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
+                                    putExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI, namaProdukExtra)
+                                    putExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI, produkBatchExtra)
+                                }
+                                startActivity(intentPabrikPengolahan)
+                                finish()
+                            }
                             Utils.PENERIMA -> {
-                                val intentPenerima = Intent(this@TahapPabrikPengolahanActivity, TahapPenerimaActivity::class.java).apply {
+                                val intentPenerima = Intent(this@TahapTengkulakActivity, TahapPenerimaActivity::class.java).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -317,7 +335,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     }
                 } else {
                     Toast.makeText(
-                        this@TahapPabrikPengolahanActivity,
+                        this@TahapTengkulakActivity,
                         getString(R.string.gagal_menambah_data),
                         Toast.LENGTH_SHORT
                     ).show()
@@ -355,7 +373,6 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
             when (binding.tahapSelanjutnyaSpinner.selectedItem) {
                 resources.getStringArray(R.array.tahap_spinner)[i].toString() -> {
                     selectedTahapSelanjutnya = resources.getStringArray(R.array.tahap_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedTahapSelanjutnya", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -387,6 +404,18 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isTambahDataTengkulakClicked) {
+            tengkulakList = ArrayList()
+            viewModel.loadDataTengkulak(traceableGoodHelper)
+        }
+        if (isTambahDataDistributorClicked) {
+            distributorList = ArrayList()
+            viewModel.loadDataDistributor(traceableGoodHelper)
+        }
     }
 
 }

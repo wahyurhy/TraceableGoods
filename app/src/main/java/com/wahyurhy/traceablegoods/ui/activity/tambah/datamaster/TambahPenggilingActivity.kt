@@ -28,7 +28,13 @@ class TambahPenggilingActivity : AppCompatActivity() {
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val penggiling = intent.getStringExtra(Utils.EXTRA_NAMA_PENGGILING) ?: ""
+        binding.edtNamaPenggiling.setText(penggiling)
     }
 
     private fun initClickListener() {
