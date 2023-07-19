@@ -18,6 +18,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistribut
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdukActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahProdusenActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import java.text.SimpleDateFormat

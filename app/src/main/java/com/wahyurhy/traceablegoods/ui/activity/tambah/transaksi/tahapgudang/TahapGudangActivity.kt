@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi
+package com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapGudangBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahGudangActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.*
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
@@ -22,20 +24,20 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_BATCH_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
     private var isAllSet: Boolean = false
+    private var isTambahDataGudangClicked: Boolean = false
+    private var isTambahDataDistributorClicked: Boolean = false
     private lateinit var adapterGudang: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
     private var gudangList = ArrayList<String>()
     private var distributorList = ArrayList<String>()
 
     private lateinit var binding: ActivityTahapGudangBinding
+    private lateinit var viewModel: TahapGudangViewModel
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuanYangDiterima = ""
@@ -46,99 +48,112 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         binding = ActivityTahapGudangBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this) [TahapGudangViewModel::class.java]
+
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
 
-        loadDataGudang()
-        loadDataDistributor()
+        viewModel.apply {
+            loadDataGudang(traceableGoodHelper)
+            loadDataDistributor(traceableGoodHelper)
+        }
+
+        viewModel.gudangList.observe(this) { gudang ->
+            if (gudang.isNotEmpty()) {
+                gudang.forEach {
+                    try {
+                        gudangList.add("${it.namaGudang} - ${it.kontakGudang.substring(0, 3)}***${it.kontakGudang.substring(it.kontakGudang.length - 3)}")
+                    } catch (e: Exception) {
+                        gudangList.add(it.namaGudang)
+                        Log.e("TahapGudangActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterGudang = ArrayAdapter<String>(
+                    this@TahapGudangActivity,
+                    android.R.layout.simple_list_item_1,
+                    gudangList
+                )
+                binding.edtNamaGudang.setAdapter(adapterGudang)
+            } else {
+                gudangList = ArrayList()
+                Toast.makeText(
+                    this@TahapGudangActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.distributorList.observe(this) { distributor ->
+            if (distributor.isNotEmpty()) {
+                distributor.forEach {
+                    try {
+                        distributorList.add(
+                            "${it.namaDistributor} - ${
+                                it.kontakDistributor.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
+                        )
+                    } catch (e: Exception) {
+                        distributorList.add(it.namaDistributor)
+                        Log.e("TahapGudangActivity", "Error: ${e.message}")
+                    }
+                }
+                adapterDistributor = ArrayAdapter<String>(
+                    this@TahapGudangActivity,
+                    android.R.layout.simple_list_item_1,
+                    distributorList
+                )
+                binding.edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
+            } else {
+                distributorList = ArrayList()
+                Toast.makeText(
+                    this@TahapGudangActivity,
+                    "Tidak ada data saat ini",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
+        viewModel.apply {
+            isTambahGudangClicked.observe(this@TahapGudangActivity) {
+                isTambahDataGudangClicked = it
+            }
+            isTambahDistributorClicked.observe(this@TahapGudangActivity) {
+                isTambahDataDistributorClicked = it
+            }
+        }
 
         fitStatusBar()
 
         initClickListener()
     }
 
-    private fun loadDataGudang() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredGudang = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllGudang()
-                    MappingHelper.mapCursorToArrayListGudang(cursor)
-                }
-                val gudang = deferredGudang.await()
-                if (gudang.size > 0) {
-                    gudang.forEach {
-                        try {
-                            gudangList.add("${it.namaGudang} - ${it.kontakGudang.substring(0, 3)}***${it.kontakGudang.substring(it.kontakGudang.length - 3)}")
-                        } catch (e: Exception) {
-                            gudangList.add(it.namaGudang)
-                            Log.e("TahapGudangActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterGudang = ArrayAdapter<String>(
-                        this@TahapGudangActivity,
-                        android.R.layout.simple_list_item_1,
-                        gudangList
-                    )
-                    edtNamaGudang.setAdapter(adapterGudang)
-                } else {
-                    gudangList = ArrayList()
-                    Toast.makeText(
-                        this@TahapGudangActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun loadDataDistributor() {
-        lifecycleScope.launch {
-            binding.apply {
-                val deferredDistributor = async(Dispatchers.IO) {
-                    val cursor = traceableGoodHelper.queryAllDistributor()
-                    MappingHelper.mapCursorToArrayListDistributor(cursor)
-                }
-                val distributor = deferredDistributor.await()
-                if (distributor.size > 0) {
-                    distributor.forEach {
-                        try {
-                            distributorList.add(
-                                "${it.namaDistributor} - ${
-                                    it.kontakDistributor.substring(
-                                        0,
-                                        3
-                                    )
-                                }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
-                            )
-                        } catch (e: Exception) {
-                            distributorList.add(it.namaDistributor)
-                            Log.e("TahapGudangActivity", "Error: ${e.message}")
-                        }
-                    }
-                    adapterDistributor = ArrayAdapter<String>(
-                        this@TahapGudangActivity,
-                        android.R.layout.simple_list_item_1,
-                        distributorList
-                    )
-                    edtNamaDistributorSelanjutnya.setAdapter(adapterDistributor)
-                } else {
-                    distributorList = ArrayList()
-                    Toast.makeText(
-                        this@TahapGudangActivity,
-                        "Tidak ada data saat ini",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
     private fun initClickListener() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnTambahGudang.setOnClickListener {
+            val intentTambahGudang = Intent(this, TambahGudangActivity::class.java).apply {
+                val namaGudang = binding.edtNamaGudang.text.toString()
+                putExtra(Utils.EXTRA_NAMA_GUDANG, namaGudang)
+            }
+            startActivity(intentTambahGudang)
+            viewModel.setTambahGudangClicked(true)
+        }
+
+        binding.btnTambahDistributor.setOnClickListener {
+            val intentTambahDistributor = Intent(this, TambahDistributorActivity::class.java).apply {
+                val namaDistributor = binding.edtNamaDistributorSelanjutnya.text.toString()
+                putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
+            }
+            startActivity(intentTambahDistributor)
+            viewModel.setTambahDistributorClicked(true)
         }
 
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
@@ -406,6 +421,18 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isTambahDataGudangClicked) {
+            gudangList = ArrayList()
+            viewModel.loadDataGudang(traceableGoodHelper)
+        }
+        if (isTambahDataDistributorClicked) {
+            distributorList = ArrayList()
+            viewModel.loadDataDistributor(traceableGoodHelper)
+        }
     }
 
 }

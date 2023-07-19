@@ -28,7 +28,13 @@ class TambahGudangActivity : AppCompatActivity() {
         traceableGoodHelper.open()
 
         fitStatusBar()
+        initEditText()
         initClickListener()
+    }
+
+    private fun initEditText() {
+        val gudang = intent.getStringExtra(Utils.EXTRA_NAMA_GUDANG) ?: ""
+        binding.edtNamaGudang.setText(gudang)
     }
 
     private fun initClickListener() {

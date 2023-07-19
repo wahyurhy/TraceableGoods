@@ -57,7 +57,7 @@
         <activity android:name=".ui.activity.tambah.datamaster.TambahTengkulakActivity" />
         <activity android:name=".ui.activity.tambah.datamaster.TambahPabrikPengolahanActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.tahapprodusen.TahapProdusenActivity" />
-        <activity android:name=".ui.activity.tambah.transaksi.TahapGudangActivity" />
+        <activity android:name=".ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.TahapTengkulakActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.TahapPenggilingActivity" />
         <activity android:name=".ui.activity.tambah.transaksi.TahapPengepulActivity" />
