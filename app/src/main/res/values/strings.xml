@@ -183,7 +183,6 @@
     <string name="tokopengecer">Toko / Pengecer</string>
     <string name="scan_qr_code_for_batch_id">Scan QR-Code for Batch ID</string>
     <string name="alur_distribusi_struk">ALUR DISTRIBUSI</string>
-    <string name="sedang_mencetak_batch_id">Sedang mencetak Batch ID</string>
     <string name="berhasil_mencetak_batch_id">Berhasil mencetak Batch ID</string>
     <string name="printer_belum_terkoneksi">Printer belum terkoneksi</string>
 
@@ -245,4 +244,8 @@
         <item>Pabrik Pengolahan</item>
         <item>Penerima</item>
     </string-array>
+    <string name="saat_ini_ntidak_ada_notifikasi">Saat ini\ntidak ada notifikasi</string>
+    <string name="belum_ada_data_informasi_nsilahkan_tambah_data">Belum ada Data Informasi\nSilahkan tambah data</string>
+    <string name="belum_ada_data_transaksi_nsilahkan_tambah_data">Belum ada Data Transaksi\nSilahkan tambah data</string>
+    <string name="mencetak">Mencetak...</string>
 </resources>

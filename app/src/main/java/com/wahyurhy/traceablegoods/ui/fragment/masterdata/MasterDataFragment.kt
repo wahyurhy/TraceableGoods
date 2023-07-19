@@ -1,11 +1,11 @@
 package com.wahyurhy.traceablegoods.ui.fragment.masterdata
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -55,12 +55,29 @@ class MasterDataFragment : Fragment() {
             adapter.setOnClickedListener(object : DataInfoAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View?, position: Int) {
                     val dataName = dataInfoList[position].dataName
-                    Intent(requireContext(), ListActivity::class.java).apply {
+                    Intent(requireActivity(), ListActivity::class.java).apply {
                         putExtra(NAME_LIST, dataName)
                         startActivity(this)
                     }
                 }
             })
+
+            if (adapter.mDataInfo.size <= 0 || adapterCardInfo.totalDataInfo <= 0){
+                binding.emptyNotification.visibility = View.VISIBLE
+                binding.textEmptyNotification.visibility = View.VISIBLE
+                binding.noData.visibility = View.VISIBLE
+                binding.textNoData.visibility = View.VISIBLE
+                binding.rvDataInfo.visibility = View.INVISIBLE
+                binding.rvCardInfo.visibility = View.INVISIBLE
+            }
+            if (adapter.mDataInfo.size > 0 || adapterCardInfo.totalDataInfo > 0) {
+                binding.emptyNotification.visibility = View.INVISIBLE
+                binding.textEmptyNotification.visibility = View.INVISIBLE
+                binding.noData.visibility = View.INVISIBLE
+                binding.textNoData.visibility = View.INVISIBLE
+                binding.rvDataInfo.visibility = View.VISIBLE
+                binding.rvCardInfo.visibility = View.VISIBLE
+            }
         }
 
         // Observasi perhitungan setiap data info
@@ -96,16 +113,9 @@ class MasterDataFragment : Fragment() {
 
         // Observasi totalDataInfo
         viewModel.totalDataInfo.observe(viewLifecycleOwner) { totalDataInfoViewModel ->
-            // Lakukan tindakan yang sesuai dengan totalDataInfo yang diperbarui
             totalDataInfo = totalDataInfoViewModel
             adapterCardInfo.totalDataInfo = totalDataInfo
             adapterCardInfo.notifyDataSetChanged()
-        }
-
-        // Observasi showToast
-        viewModel.showToast.observe(viewLifecycleOwner) { message ->
-            // Tampilkan pesan toast jika diperlukan
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
     }

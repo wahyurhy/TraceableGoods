@@ -20,9 +20,6 @@ class MasterDataViewModel(private val application: Application) : AndroidViewMod
     private val _totalDataInfo = MutableLiveData<Int>()
     val totalDataInfo: LiveData<Int> get() = _totalDataInfo
 
-    private val _showToast = MutableLiveData<String>()
-    val showToast: LiveData<String> get() = _showToast
-
     private val _produk = MutableLiveData<String>()
     val produk: LiveData<String> get() = _produk
 
@@ -124,7 +121,6 @@ class MasterDataViewModel(private val application: Application) : AndroidViewMod
             } else {
                 _dataInfoList.value = ArrayList()
                 _totalDataInfo.value = 0
-                _showToast.value = "Tidak ada data saat ini"
             }
 
             traceableGoodHelper.close()

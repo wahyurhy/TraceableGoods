@@ -3,15 +3,14 @@ package com.wahyurhy.traceablegoods.ui.activity
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,10 +19,10 @@ import com.dantsu.escposprinter.EscPosPrinter
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
+import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.wahyurhy.traceablegoods.MainActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
@@ -42,6 +41,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class TahapAlurDistribusiActivity : AppCompatActivity() {
@@ -116,41 +116,70 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
     }
 
     private fun setPrintStruk() {
-        val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
-        val namaProduk = intent.getStringExtra(EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+        binding.bgDark.visibility = View.VISIBLE
+        binding.animPrinter.visibility = View.VISIBLE
+        binding.textAnimPrinter.visibility = View.VISIBLE
 
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            if (Build.VERSION.SDK_INT >= 31) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                    PERMISSION_BLUETOOTH
-                )
+        lifecycleScope.launch {
+            val batchId = intent.getStringExtra(EXTRA_BATCH_ID) ?: ""
+            val namaProduk = intent.getStringExtra(EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
+
+            if (ContextCompat.checkSelfPermission(
+                    this@TahapAlurDistribusiActivity,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                if (Build.VERSION.SDK_INT >= 31) {
+                    ActivityCompat.requestPermissions(
+                        this@TahapAlurDistribusiActivity,
+                        arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                        PERMISSION_BLUETOOTH
+                    )
+                }
             }
-        }
 
-        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+            val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
 
-        if (Build.VERSION.SDK_INT >= 31) {
-            bluetoothAdapter = bluetoothManager.adapter
-        } else {
-            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        }
-
-        if (bluetoothAdapter.isEnabled) {
-            val connection = BluetoothPrintersConnections.selectFirstPaired()
-            if (connection != null) {
-                printStruk(connection, namaProduk, batchId)
+            bluetoothAdapter = if (Build.VERSION.SDK_INT >= 31) {
+                bluetoothManager.adapter
             } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.printer_belum_terkoneksi),
-                    Toast.LENGTH_SHORT
-                ).show()
+                BluetoothAdapter.getDefaultAdapter()
+            }
+
+            if (bluetoothAdapter.isEnabled) {
+                val startTime = System.currentTimeMillis()
+
+                withContext(Dispatchers.IO) {
+                    val connection = BluetoothPrintersConnections.selectFirstPaired()
+                    if (connection != null) {
+                        printStruk(connection, namaProduk, batchId, startTime)
+                    } else {
+                        val withContextDuration = System.currentTimeMillis() - startTime
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Snackbar.make(
+                                binding.root,
+                                getString(R.string.printer_belum_terkoneksi),
+                                Snackbar.LENGTH_SHORT
+                            ).apply {
+                                view.setBackgroundColor(ContextCompat.getColor(this@TahapAlurDistribusiActivity, R.color.red))
+                                setActionTextColor(ContextCompat.getColor(this@TahapAlurDistribusiActivity, android.R.color.white))
+                                val snackbarView = view
+                                val params = snackbarView.layoutParams as ViewGroup.MarginLayoutParams
+                                params.bottomMargin = 100
+                                snackbarView.layoutParams = params
+                                show()
+                            }
+                        }, withContextDuration)
+                    }
+                }
+
+                val withContextDuration = System.currentTimeMillis() - startTime
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.bgDark.visibility = View.GONE
+                    binding.animPrinter.visibility = View.GONE
+                    binding.textAnimPrinter.visibility = View.GONE
+                }, withContextDuration)
             }
         }
     }
@@ -158,18 +187,12 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
     private fun printStruk(
         connection: BluetoothConnection?,
         namaProduk: String,
-        batchId: String
+        batchId: String,
+        startTime: Long
     ) {
         val printer = EscPosPrinter(connection, 203, 48f, 32)
 
-        val text = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
-            printer,
-            this.applicationContext.resources.getDrawableForDensity(
-                R.drawable.logo_struk,
-                DisplayMetrics.DENSITY_LOW,
-                theme
-            )
-        ) + "</img>\n" +
+        val text = "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.applicationContext.resources.getDrawableForDensity(R.drawable.logo_struk, DisplayMetrics.DENSITY_LOW, theme)) + "</img>\n" +
                 "[C]---------------------------\n" +
                 "[C]<font size='big-2'>${getString(R.string.alur_distribusi_struk)}</font>\n" +
                 "[C]<font size='big'>${namaProduk.uppercase()}</font>\n" +
@@ -178,21 +201,26 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 "[C]<qrcode size='29'>$batchId</qrcode>\n" +
                 "[C]<b>$batchId</b>\n" +
                 "[L]\n" +
-                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
-            printer,
-            this.applicationContext.resources.getDrawableForDensity(
-                R.drawable.border_bottom,
-                DisplayMetrics.DENSITY_LOW,
-                theme
-            )
-        ) + "</img>\n" +
+                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.applicationContext.resources.getDrawableForDensity(R.drawable.border_bottom, DisplayMetrics.DENSITY_LOW, theme)) + "</img>\n" +
                 "[L]"
 
-        Toast.makeText(this, getString(R.string.sedang_mencetak_batch_id), Toast.LENGTH_SHORT)
-            .show()
         printer.printFormattedText(text)
-        Toast.makeText(this, getString(R.string.berhasil_mencetak_batch_id), Toast.LENGTH_SHORT)
-            .show()
+
+        val withContextDuration = System.currentTimeMillis() - startTime
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            Snackbar.make(
+                binding.root,
+                getString(R.string.berhasil_mencetak_batch_id),
+                Snackbar.LENGTH_SHORT
+            ).apply {
+                val snackbarViewBerhasil = view
+                val paramsBerhasil = snackbarViewBerhasil.layoutParams as ViewGroup.MarginLayoutParams
+                paramsBerhasil.bottomMargin = 100
+                snackbarViewBerhasil.layoutParams = paramsBerhasil
+                show()
+            }
+        }, withContextDuration)
     }
 
     private fun setAdapter() {

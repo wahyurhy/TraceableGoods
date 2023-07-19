@@ -1,156 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.TahapAlurDistribusiActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="50dp"
-            android:paddingEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutTitle"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingTop="50dp"
+                android:paddingEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayoutTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:paddingVertical="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:src="@drawable/ic_back"
-                    tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_tahap_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/alur_distribusi"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <ImageButton
+                        android:id="@+id/btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@drawable/ic_back"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                <TextView
-                    android:id="@+id/btn_print"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:text="@string/cetak"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck"
-                    app:drawableTopCompat="@drawable/ic_print" />
+                    <TextView
+                        android:id="@+id/tv_tahap_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/alur_distribusi"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/btn_print"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/cetak"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:drawableTopCompat="@drawable/ic_print"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/qr_code"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_qr_raw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle" />
+
+            <TextView
+                android:id="@+id/batch_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Batch_su65ya1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/qr_code"
+                app:layout_constraintStart_toStartOf="@+id/qr_code"
+                app:layout_constraintTop_toBottomOf="@+id/qr_code" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_alur_produsen"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/batch_id"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_alur_distribusi_produsen" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_alur_distribusi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/rv_alur_produsen"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_alur_distribusi" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_alur_penerima"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/rv_alur_distribusi"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_alur_distribusi_penerima" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_tambah_alur_distribusi"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/bg_button_rounded"
+                android:drawableEnd="@drawable/ic_add"
+                android:fontFamily="@font/poppins_bold"
+                android:paddingStart="30dp"
+                android:paddingEnd="10dp"
+                android:text="@string/tambah_alur_distribusi"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_alur_distribusi"
+                tools:ignore="VisualLintButtonSize" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/qr_code"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_qr_raw"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayoutTitle" />
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/batch_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Batch_su65ya1"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/qr_code"
-            app:layout_constraintStart_toStartOf="@+id/qr_code"
-            app:layout_constraintTop_toBottomOf="@+id/qr_code" />
+    <View
+        android:id="@+id/bg_dark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".5"
+        android:background="@color/black"
+        android:visibility="invisible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_alur_produsen"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:overScrollMode="never"
-            android:scrollbarSize="0dp"
-            tools:itemCount="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/batch_id"
-            tools:listitem="@layout/item_alur_distribusi_produsen" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_printer"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/printer" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_alur_distribusi"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
-            android:overScrollMode="never"
-            android:scrollbarSize="0dp"
-            tools:itemCount="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/rv_alur_produsen"
-            tools:listitem="@layout/item_alur_distribusi" />
+    <TextView
+        android:id="@+id/text_anim_printer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/anim_printer"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:text="@string/mencetak"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_alur_penerima"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
-            android:overScrollMode="never"
-            android:scrollbarSize="0dp"
-            tools:itemCount="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/rv_alur_distribusi"
-            tools:listitem="@layout/item_alur_distribusi_penerima" />
+</RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_tambah_alur_distribusi"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/bg_button_rounded"
-            android:drawableEnd="@drawable/ic_add"
-            android:visibility="invisible"
-            android:fontFamily="@font/poppins_bold"
-            android:paddingStart="30dp"
-            android:paddingEnd="10dp"
-            android:text="@string/tambah_alur_distribusi"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_alur_distribusi"
-            tools:ignore="VisualLintButtonSize" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
