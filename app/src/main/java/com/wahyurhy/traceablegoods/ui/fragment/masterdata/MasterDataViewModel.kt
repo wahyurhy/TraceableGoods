@@ -104,27 +104,120 @@ class MasterDataViewModel(private val application: Application) : AndroidViewMod
 
             if (dataInfo.size > 0) {
                 _dataInfoList.value = dataInfo
-                _produk.value = produk.size.toString()
-                _produsen.value = produsen.size.toString()
-                _distributor.value = distributor.size.toString()
-                _penerima.value = penerima.size.toString()
-                _penggiling.value = penggiling.size.toString()
-                _pengepul.value = pengepul.size.toString()
-                _gudang.value = gudang.size.toString()
-                _tengkulak.value = tengkulak.size.toString()
-                _pabrikPengolahan.value = pabrikPengolahan.size.toString()
                 val totalDataInfo = produk.size + produsen.size + distributor.size + penerima.size +
                         penggiling.size + pengepul.size + gudang.size + tengkulak.size + pabrikPengolahan.size
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    var delayTime = 200L
+                val scopeTotalDataInfo = CoroutineScope(Dispatchers.Main)
+                val scopeProduk = CoroutineScope(Dispatchers.Main)
+                val scopeProdusen = CoroutineScope(Dispatchers.Main)
+                val scopeDistributor = CoroutineScope(Dispatchers.Main)
+                val scopePenerima = CoroutineScope(Dispatchers.Main)
+                val scopePenggiling = CoroutineScope(Dispatchers.Main)
+                val scopePengepul = CoroutineScope(Dispatchers.Main)
+                val scopeGudang = CoroutineScope(Dispatchers.Main)
+                val scopeTengkulak = CoroutineScope(Dispatchers.Main)
+                val scopePabrikPengolahan = CoroutineScope(Dispatchers.Main)
 
+                val jobTotalDataInfo = scopeTotalDataInfo.async {
+                    var delayTime = 200L
                     for (i in 0..totalDataInfo) {
                         _totalDataInfo.value = i
                         delay(delayTime)
                         delayTime -= 10
                     }
                 }
+
+                val jobProduk = scopeProduk.async {
+                    var delayTime = 50L
+                    for (i in 0..produk.size) {
+                        _produk.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobProdusen = scopeProdusen.async {
+                    var delayTime = 50L
+                    for (i in 0..produsen.size) {
+                        _produsen.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobDistributor = scopeDistributor.async {
+                    var delayTime = 50L
+                    for (i in 0..distributor.size) {
+                        _distributor.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobPenerima = scopePenerima.async {
+                    var delayTime = 50L
+                    for (i in 0..penerima.size) {
+                        _penerima.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobPenggiling = scopePenggiling.async {
+                    var delayTime = 50L
+                    for (i in 0..penggiling.size) {
+                        _penggiling.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobPengepul = scopePengepul.async {
+                    var delayTime = 50L
+                    for (i in 0..pengepul.size) {
+                        _pengepul.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobGudang = scopeGudang.async {
+                    var delayTime = 50L
+                    for (i in 0..gudang.size) {
+                        _gudang.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobTengkulak = scopeTengkulak.async {
+                    var delayTime = 50L
+                    for (i in 0..tengkulak.size) {
+                        _tengkulak.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                val jobPabrikPengolahan = scopePabrikPengolahan.async {
+                    var delayTime = 50L
+                    for (i in 0..pabrikPengolahan.size) {
+                        _pabrikPengolahan.value = i.toString()
+                        delay(delayTime)
+                        delayTime -= 10
+                    }
+                }
+
+                jobTotalDataInfo.await()
+                jobProduk.await()
+                jobProdusen.await()
+                jobDistributor.await()
+                jobPenerima.await()
+                jobPenggiling.await()
+                jobPengepul.await()
+                jobGudang.await()
+                jobTengkulak.await()
+                jobPabrikPengolahan.await()
             } else {
                 _dataInfoList.value = ArrayList()
                 _totalDataInfo.value = 0

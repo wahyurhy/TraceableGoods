@@ -84,9 +84,11 @@ class MasterDataFragment : Fragment() {
         viewModel.apply {
             produk.observe(viewLifecycleOwner) { produk ->
                 adapter.produkCount = produk
+                adapter.notifyDataSetChanged()
             }
             produsen.observe(viewLifecycleOwner) { produsen ->
                 adapter.produsenCount = produsen
+                adapter.notifyDataSetChanged()
             }
             distributor.observe(viewLifecycleOwner) { distributor ->
                 adapter.distributorCount = distributor
