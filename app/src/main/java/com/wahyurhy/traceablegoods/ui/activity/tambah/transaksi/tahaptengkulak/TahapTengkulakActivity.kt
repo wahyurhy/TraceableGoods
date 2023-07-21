@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapTengkulakBinding
@@ -22,6 +20,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappengepul.Ta
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -46,7 +45,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         binding = ActivityTahapTengkulakBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this) [TahapTengkulakViewModel::class.java]
+        viewModel = ViewModelProvider(this)[TahapTengkulakViewModel::class.java]
 
         traceableGoodHelper = TraceableGoodHelper.getInstance(applicationContext)
         traceableGoodHelper.open()
@@ -60,7 +59,14 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             if (tengkulak.isNotEmpty()) {
                 tengkulak.forEach {
                     try {
-                        tengkulakList.add("${it.namaTengkulak} - ${it.kontakTengkulak.substring(0, 3)}***${it.kontakTengkulak.substring(it.kontakTengkulak.length - 3)}")
+                        tengkulakList.add(
+                            "${it.namaTengkulak} - ${
+                                it.kontakTengkulak.substring(
+                                    0,
+                                    3
+                                )
+                            }***${it.kontakTengkulak.substring(it.kontakTengkulak.length - 3)}"
+                        )
                     } catch (e: Exception) {
                         tengkulakList.add(it.namaTengkulak)
                         Log.e("TahapTengkulakActivity", "Error: ${e.message}")
@@ -146,10 +152,11 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         }
 
         binding.btnTambahDistributor.setOnClickListener {
-            val intentTambahDistributor = Intent(this, TambahDistributorActivity::class.java).apply {
-                val namaDistributor = binding.edtNamaDistributorSelanjutnya.text.toString()
-                putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
-            }
+            val intentTambahDistributor =
+                Intent(this, TambahDistributorActivity::class.java).apply {
+                    val namaDistributor = binding.edtNamaDistributorSelanjutnya.text.toString()
+                    putExtra(Utils.EXTRA_NAMA_DISTRIBUTOR, namaDistributor)
+                }
             startActivity(intentTambahDistributor)
             viewModel.setTambahDistributorClicked(true)
         }
@@ -210,27 +217,27 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
             val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-            namaTengkulak.showErrorIfEmpty(
+            isAllSet = namaTengkulak.isEmpty(
                 binding.edtNamaTengkulak,
                 getString(R.string.tidak_boleh_kosong)
             )
-            namaDistributorSelanjutnya.showErrorIfEmpty(
+            isAllSet = namaDistributorSelanjutnya.isEmpty(
                 binding.edtNamaDistributorSelanjutnya,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiterima.showErrorIfEmpty(
+            isAllSet = totalYangDiterima.isEmpty(
                 binding.edtTotalYangDiterima,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiDistribusikan.showErrorIfEmpty(
+            isAllSet = totalYangDiDistribusikan.isEmpty(
                 binding.edtTotalYangDidistribusikan,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiAsal.showErrorIfEmpty(
+            isAllSet = lokasiAsal.isEmpty(
                 binding.edtLokasiAsal,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiTujuan.showErrorIfEmpty(
+            isAllSet = lokasiTujuan.isEmpty(
                 binding.edtLokasiTujuan,
                 getString(R.string.tidak_boleh_kosong)
             )
@@ -272,7 +279,10 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         ).show()
                         when (tahapSelanjutnya) {
                             Utils.GUDANG -> {
-                                val intentTengkulak = Intent(this@TahapTengkulakActivity, TahapTengkulakActivity::class.java).apply {
+                                val intentTengkulak = Intent(
+                                    this@TahapTengkulakActivity,
+                                    TahapTengkulakActivity::class.java
+                                ).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -284,7 +294,10 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
                             }
                             Utils.PENGGILING -> {
-                                val intentPenggiling = Intent(this@TahapTengkulakActivity, TahapPenggilingActivity::class.java).apply {
+                                val intentPenggiling = Intent(
+                                    this@TahapTengkulakActivity,
+                                    TahapPenggilingActivity::class.java
+                                ).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -295,7 +308,10 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 finish()
                             }
                             Utils.PENGEPUL -> {
-                                val intentPengepul = Intent(this@TahapTengkulakActivity, TahapPengepulActivity::class.java).apply {
+                                val intentPengepul = Intent(
+                                    this@TahapTengkulakActivity,
+                                    TahapPengepulActivity::class.java
+                                ).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -306,7 +322,10 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 finish()
                             }
                             Utils.PABRIK_PENGOLAHAN -> {
-                                val intentPabrikPengolahan = Intent(this@TahapTengkulakActivity, TahapPabrikPengolahanActivity::class.java).apply {
+                                val intentPabrikPengolahan = Intent(
+                                    this@TahapTengkulakActivity,
+                                    TahapPabrikPengolahanActivity::class.java
+                                ).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -317,7 +336,10 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 finish()
                             }
                             Utils.PENERIMA -> {
-                                val intentPenerima = Intent(this@TahapTengkulakActivity, TahapPenerimaActivity::class.java).apply {
+                                val intentPenerima = Intent(
+                                    this@TahapTengkulakActivity,
+                                    TahapPenerimaActivity::class.java
+                                ).apply {
                                     putExtra(Utils.EXTRA_TRANSAKSI_ID, transaksiIdExtra)
                                     putExtra(Utils.EXTRA_BATCH_ID, batchIdExtra)
                                     putExtra(Utils.EXTRA_JENIS_PRODUK_TRANSAKSI, jenisProdukExtra)
@@ -344,26 +366,6 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         }
     }
 
-    private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
-    }
-
     private fun fitStatusBar() {
         Utils.setSystemBarFitWindow(this)
     }
@@ -372,7 +374,8 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         for (i in 0..5) {
             when (binding.tahapSelanjutnyaSpinner.selectedItem) {
                 resources.getStringArray(R.array.tahap_spinner)[i].toString() -> {
-                    selectedTahapSelanjutnya = resources.getStringArray(R.array.tahap_spinner)[i].toString()
+                    selectedTahapSelanjutnya =
+                        resources.getStringArray(R.array.tahap_spinner)[i].toString()
                 }
             }
         }

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.Transaksi
+import com.wahyurhy.traceablegoods.core.data.source.model.Transaksi
 import com.wahyurhy.traceablegoods.utils.Utils.BIJIAN
 import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.DAGING

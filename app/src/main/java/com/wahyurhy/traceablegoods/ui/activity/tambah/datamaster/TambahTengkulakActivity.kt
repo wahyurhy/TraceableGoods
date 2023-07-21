@@ -3,7 +3,6 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataTengkulakBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
@@ -11,6 +10,7 @@ import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.TENGKULAK
 import com.wahyurhy.traceablegoods.utils.Utils.TENGKULAK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahTengkulakActivity : AppCompatActivity() {
 
@@ -48,9 +48,9 @@ class TambahTengkulakActivity : AppCompatActivity() {
                 val kontakTengkulak = edtKontakTengkulak.text.toString().trim()
                 val alamatTengkulak = edtAlamatTengkulak.text.toString().trim()
 
-                namaTengkulak.showErrorIfEmpty(binding.edtNamaTengkulak, getString(R.string.tidak_boleh_kosong))
-                kontakTengkulak.showErrorIfEmpty(binding.edtKontakTengkulak, getString(R.string.tidak_boleh_kosong))
-                alamatTengkulak.showErrorIfEmpty(binding.edtAlamatTengkulak, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaTengkulak.isEmpty(binding.edtNamaTengkulak, getString(R.string.tidak_boleh_kosong))
+                isAllSet = kontakTengkulak.isEmpty(binding.edtKontakTengkulak, getString(R.string.tidak_boleh_kosong))
+                isAllSet = alamatTengkulak.isEmpty(binding.edtAlamatTengkulak, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(TENGKULAK_ID, TENGKULAK, getCurrentDate() + " WIB")
@@ -72,16 +72,6 @@ class TambahTengkulakActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

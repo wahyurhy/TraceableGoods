@@ -185,6 +185,9 @@
     <string name="alur_distribusi_struk">ALUR DISTRIBUSI</string>
     <string name="berhasil_mencetak_batch_id">Berhasil mencetak Batch ID</string>
     <string name="printer_belum_terkoneksi">Printer belum terkoneksi</string>
+    <string name="email_tidak_kosong">Email tidak boleh kosong</string>
+    <string name="password_tidak_kosong">Password tidak boleh kosong</string>
+    <string name="success_login">Selamat datang %1$s</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

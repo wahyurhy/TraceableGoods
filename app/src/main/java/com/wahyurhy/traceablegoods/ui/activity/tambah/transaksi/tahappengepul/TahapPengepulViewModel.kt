@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.Distributor
-import com.wahyurhy.traceablegoods.model.Pengepul
+import com.wahyurhy.traceablegoods.core.data.source.model.Distributor
+import com.wahyurhy.traceablegoods.core.data.source.model.Pengepul
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

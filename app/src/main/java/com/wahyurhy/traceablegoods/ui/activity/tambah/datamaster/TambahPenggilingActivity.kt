@@ -11,6 +11,7 @@ import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PENGGILING
 import com.wahyurhy.traceablegoods.utils.Utils.PENGGILING_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahPenggilingActivity : AppCompatActivity() {
 
@@ -48,9 +49,9 @@ class TambahPenggilingActivity : AppCompatActivity() {
                 val kontakPenggiling = edtKontakPenggiling.text.toString().trim()
                 val alamatPenggiling = edtAlamatPenggiling.text.toString().trim()
 
-                namaPenggiling.showErrorIfEmpty(binding.edtNamaPenggiling, getString(R.string.tidak_boleh_kosong))
-                namaPenggiling.showErrorIfEmpty(binding.edtKontakPenggiling, getString(R.string.tidak_boleh_kosong))
-                namaPenggiling.showErrorIfEmpty(binding.edtAlamatPenggiling, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaPenggiling.isEmpty(binding.edtNamaPenggiling, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaPenggiling.isEmpty(binding.edtKontakPenggiling, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaPenggiling.isEmpty(binding.edtAlamatPenggiling, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(PENGGILING_ID, PENGGILING, getCurrentDate() + " WIB")
@@ -72,16 +73,6 @@ class TambahPenggilingActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

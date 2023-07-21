@@ -3,14 +3,12 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataGudangBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import java.text.SimpleDateFormat
-import java.util.*
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahGudangActivity : AppCompatActivity() {
 
@@ -48,9 +46,9 @@ class TambahGudangActivity : AppCompatActivity() {
                 val kontakGudang = edtKontakGudang.text.toString().trim()
                 val alamatGudang = edtAlamatGudang.text.toString().trim()
 
-                namaGudang.showErrorIfEmpty(binding.edtNamaGudang, getString(R.string.tidak_boleh_kosong))
-                kontakGudang.showErrorIfEmpty(binding.edtKontakGudang, getString(R.string.tidak_boleh_kosong))
-                alamatGudang.showErrorIfEmpty(binding.edtAlamatGudang, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaGudang.isEmpty(binding.edtNamaGudang, getString(R.string.tidak_boleh_kosong))
+                isAllSet = kontakGudang.isEmpty(binding.edtKontakGudang, getString(R.string.tidak_boleh_kosong))
+                isAllSet = alamatGudang.isEmpty(binding.edtAlamatGudang, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(
@@ -74,16 +72,6 @@ class TambahGudangActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

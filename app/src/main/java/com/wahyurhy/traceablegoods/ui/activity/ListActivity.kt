@@ -1,20 +1,17 @@
 package com.wahyurhy.traceablegoods.ui.activity
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.*
+import com.wahyurhy.traceablegoods.core.data.source.model.*
 import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.model.*
 import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper

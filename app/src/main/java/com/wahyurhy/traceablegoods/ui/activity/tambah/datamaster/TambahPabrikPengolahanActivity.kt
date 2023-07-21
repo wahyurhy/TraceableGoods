@@ -3,7 +3,6 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataPabrikPengolahanBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
@@ -11,6 +10,7 @@ import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PABRIK_PENGOLAHAN
 import com.wahyurhy.traceablegoods.utils.Utils.PABRIK_PENGOLAHAN_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahPabrikPengolahanActivity : AppCompatActivity() {
 
@@ -48,9 +48,9 @@ class TambahPabrikPengolahanActivity : AppCompatActivity() {
                 val kontakPabrikPengolahan = edtKontakPabrikPengolahan.text.toString().trim()
                 val alamatPabrikPengolahan = edtAlamatPabrikPengolahan.text.toString().trim()
 
-                namaPabrikPengolahan.showErrorIfEmpty(binding.edtNamaPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
-                kontakPabrikPengolahan.showErrorIfEmpty(binding.edtKontakPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
-                alamatPabrikPengolahan.showErrorIfEmpty(binding.edtAlamatPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaPabrikPengolahan.isEmpty(binding.edtNamaPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
+                isAllSet = kontakPabrikPengolahan.isEmpty(binding.edtKontakPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
+                isAllSet = alamatPabrikPengolahan.isEmpty(binding.edtAlamatPabrikPengolahan, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(PABRIK_PENGOLAHAN_ID, PABRIK_PENGOLAHAN, getCurrentDate() + " WIB")
@@ -72,16 +72,6 @@ class TambahPabrikPengolahanActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

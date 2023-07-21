@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.AlurDistribusi
+import com.wahyurhy.traceablegoods.core.data.source.model.AlurDistribusi
 
 class AlurDistribusiPenerimaAdapter : RecyclerView.Adapter<AlurDistribusiPenerimaAdapter.ViewHolder>() {
 

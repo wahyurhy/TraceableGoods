@@ -12,6 +12,7 @@ import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.PRODUK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -57,7 +58,7 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 val tanggalKadaluarsa = edtTanggalKadaluarsaProduk.text.toString().trim()
                 val deskripsiProduk = edtDeskripsiProduk.text.toString().trim()
 
-                namaProduk.showErrorIfEmpty(binding, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaProduk.isEmpty(binding, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(PRODUK_ID, PRODUK, getCurrentDate() + " WIB")
@@ -79,16 +80,6 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.edtNamaProduk.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.edtNamaProduk.error = null
         }
     }
 

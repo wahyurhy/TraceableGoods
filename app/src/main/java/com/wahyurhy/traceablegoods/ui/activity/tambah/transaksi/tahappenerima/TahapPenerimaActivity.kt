@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapPenerimaBinding
@@ -18,6 +16,7 @@ import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenerimaActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -119,11 +118,11 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
                 val kategoriPenerima = mapPenerima[namaPenerima] ?: tahap
 
-                namaPenerima.showErrorIfEmpty(
+                isAllSet = namaPenerima.isEmpty(
                     binding.edtNamaPenerima,
                     getString(R.string.tidak_boleh_kosong)
                 )
-                totalYangDiterima.showErrorIfEmpty(
+                isAllSet = totalYangDiterima.isEmpty(
                     binding.edtTotalYangDiterima,
                     getString(R.string.tidak_boleh_kosong)
                 )
@@ -187,26 +186,6 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

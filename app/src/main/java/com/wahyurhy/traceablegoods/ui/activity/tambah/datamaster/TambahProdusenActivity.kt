@@ -11,6 +11,7 @@ import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdusenBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -54,10 +55,10 @@ class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val kontakProdusen = edtKontakProdusen.text.toString().trim()
                 val noNPWPProdusen = edtNpwpProdusen.text.toString().trim()
 
-                namaProdusen.showErrorIfEmpty(binding.edtNamaProdusen, getString(R.string.tidak_boleh_kosong))
-                alamatProdusen.showErrorIfEmpty(binding.edtAlamatProdusen, getString(R.string.tidak_boleh_kosong))
-                kontakProdusen.showErrorIfEmpty(binding.edtKontakProdusen, getString(R.string.tidak_boleh_kosong))
-                noNPWPProdusen.showErrorIfEmpty(binding.edtNpwpProdusen, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaProdusen.isEmpty(binding.edtNamaProdusen, getString(R.string.tidak_boleh_kosong))
+                isAllSet = alamatProdusen.isEmpty(binding.edtAlamatProdusen, getString(R.string.tidak_boleh_kosong))
+                isAllSet = kontakProdusen.isEmpty(binding.edtKontakProdusen, getString(R.string.tidak_boleh_kosong))
+                isAllSet = noNPWPProdusen.isEmpty(binding.edtNpwpProdusen, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(
@@ -96,16 +97,6 @@ class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
     private fun fitStatusBar() {
         Utils.setSystemBarFitWindow(this)
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

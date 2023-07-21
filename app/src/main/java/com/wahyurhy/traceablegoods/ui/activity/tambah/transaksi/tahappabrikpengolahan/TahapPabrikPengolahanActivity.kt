@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapPabrikPengolahanBinding
@@ -22,6 +20,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -209,27 +208,27 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
             val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
             val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-            namaPabrikPengolahan.showErrorIfEmpty(
+            isAllSet = namaPabrikPengolahan.isEmpty(
                 binding.edtNamaPabrikPengolahan,
                 getString(R.string.tidak_boleh_kosong)
             )
-            namaDistributorSelanjutnya.showErrorIfEmpty(
+            isAllSet = namaDistributorSelanjutnya.isEmpty(
                 binding.edtNamaDistributorSelanjutnya,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiterima.showErrorIfEmpty(
+            isAllSet = totalYangDiterima.isEmpty(
                 binding.edtTotalYangDiterima,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiDistribusikan.showErrorIfEmpty(
+            isAllSet = totalYangDiDistribusikan.isEmpty(
                 binding.edtTotalYangDidistribusikan,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiAsal.showErrorIfEmpty(
+            isAllSet = lokasiAsal.isEmpty(
                 binding.edtLokasiAsal,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiTujuan.showErrorIfEmpty(
+            isAllSet = lokasiTujuan.isEmpty(
                 binding.edtLokasiTujuan,
                 getString(R.string.tidak_boleh_kosong)
             )
@@ -340,26 +339,6 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     ).show()
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

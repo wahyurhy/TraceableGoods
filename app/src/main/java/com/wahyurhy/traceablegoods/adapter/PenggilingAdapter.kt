@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.Penggiling
+import com.wahyurhy.traceablegoods.core.data.source.model.Penggiling
 
 class PenggilingAdapter : RecyclerView.Adapter<PenggilingAdapter.ViewHolder>() {
 

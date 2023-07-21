@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.model
+package com.wahyurhy.traceablegoods.core.data.source.model
 
 
 import android.os.Parcelable

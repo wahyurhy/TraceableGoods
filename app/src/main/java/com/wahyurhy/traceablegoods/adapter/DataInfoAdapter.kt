@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
-import com.wahyurhy.traceablegoods.model.DataInformasi
+import com.wahyurhy.traceablegoods.core.data.source.model.DataInformasi
 import com.wahyurhy.traceablegoods.utils.Utils
 
 class DataInfoAdapter : RecyclerView.Adapter<DataInfoAdapter.ViewHolder>() {

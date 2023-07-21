@@ -9,6 +9,7 @@ import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataPengepulBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TambahPengepulActivity : AppCompatActivity() {
 
@@ -46,9 +47,9 @@ class TambahPengepulActivity : AppCompatActivity() {
                 val kontakPengepul = edtKontakPengepul.text.toString().trim()
                 val alamatPengepul = edtAlamatPengepul.text.toString().trim()
 
-                namaPengepul.showErrorIfEmpty(binding.edtNamaPengepul, getString(R.string.tidak_boleh_kosong))
-                kontakPengepul.showErrorIfEmpty(binding.edtKontakPengepul, getString(R.string.tidak_boleh_kosong))
-                alamatPengepul.showErrorIfEmpty(binding.edtAlamatPengepul, getString(R.string.tidak_boleh_kosong))
+                isAllSet = namaPengepul.isEmpty(binding.edtNamaPengepul, getString(R.string.tidak_boleh_kosong))
+                isAllSet = kontakPengepul.isEmpty(binding.edtKontakPengepul, getString(R.string.tidak_boleh_kosong))
+                isAllSet = alamatPengepul.isEmpty(binding.edtAlamatPengepul, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(
@@ -72,16 +73,6 @@ class TambahPengepulActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

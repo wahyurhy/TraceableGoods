@@ -6,27 +6,21 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapPengepulBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDistributorActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPengepulActivity
-import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
-import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima.TahapPenerimaActivity
-import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
+import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 
 class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -214,27 +208,27 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             val namaProdukExtra = intent.getStringExtra(Utils.EXTRA_NAMA_PRODUK_TRANSAKSI) ?: ""
             val produkBatchExtra = intent.getStringExtra(Utils.EXTRA_PRODUK_BATCH_TRANSAKSI) ?: ""
 
-            namaPengepul.showErrorIfEmpty(
+            isAllSet = namaPengepul.isEmpty(
                 binding.edtNamaPengepul,
                 getString(R.string.tidak_boleh_kosong)
             )
-            namaDistributorSelanjutnya.showErrorIfEmpty(
+            isAllSet = namaDistributorSelanjutnya.isEmpty(
                 binding.edtNamaDistributorSelanjutnya,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiterima.showErrorIfEmpty(
+            isAllSet = totalYangDiterima.isEmpty(
                 binding.edtTotalYangDiterima,
                 getString(R.string.tidak_boleh_kosong)
             )
-            totalYangDiDistribusikan.showErrorIfEmpty(
+            isAllSet = totalYangDiDistribusikan.isEmpty(
                 binding.edtTotalYangDidistribusikan,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiAsal.showErrorIfEmpty(
+            isAllSet = lokasiAsal.isEmpty(
                 binding.edtLokasiAsal,
                 getString(R.string.tidak_boleh_kosong)
             )
-            lokasiTujuan.showErrorIfEmpty(
+            isAllSet = lokasiTujuan.isEmpty(
                 binding.edtLokasiTujuan,
                 getString(R.string.tidak_boleh_kosong)
             )
@@ -345,26 +339,6 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     ).show()
                 }
             }
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AutoCompleteTextView, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
-        }
-    }
-
-    private fun String.showErrorIfEmpty(binding: AppCompatEditText, errorMessage: String) {
-        if (this.isEmpty()) {
-            isAllSet = false
-            binding.error = errorMessage
-        } else {
-            isAllSet = true
-            binding.error = null
         }
     }
 

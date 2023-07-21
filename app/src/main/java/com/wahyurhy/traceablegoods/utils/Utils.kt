@@ -2,6 +2,9 @@ package com.wahyurhy.traceablegoods.utils
 
 import android.app.Activity
 import android.view.WindowManager
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatEditText
+import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,8 +29,6 @@ object Utils {
     const val TENGKULAK = "Tengkulak"
     const val PABRIK_PENGOLAHAN = "Pabrik Pengolahan"
 
-    const val EXTRA_DATA_INFO = "extra_data_info"
-    const val EXTRA_TRANSAKSI = "extra_transaksi"
     const val EXTRA_PRODUK = "extra_produk"
     const val EXTRA_PRODUSEN = "extra_produsen"
     const val EXTRA_DISTRIBUTOR = "extra_distributor"
@@ -37,7 +38,6 @@ object Utils {
     const val EXTRA_GUDANG = "extra_gudang"
     const val EXTRA_TENGKULAK = "extra_tengkulak"
     const val EXTRA_PABRIK_PENGOLAHAN = "extra_pabrik_pengolahan"
-    const val EXTRA_TOTAL_DATA_INFO = "extra_total_data_info"
     const val EXTRA_PRODUK_ID = "extra_produk_id"
     const val EXTRA_JENIS_PRODUK = "extra_jenis_produk"
     const val EXTRA_NAMA_PRODUK = "extra_nama_produk"
@@ -88,7 +88,7 @@ object Utils {
     const val EXTRA_PRODUK_BATCH_TRANSAKSI = "produk_batch"
     const val EXTRA_STATUS_TRANSAKSI = "status_extra"
     const val EXTRA_ALUR_PRODUSEN = "alur_produsen_extra"
-    const val EXTRA_ALUR_DISTRIBUTOR= "alur_distributor_extra"
+    const val EXTRA_ALUR_DISTRIBUTOR = "alur_distributor_extra"
     const val EXTRA_ALUR_PENERIMA = "alur_penerima_extra"
     const val EXTRA_AFTER_TAHAP_PENERIMA = "after_tahap_penerima_extra"
 
@@ -102,11 +102,6 @@ object Utils {
     const val TENGKULAK_ID = 7
     const val PABRIK_PENGOLAHAN_ID = 8
 
-    const val RESULT_ADD = 101
-    const val RESULT_UPDATE = 201
-    const val RESULT_DELETE = 301
-    const val ALERT_DIALOG_CLOSE = 10
-    const val ALERT_DIALOG_DELETE = 20
     fun setSystemBarFitWindow(activity: Activity) {
         activity.apply {
             window.setFlags(
@@ -122,5 +117,35 @@ object Utils {
         val date = Date()
 
         return dateFormat.format(date)
+    }
+
+    fun String.isEmpty(binding: AppCompatEditText, errorMessage: String): Boolean {
+        return if (this.isEmpty()) {
+            binding.error = errorMessage
+            false
+        } else {
+            binding.error = null
+            true
+        }
+    }
+
+    fun String.isEmpty(binding: AutoCompleteTextView, errorMessage: String): Boolean {
+        return if (this.isEmpty()) {
+            binding.error = errorMessage
+            false
+        } else {
+            binding.error = null
+            true
+        }
+    }
+
+    fun String.isEmpty(binding: ActivityTambahDataProdukBinding, errorMessage: String): Boolean {
+        return if (this.isEmpty()) {
+            binding.edtNamaProduk.error = errorMessage
+            false
+        } else {
+            binding.edtNamaProduk.error = null
+            true
+        }
     }
 }

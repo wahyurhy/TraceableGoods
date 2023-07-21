@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.wahyurhy.traceablegoods.databinding.FragmentProfileBinding
-import com.wahyurhy.traceablegoods.ui.activity.LoginActivity
+import com.wahyurhy.traceablegoods.ui.activity.login.LoginActivity
 
 class ProfileFragment : Fragment() {
 
