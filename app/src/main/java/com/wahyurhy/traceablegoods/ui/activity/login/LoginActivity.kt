@@ -13,6 +13,7 @@ import com.wahyurhy.traceablegoods.MainObserverActivity
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.core.data.source.remote.network.State
 import com.wahyurhy.traceablegoods.databinding.ActivityLoginBinding
+import com.wahyurhy.traceablegoods.utils.Prefs
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,20 +56,20 @@ class LoginActivity : AppCompatActivity() {
                     when (it.state) {
                         State.SUCCESS -> {
                             binding.loading.visibility = View.GONE
-                            Snackbar.make(
-                                binding.root,
-                                getString(R.string.success_login, it.data?.nama),
-                                Snackbar.LENGTH_SHORT
-                            ).apply {
-                                view.setBackgroundColor(ContextCompat.getColor(this@LoginActivity, R.color.green))
-                                setActionTextColor(ContextCompat.getColor(this@LoginActivity, android.R.color.white))
-                                val snackbarView = view
-                                val params = snackbarView.layoutParams as ViewGroup.MarginLayoutParams
-                                params.bottomMargin = 100
-                                snackbarView.layoutParams = params
-                                show()
+                            Intent(this@LoginActivity, MainActivity::class.java).apply {
+                                val idAdmin = it.data?.id
+                                val namaAdmin = it.data?.nama
+                                val emailAdmin = it.data?.email
+
+                                Prefs.greeting = true
+
+                                Prefs.idAdmin = idAdmin ?: -1
+                                Prefs.namaAdmin = namaAdmin ?: getString(R.string.siapa_ya)
+                                Prefs.emailAdmin = emailAdmin ?: ""
+
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(this)
                             }
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
                         State.ERROR -> {
                             binding.loading.visibility = View.GONE

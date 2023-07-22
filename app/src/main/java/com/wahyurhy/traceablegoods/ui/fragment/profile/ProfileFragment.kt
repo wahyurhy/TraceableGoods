@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.wahyurhy.traceablegoods.databinding.FragmentProfileBinding
 import com.wahyurhy.traceablegoods.ui.activity.login.LoginActivity
+import com.wahyurhy.traceablegoods.utils.Prefs
 
 class ProfileFragment : Fragment() {
 
@@ -24,8 +25,28 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initProfile()
+
         binding.btnLogout.setOnClickListener {
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            Prefs.apply {
+                isLogin = false
+                idAdmin = -1
+                namaAdmin = ""
+                emailAdmin = ""
+            }
+
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(this)
+            }
+        }
+    }
+
+    private fun initProfile() {
+        binding.apply {
+            inisialNama.text = Prefs.namaAdmin[0].toString()
+            tvName.text = Prefs.namaAdmin
+            tvEmail.text = Prefs.emailAdmin
         }
     }
 

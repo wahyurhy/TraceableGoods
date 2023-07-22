@@ -173,7 +173,7 @@
                     android:enabled="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/masukan_npwp_produsen"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingHorizontal="15dp"
                     android:textColor="@color/edittext_disabled_text_color"

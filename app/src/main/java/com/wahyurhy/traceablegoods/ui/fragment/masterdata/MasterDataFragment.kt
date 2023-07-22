@@ -1,19 +1,22 @@
 package com.wahyurhy.traceablegoods.ui.fragment.masterdata
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
+import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.ViewModelFactory
 import com.wahyurhy.traceablegoods.adapter.DataInfoAdapter
 import com.wahyurhy.traceablegoods.adapter.DataInfoCardInfoAdapter
 import com.wahyurhy.traceablegoods.databinding.FragmentMasterDataBinding
 import com.wahyurhy.traceablegoods.ui.activity.ListActivity
+import com.wahyurhy.traceablegoods.utils.Prefs
 
 class MasterDataFragment : Fragment() {
 
@@ -37,6 +40,8 @@ class MasterDataFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initNamaAdmin()
 
         viewModel = ViewModelProvider(
             this,
@@ -119,6 +124,28 @@ class MasterDataFragment : Fragment() {
             adapterCardInfo.notifyDataSetChanged()
         }
 
+    }
+
+    private fun initNamaAdmin() {
+        val namaAdmin = Prefs.namaAdmin
+        binding.tvUsername.text = namaAdmin
+
+        if (Prefs.greeting) {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.success_login, namaAdmin),
+                Snackbar.LENGTH_SHORT
+            ).apply {
+                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                setActionTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+                val snackbarView = view
+                val params = snackbarView.layoutParams as ViewGroup.MarginLayoutParams
+                params.bottomMargin = 100
+                snackbarView.layoutParams = params
+                show()
+            }
+        }
+        Prefs.greeting = false
     }
 
     private fun setAdapter() {

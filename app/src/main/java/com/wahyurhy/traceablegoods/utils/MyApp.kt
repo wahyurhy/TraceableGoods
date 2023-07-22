@@ -3,6 +3,7 @@ package com.wahyurhy.traceablegoods.utils
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
+import com.chibatching.kotpref.Kotpref
 import com.wahyurhy.traceablegoods.core.di.appModule
 import com.wahyurhy.traceablegoods.core.di.repositoryModule
 import com.wahyurhy.traceablegoods.core.di.viewModelModule
@@ -13,6 +14,7 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Kotpref.init(this)
         startKoin {
             androidContext(this@MyApp)
             modules(listOf(appModule, viewModelModule, repositoryModule))

@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/inisial_nama"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@drawable/bg_profile_empty"
@@ -48,6 +49,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -57,6 +59,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"

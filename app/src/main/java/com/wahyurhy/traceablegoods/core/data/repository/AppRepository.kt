@@ -4,6 +4,7 @@ import android.util.Log
 import com.wahyurhy.traceablegoods.core.data.source.local.LocalDataSource
 import com.wahyurhy.traceablegoods.core.data.source.remote.RemoteDataSource
 import com.wahyurhy.traceablegoods.core.data.source.remote.network.Resource
+import com.wahyurhy.traceablegoods.utils.Prefs
 import kotlinx.coroutines.flow.flow
 import org.json.JSONObject
 
@@ -14,11 +15,12 @@ class AppRepository(val local: LocalDataSource, val remote: RemoteDataSource) {
         try {
             remote.login(email, password).let {
                 if (it.isSuccessful) {
+                    Prefs.isLogin = true
                     val data = it.body()?.data
                     emit(Resource.success(data))
                     Log.d("AppRepository", "Login Berhasil: ${it.body().toString()}")
                 } else {
-                    val errorBody = it.errorBody()?.string()
+                    val errorBody = it.errorBody()?.string() ?: "Terjadi Error"
                     val errorMessage = JSONObject(errorBody).getString("message")
                     emit(Resource.error(errorMessage,null))
                     Log.d("AppRepository", errorMessage)

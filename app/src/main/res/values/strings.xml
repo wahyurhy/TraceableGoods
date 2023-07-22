@@ -188,6 +188,7 @@
     <string name="email_tidak_kosong">Email tidak boleh kosong</string>
     <string name="password_tidak_kosong">Password tidak boleh kosong</string>
     <string name="success_login">Selamat datang %1$s</string>
+    <string name="siapa_ya">Siapa ya?</string>
 
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>

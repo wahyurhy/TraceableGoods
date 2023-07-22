@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.databinding.ActivityMainBinding
+import com.wahyurhy.traceablegoods.ui.activity.login.LoginActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahDataMasterActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapprodusen.TahapProdusenActivity
 import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment
 import com.wahyurhy.traceablegoods.ui.fragment.profile.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.transaksi.TransaksiFragment
+import com.wahyurhy.traceablegoods.utils.Prefs
 import com.wahyurhy.traceablegoods.utils.Utils
 
 class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
@@ -24,6 +26,13 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (!Prefs.isLogin) {
+            Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(this)
+            }
+        }
 
         fitStatusBar()
         initTabs()
