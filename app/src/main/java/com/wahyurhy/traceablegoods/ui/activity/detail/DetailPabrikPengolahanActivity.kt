@@ -124,7 +124,6 @@ class DetailPabrikPengolahanActivity : AppCompatActivity() {
         val kontakPabrikPengolahan = intent.getStringExtra(Utils.EXTRA_KONTAK_PABRIK_PENGOLAHAN)
         val alamatPabrikPengolahan = intent.getStringExtra(Utils.EXTRA_ALAMAT_PABRIK_PENGOLAHAN)
 
-        Toast.makeText(this, "kategori pabrik: $pabrikId", Toast.LENGTH_SHORT).show()
         binding.idPabrikPengolahan.text = getString(R.string.id_pabrik_pengolahan, pabrikId)
         binding.edtNamaPabrikPengolahan.setText(namaPabrikPengolahan)
         binding.edtKontakPabrikPengolahan.setText(kontakPabrikPengolahan)

@@ -380,23 +380,12 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             when (binding.satuanDiterimaSpinner.selectedItem) {
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiterima =
-                        resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
-                    Toast.makeText(
-                        this,
-                        "diterima satuan: $selectedSatuanYangDiterima",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                        resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() }
             }
             when (binding.satuanDiDistibusikanSpinner.selectedItem) {
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiDistribusikan =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
-                    Toast.makeText(
-                        this,
-                        "didistribusikan satuan: $selectedSatuanYangDiDistribusikan",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         }

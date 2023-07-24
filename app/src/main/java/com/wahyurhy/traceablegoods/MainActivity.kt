@@ -15,12 +15,15 @@ import com.wahyurhy.traceablegoods.ui.fragment.profile.ProfileFragment
 import com.wahyurhy.traceablegoods.ui.fragment.transaksi.TransaksiFragment
 import com.wahyurhy.traceablegoods.utils.Prefs
 import com.wahyurhy.traceablegoods.utils.Utils
+import com.wahyurhy.traceablegoods.utils.Utils.showExitToast
 
 class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
     MasterDataFragment.ScrollListener {
 
     private lateinit var binding: ActivityMainBinding
     private var isMasterData = true
+    private var backPressedTime: Long = 0
+    private val exitToastDuration: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,6 +153,15 @@ class MainActivity : AppCompatActivity(), TransaksiFragment.ScrollListener,
             if (scrollY == 0) {
                 binding.fbTambahData.extend()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - backPressedTime < exitToastDuration) {
+            super.onBackPressed()
+        } else {
+            showExitToast(this)
+            backPressedTime = System.currentTimeMillis()
         }
     }
 }

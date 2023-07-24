@@ -252,4 +252,10 @@
     <string name="belum_ada_data_informasi_nsilahkan_tambah_data">Belum ada Data Informasi\nSilahkan tambah data</string>
     <string name="belum_ada_data_transaksi_nsilahkan_tambah_data">Belum ada Data Transaksi\nSilahkan tambah data</string>
     <string name="mencetak">Mencetak...</string>
+    <string name="filter">Filter</string>
+    <string name="filter_berdasarkan">Filter berdasarkan :</string>
+    <string name="semua">Semua</string>
+    <string name="sudah_selesai">Sudah Selesai</string>
+    <string name="belum_selesai">Belum Selesai</string>
+    <string name="tutup_dialog">Tutup dialog</string>
 </resources>

@@ -93,7 +93,6 @@ class TambahPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             when (binding.kategoriPenerimaSpinner.selectedItem) {
                 resources.getStringArray(R.array.kategori_penerima_spinner)[i].toString() -> {
                     selectedKategoriPenerima = resources.getStringArray(R.array.kategori_penerima_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedKategoriPenerima", Toast.LENGTH_SHORT).show()
                 }
             }
         }

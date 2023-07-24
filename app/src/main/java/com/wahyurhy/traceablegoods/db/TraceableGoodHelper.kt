@@ -806,6 +806,45 @@ class TraceableGoodHelper(context: Context) {
         )
     }
 
+    fun queryTransaksiByIdObserver(id: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_TRANSAKSI,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_BATCH_ID} LIKE ? AND ${DatabaseContract.TransaksiColumns.COLUMN_STATUS} = 'Selesai'",
+            arrayOf("%$id%"),
+            null,
+            null,
+            null,
+            null
+        )
+    }
+
+    fun queryTransaksiBySudah(status: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_TRANSAKSI,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_STATUS} LIKE ?",
+            arrayOf("%$status%"),
+            null,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID} DESC",
+            null
+        )
+    }
+
+    fun queryTransaksiByBelum(status: String): Cursor {
+        return database.query(
+            DATABASE_TABLE_TRANSAKSI,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_STATUS} NOT LIKE ?",
+            arrayOf("%$status%"),
+            null,
+            null,
+            "${DatabaseContract.TransaksiColumns.COLUMN_TRANSAKSI_ID} DESC",
+            null
+        )
+    }
+
     fun insertTransaksi(
         batchId: String,
         status: String,

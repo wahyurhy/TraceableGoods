@@ -72,25 +72,13 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_view"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
                     android:inputType="textCapSentences"
                     android:background="@drawable/bg_outline_gray"
                     app:iconifiedByDefault="false"
                     app:queryHint="@string/cari_apa"
                     app:searchIcon="@drawable/ic_search" />
-
-                <ImageButton
-                    android:id="@+id/btn_filter"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/bg_outline_gray"
-                    android:contentDescription="@string/filter_data"
-                    android:src="@drawable/ic_filter"
-                    tools:ignore="ImageContrastCheck" />
 
             </LinearLayout>
 

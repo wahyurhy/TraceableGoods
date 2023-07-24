@@ -124,7 +124,6 @@ class DetailPengepulActivity : AppCompatActivity() {
         val kontakPengepul = intent.getStringExtra(Utils.EXTRA_KONTAK_PENGEPUL)
         val alamatPengepul = intent.getStringExtra(Utils.EXTRA_ALAMAT_PENGEPUL)
 
-        Toast.makeText(this, "kategori pengepul: $pengepulId", Toast.LENGTH_SHORT).show()
         binding.idPengepul.text = getString(R.string.id_pengepul, pengepulId)
         binding.edtNamaPengepul.setText(namaPengepul)
         binding.edtKontakPengepul.setText(kontakPengepul)

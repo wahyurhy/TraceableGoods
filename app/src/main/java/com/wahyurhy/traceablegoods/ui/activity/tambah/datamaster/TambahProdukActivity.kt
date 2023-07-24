@@ -92,7 +92,6 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             when (binding.jenisProdukSpinner.selectedItem) {
                 resources.getStringArray(R.array.jenis_produk_spinner)[i].toString() -> {
                     selectedJenisProduk = resources.getStringArray(R.array.jenis_produk_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedJenisProduk", Toast.LENGTH_SHORT).show()
                 }
             }
         }

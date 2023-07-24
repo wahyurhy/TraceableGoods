@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
+import com.wahyurhy.traceablegoods.core.data.source.model.Transaksi
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
-import com.wahyurhy.traceablegoods.core.data.source.model.Transaksi
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity
@@ -24,6 +24,8 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappengepul.Ta
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapprodusen.TahapProdusenActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
+import com.wahyurhy.traceablegoods.utils.MyDialogFilterTransaksiFragment
+import com.wahyurhy.traceablegoods.utils.Prefs
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
@@ -31,7 +33,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PRODUK_BATCH_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_STATUS_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TRANSAKSI_ID
 
-class TransaksiFragment : Fragment() {
+class TransaksiFragment : Fragment(), MyDialogFilterTransaksiFragment.FilterCallback {
 
     private lateinit var traceableGoodHelper: TraceableGoodHelper
 
@@ -66,9 +68,14 @@ class TransaksiFragment : Fragment() {
         initClickListener()
         hideFloatingActionButton()
         setSearchViewListener(traceableGoodHelper)
+        setFilterData()
 
         batchId = arguments?.getString(EXTRA_BATCH_ID) ?: ""
-        viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+
+        if (Prefs.isLogin)
+            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+        else
+            viewModel.filterDataTransaksi(traceableGoodHelper, "Selesai")
 
         // Observasi mTransaksi
         viewModel.transaksiList.observe(viewLifecycleOwner) { transaksiList ->
@@ -79,6 +86,17 @@ class TransaksiFragment : Fragment() {
                 }
                 batchId = ""
             }
+        }
+    }
+
+    private fun setFilterData() {
+        binding.btnFilter.setOnClickListener {
+            val myDialogFilterTransaksiFragment = MyDialogFilterTransaksiFragment()
+            myDialogFilterTransaksiFragment.setFilterCallback(this)
+            myDialogFilterTransaksiFragment.show(
+                childFragmentManager,
+                myDialogFilterTransaksiFragment.tag
+            )
         }
     }
 
@@ -93,7 +111,10 @@ class TransaksiFragment : Fragment() {
                 if (newText != "") {
                     viewModel.loadDataTransaksi(traceableGoodHelper, newText.trim())
                 } else {
-                    viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+                    if (Prefs.isLogin)
+                        viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+                    else
+                        viewModel.filterDataTransaksi(traceableGoodHelper, "Selesai")
                 }
                 return true
             }
@@ -260,7 +281,10 @@ class TransaksiFragment : Fragment() {
                     .show()
             }
             arguments = null
-            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+            if (Prefs.isLogin)
+                viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+            else
+                viewModel.filterDataTransaksi(traceableGoodHelper, "Selesai")
         }
     }
 
@@ -297,15 +321,62 @@ class TransaksiFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         traceableGoodHelper.close()
+        Prefs.apply {
+            filterSemua = true
+            filterSudahSelesai = false
+            filterBelumSelesai = false
+        }
     }
 
     override fun onResume() {
         super.onResume()
         if (isFirstLaunched) {
             adapter.mTransaksi = ArrayList()
-            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+            when {
+                Prefs.filterSemua -> viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
+                Prefs.filterSudahSelesai -> viewModel.filterDataTransaksi(
+                    traceableGoodHelper,
+                    "Selesai"
+                )
+                Prefs.filterBelumSelesai -> {
+                    if (Prefs.isLogin)
+                        viewModel.filterDataTransaksi(traceableGoodHelper, "Belum Selesai")
+                    else
+                        Toast.makeText(
+                            requireContext(),
+                            "Maaf fitur filter \"Belum Selesai\" hanya untuk Admin saja",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                }
+            }
         }
         isFirstLaunched = true
+    }
+
+    override fun onFilterChanged(
+        filterSemua: Boolean,
+        filterSudahSelesai: Boolean,
+        filterBelumSelesai: Boolean
+    ) {
+        Prefs.filterSemua = filterSemua
+        Prefs.filterSudahSelesai = filterSudahSelesai
+        Prefs.filterBelumSelesai = filterBelumSelesai
+
+        when {
+            filterSemua -> viewModel.loadDataTransaksi(traceableGoodHelper, "")
+            filterSudahSelesai -> viewModel.filterDataTransaksi(traceableGoodHelper, "Selesai")
+            filterBelumSelesai -> {
+                if (Prefs.isLogin)
+                    viewModel.filterDataTransaksi(traceableGoodHelper, "Belum Selesai")
+                else
+                    Toast.makeText(
+                        requireContext(),
+                        "Filter \"Belum Selesai\" hanya untuk Admin saja",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+            }
+        }
     }
 
 }

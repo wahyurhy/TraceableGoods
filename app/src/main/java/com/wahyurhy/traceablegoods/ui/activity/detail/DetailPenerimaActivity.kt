@@ -117,12 +117,6 @@ class DetailPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 getString(R.string.gagal_hapus_data),
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Toast.makeText(
-                                this@DetailPenerimaActivity,
-                                "result: $result",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
                         }
                     }
                     .setNegativeButton("Batalkan") { dialog, _ -> dialog.cancel() }
@@ -145,7 +139,7 @@ class DetailPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
 
         val selectedPosition = kategoriPenerimaArray.indexOf(kategoriPenerima)
-        Toast.makeText(this, "kategori penerima: $penerimaId", Toast.LENGTH_SHORT).show()
+
         binding.idPenerima.text = getString(R.string.id_penerima, penerimaId)
         binding.kategoriPenerimaSpinner.setSelection(selectedPosition)
         binding.kategoriPenerimaSpinner.isEnabled = false
@@ -162,9 +156,7 @@ class DetailPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         for (i in 0..7) {
             when (binding.kategoriPenerimaSpinner.selectedItem) {
                 resources.getStringArray(R.array.kategori_penerima_spinner)[i].toString() -> {
-                    selectedKategoriPenerima =
-                        resources.getStringArray(R.array.kategori_penerima_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedKategoriPenerima", Toast.LENGTH_SHORT).show()
+                    selectedKategoriPenerima = resources.getStringArray(R.array.kategori_penerima_spinner)[i].toString()
                 }
             }
         }

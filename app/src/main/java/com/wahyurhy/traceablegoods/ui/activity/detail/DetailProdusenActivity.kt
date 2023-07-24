@@ -143,7 +143,7 @@ class DetailProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
 
         val selectedPosition = kategoriProdusenArray.indexOf(kategoriProdusen)
-        Toast.makeText(this, "kategori produsen: $produsenId", Toast.LENGTH_SHORT).show()
+
         binding.idProdusen.text = getString(R.string.id_produsen, produsenId)
         binding.kategoriProdusenSpinner.setSelection(selectedPosition)
         binding.kategoriProdusenSpinner.isEnabled = false
@@ -163,7 +163,6 @@ class DetailProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 resources.getStringArray(R.array.kategori_produsen_spinner)[i].toString() -> {
                     selectedKategoriProdusen =
                         resources.getStringArray(R.array.kategori_produsen_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedKategoriProdusen", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdusenBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
@@ -105,7 +104,6 @@ class TambahProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 resources.getStringArray(R.array.kategori_produsen_spinner)[i].toString() -> {
                     selectedKategoriProdusen =
                         resources.getStringArray(R.array.kategori_produsen_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedKategoriProdusen", Toast.LENGTH_SHORT).show()
                 }
             }
         }

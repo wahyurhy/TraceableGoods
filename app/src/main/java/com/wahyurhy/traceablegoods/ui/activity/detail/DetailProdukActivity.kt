@@ -177,7 +177,7 @@ class DetailProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         deskripsiProduk = deskripsiProduk.orDefault(getString(R.string.belum_ada))
 
         val selectedPosition = jenisProdukArray.indexOf(jenisProduk)
-        Toast.makeText(this, "jenis produk: $produkId", Toast.LENGTH_SHORT).show()
+
         binding.idProduk.text = getString(R.string.id_produk, produkId)
         binding.jenisProdukSpinner.setSelection(selectedPosition)
         binding.jenisProdukSpinner.isEnabled = false
@@ -207,7 +207,6 @@ class DetailProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 resources.getStringArray(R.array.jenis_produk_spinner)[i].toString() -> {
                     selectedJenisProduk =
                         resources.getStringArray(R.array.jenis_produk_spinner)[i].toString()
-                    Toast.makeText(this, "Hi $selectedJenisProduk", Toast.LENGTH_SHORT).show()
                 }
             }
         }

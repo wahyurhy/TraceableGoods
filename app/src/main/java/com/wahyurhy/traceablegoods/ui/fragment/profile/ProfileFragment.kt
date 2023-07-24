@@ -1,5 +1,6 @@
 package com.wahyurhy.traceablegoods.ui.fragment.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,18 +29,34 @@ class ProfileFragment : Fragment() {
         initProfile()
 
         binding.btnLogout.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun logout() {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+
+        alertDialogBuilder.setTitle("Logout?")
+        alertDialogBuilder.setMessage("Apakah Anda yakin ingin log-out?")
+
+        alertDialogBuilder.setPositiveButton("Ya") { _, _ ->
             Prefs.apply {
                 isLogin = false
                 idAdmin = -1
                 namaAdmin = ""
                 emailAdmin = ""
             }
-
             Intent(requireContext(), LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(this)
             }
         }
+
+        alertDialogBuilder.setNegativeButton("Batal") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.show()
     }
 
     private fun initProfile() {

@@ -1,8 +1,10 @@
 package com.wahyurhy.traceablegoods.utils
 
 import android.app.Activity
+import android.content.Context
 import android.view.WindowManager
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
 import java.text.SimpleDateFormat
@@ -147,5 +149,9 @@ object Utils {
             binding.edtNamaProduk.error = null
             true
         }
+    }
+
+    fun showExitToast(context: Context) {
+        Toast.makeText(context, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
     }
 }

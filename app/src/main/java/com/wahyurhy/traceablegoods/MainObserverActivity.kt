@@ -17,6 +17,9 @@ class MainObserverActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainObserverBinding
 
+    private var backPressedTime: Long = 0
+    private val exitToastDuration: Long = 2000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainObserverBinding.inflate(layoutInflater)
@@ -95,5 +98,14 @@ class MainObserverActivity : AppCompatActivity() {
 
     private fun fitStatusBar() {
         Utils.setSystemBarFitWindow(this)
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - backPressedTime < exitToastDuration) {
+            super.onBackPressed()
+        } else {
+            Utils.showExitToast(this)
+            backPressedTime = System.currentTimeMillis()
+        }
     }
 }

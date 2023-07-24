@@ -10,4 +10,9 @@ object Prefs : KotprefModel() {
     var emailAdmin by stringPref("")
     var greeting by booleanPref(false)
 
+    // filter transaksi
+    var filterSemua by booleanPref(true)
+    var filterSudahSelesai by booleanPref(false)
+    var filterBelumSelesai by booleanPref(false)
+
 }

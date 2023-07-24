@@ -33,4 +33,8 @@
     </style>
 
     <style name="Button.OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+
+    <style name="NoBackgroundDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@null</item>
+    </style>
 </resources>

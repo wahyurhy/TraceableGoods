@@ -3,7 +3,6 @@ package com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataPengepulBinding
 import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
