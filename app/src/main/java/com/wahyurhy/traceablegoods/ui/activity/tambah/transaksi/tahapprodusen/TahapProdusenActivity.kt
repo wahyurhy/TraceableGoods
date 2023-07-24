@@ -21,6 +21,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima.Ta
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappengepul.TahapPengepulActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
+import com.wahyurhy.traceablegoods.utils.Lokasi
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
@@ -37,15 +38,16 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private lateinit var adapterProdusen: ArrayAdapter<String>
     private lateinit var adapterProduk: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
+    private lateinit var adapterLokasi: ArrayAdapter<String>
     private var produsenList = ArrayList<String>()
     private var produkList = ArrayList<String>()
+    private var lokasiArray = Lokasi.lokasi
     private var distributorList = ArrayList<String>()
     private var mapProdusen: MutableMap<String, String> = mutableMapOf()
     private var mapProduk: MutableMap<String, String> = mutableMapOf()
 
     private lateinit var binding: ActivityTahapProdusenBinding
     private lateinit var viewModel: TahapProdusenViewModel
-
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuan = ""
@@ -176,9 +178,21 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             }
         }
 
+        initAdapterLokasi()
+
         fitStatusBar()
 
         initClickListener()
+    }
+
+    private fun initAdapterLokasi() {
+        adapterLokasi = ArrayAdapter<String>(
+            this@TahapProdusenActivity,
+            android.R.layout.simple_list_item_1,
+            lokasiArray
+        )
+        binding.edtLokasiAsal.setAdapter(adapterLokasi)
+        binding.edtLokasiTujuan.setAdapter(adapterLokasi)
     }
 
     private fun initClickListener() {

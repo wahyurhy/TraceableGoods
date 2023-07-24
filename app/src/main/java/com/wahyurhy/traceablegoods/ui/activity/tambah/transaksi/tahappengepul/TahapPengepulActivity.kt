@@ -18,6 +18,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengo
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenerima.TahapPenerimaActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappenggiling.TahapPenggilingActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahaptengkulak.TahapTengkulakActivity
+import com.wahyurhy.traceablegoods.utils.Lokasi
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
@@ -30,8 +31,10 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private var isTambahDataDistributorClicked: Boolean = false
     private lateinit var adapterPengepul: ArrayAdapter<String>
     private lateinit var adapterDistributor: ArrayAdapter<String>
+    private lateinit var adapterLokasi: ArrayAdapter<String>
     private var pengepulList = ArrayList<String>()
     private var distributorList = ArrayList<String>()
+    private var lokasiArray = Lokasi.lokasi
 
     private lateinit var binding: ActivityTahapPengepulBinding
     private lateinit var viewModel: TahapPengepulViewModel
@@ -125,9 +128,21 @@ class TahapPengepulActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             }
         }
 
+        initAdapterLokasi()
+
         fitStatusBar()
 
         initClickListener()
+    }
+
+    private fun initAdapterLokasi() {
+        adapterLokasi = ArrayAdapter<String>(
+            this@TahapPengepulActivity,
+            android.R.layout.simple_list_item_1,
+            lokasiArray
+        )
+        binding.edtLokasiAsal.setAdapter(adapterLokasi)
+        binding.edtLokasiTujuan.setAdapter(adapterLokasi)
     }
 
     private fun initClickListener() {

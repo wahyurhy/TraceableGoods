@@ -337,7 +337,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <AutoCompleteTextView
                     android:id="@+id/edt_lokasi_asal"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -368,7 +368,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <AutoCompleteTextView
                     android:id="@+id/edt_lokasi_tujuan"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
