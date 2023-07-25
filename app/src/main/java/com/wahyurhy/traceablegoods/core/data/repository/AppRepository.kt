@@ -1,14 +1,13 @@
 package com.wahyurhy.traceablegoods.core.data.repository
 
 import android.util.Log
-import com.wahyurhy.traceablegoods.core.data.source.local.LocalDataSource
 import com.wahyurhy.traceablegoods.core.data.source.remote.RemoteDataSource
 import com.wahyurhy.traceablegoods.core.data.source.remote.network.Resource
 import com.wahyurhy.traceablegoods.utils.Prefs
 import kotlinx.coroutines.flow.flow
 import org.json.JSONObject
 
-class AppRepository(val local: LocalDataSource, val remote: RemoteDataSource) {
+class AppRepository(val remote: RemoteDataSource) {
 
     fun login(email: String, password: String) = flow {
         emit(Resource.loading(null))

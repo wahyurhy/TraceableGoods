@@ -2,7 +2,7 @@ package com.wahyurhy.traceablegoods.utils
 
 import android.database.Cursor
 import com.wahyurhy.traceablegoods.core.data.source.model.*
-import com.wahyurhy.traceablegoods.db.DatabaseContract
+import com.wahyurhy.traceablegoods.core.data.source.local.db.DatabaseContract
 
 object MappingHelper {
 

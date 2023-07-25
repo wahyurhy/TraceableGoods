@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityDetailPenggilingBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PENGGILING_ID
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate

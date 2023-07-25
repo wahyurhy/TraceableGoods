@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapPenerimaBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenerimaActivity
 import com.wahyurhy.traceablegoods.utils.Utils

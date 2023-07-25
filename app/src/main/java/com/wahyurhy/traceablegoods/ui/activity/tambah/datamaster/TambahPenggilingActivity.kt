@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataPenggilingBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.PENGGILING
 import com.wahyurhy.traceablegoods.utils.Utils.PENGGILING_ID

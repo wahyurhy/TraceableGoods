@@ -28,7 +28,7 @@ import com.wahyurhy.traceablegoods.adapter.AlurDistribusiAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiPenerimaAdapter
 import com.wahyurhy.traceablegoods.adapter.AlurDistribusiProdusenAdapter
 import com.wahyurhy.traceablegoods.databinding.ActivityTahapAlurDistribusiBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.core.data.source.model.AlurDistribusi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
 import com.wahyurhy.traceablegoods.utils.Utils

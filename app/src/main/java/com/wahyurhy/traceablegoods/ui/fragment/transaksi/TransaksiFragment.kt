@@ -15,7 +15,7 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.TransaksiAdapter
 import com.wahyurhy.traceablegoods.core.data.source.model.Transaksi
 import com.wahyurhy.traceablegoods.databinding.FragmentTransaksiBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.TahapAlurDistribusiActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahapgudang.TahapGudangActivity
 import com.wahyurhy.traceablegoods.ui.activity.tambah.transaksi.tahappabrikpengolahan.TahapPabrikPengolahanActivity

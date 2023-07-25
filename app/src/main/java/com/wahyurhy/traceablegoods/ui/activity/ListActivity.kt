@@ -11,7 +11,7 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.adapter.*
 import com.wahyurhy.traceablegoods.core.data.source.model.*
 import com.wahyurhy.traceablegoods.databinding.ActivityListBinding
-import com.wahyurhy.traceablegoods.db.TraceableGoodHelper
+import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.ui.activity.detail.*
 import com.wahyurhy.traceablegoods.ui.fragment.masterdata.MasterDataFragment.Companion.NAME_LIST
 import com.wahyurhy.traceablegoods.utils.MappingHelper

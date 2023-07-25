@@ -1,4 +1,4 @@
-package com.wahyurhy.traceablegoods.db
+package com.wahyurhy.traceablegoods.core.data.source.local.db
 
 import android.provider.BaseColumns
 
