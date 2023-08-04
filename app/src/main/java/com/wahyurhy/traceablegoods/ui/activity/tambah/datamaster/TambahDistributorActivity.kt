@@ -46,15 +46,19 @@ class TambahDistributorActivity : AppCompatActivity() {
             binding.apply {
                 val namaDistributor = edtNamaDistributor.text.toString().trim()
                 val kontakDistributor = edtKontakDistributor.text.toString().trim()
+                val nopolDistributor = edtNopolDistributor.text.toString().trim()
+                val tonaseDistributor = edtTonaseDistributor.text.toString().trim()
                 val alamatDistributor = edtAlamatDistributor.text.toString().trim()
 
                 isAllSet = namaDistributor.isEmpty(binding.edtNamaDistributor, getString(R.string.tidak_boleh_kosong))
                 isAllSet = kontakDistributor.isEmpty(binding.edtKontakDistributor, getString(R.string.tidak_boleh_kosong))
+                isAllSet = nopolDistributor.isEmpty(binding.edtNopolDistributor, getString(R.string.tidak_boleh_kosong))
+                isAllSet = tonaseDistributor.isEmpty(binding.edtTonaseDistributor, getString(R.string.tidak_boleh_kosong))
                 isAllSet = alamatDistributor.isEmpty(binding.edtAlamatDistributor, getString(R.string.tidak_boleh_kosong))
 
                 if (isAllSet) {
                     traceableGoodHelper.insertDataInfo(DISTRIBUTOR_ID, DISTRIBUTOR, getCurrentDate() + " WIB")
-                    val distributorId = traceableGoodHelper.insertDistributor(DISTRIBUTOR_ID, namaDistributor, alamatDistributor, kontakDistributor, getCurrentDate() + " WIB")
+                    val distributorId = traceableGoodHelper.insertDistributor(DISTRIBUTOR_ID, namaDistributor, alamatDistributor, kontakDistributor, nopolDistributor, tonaseDistributor, getCurrentDate() + " WIB")
 
                     if (distributorId > 0) {
                         Toast.makeText(

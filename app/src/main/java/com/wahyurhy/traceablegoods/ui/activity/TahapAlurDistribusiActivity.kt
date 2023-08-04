@@ -3,6 +3,7 @@ package com.wahyurhy.traceablegoods.ui.activity
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -31,12 +32,14 @@ import com.wahyurhy.traceablegoods.databinding.ActivityTahapAlurDistribusiBindin
 import com.wahyurhy.traceablegoods.core.data.source.local.db.TraceableGoodHelper
 import com.wahyurhy.traceablegoods.core.data.source.model.AlurDistribusi
 import com.wahyurhy.traceablegoods.utils.MappingHelper
+import com.wahyurhy.traceablegoods.utils.Prefs
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_AFTER_TAHAP_PENERIMA
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_BATCH_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_JENIS_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK_TRANSAKSI
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_STATUS_TRANSAKSI
+import com.wahyurhy.traceablegoods.utils.Utils.REQUEST_ENABLE_BT
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -89,10 +92,16 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
             }
         }
 
-        if (afterTahapPenerima != "") {
-            Handler(Looper.getMainLooper()).postDelayed({
-                setPrintStruk()
-            }, 2000)
+        setAutoPrint(afterTahapPenerima)
+    }
+
+    private fun setAutoPrint(afterTahapPenerima: String) {
+        if (Prefs.autoPrint) {
+            if (afterTahapPenerima != "") {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    setPrintStruk()
+                }, 2000)
+            }
         }
     }
 
@@ -146,6 +155,11 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
                 BluetoothAdapter.getDefaultAdapter()
             }
 
+            if (!bluetoothAdapter.isEnabled) {
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            }
+
             if (bluetoothAdapter.isEnabled) {
                 val startTime = System.currentTimeMillis()
 
@@ -183,6 +197,20 @@ class TahapAlurDistribusiActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) {
+                setPrintStruk()
+            } else {
+                binding.bgDark.visibility = View.GONE
+                binding.animPrinter.visibility = View.GONE
+                binding.textAnimPrinter.visibility = View.GONE
+            }
+        }
+    }
+
 
     private fun printStruk(
         connection: BluetoothConnection?,

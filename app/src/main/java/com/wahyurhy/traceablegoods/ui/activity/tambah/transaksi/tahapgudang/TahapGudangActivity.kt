@@ -97,14 +97,7 @@ class TahapGudangActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             if (distributor.isNotEmpty()) {
                 distributor.forEach {
                     try {
-                        distributorList.add(
-                            "${it.namaDistributor} - ${
-                                it.kontakDistributor.substring(
-                                    0,
-                                    3
-                                )
-                            }***${it.kontakDistributor.substring(it.kontakDistributor.length - 3)}"
-                        )
+                        distributorList.add("${it.namaDistributor} - ${it.nopolDistributor}")
                     } catch (e: Exception) {
                         distributorList.add(it.namaDistributor)
                         Log.e("TahapGudangActivity", "Error: ${e.message}")

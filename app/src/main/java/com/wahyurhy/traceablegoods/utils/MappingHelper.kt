@@ -113,8 +113,10 @@ object MappingHelper {
                 val namaDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR))
                 val alamatDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR))
                 val kontakDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR))
+                val nopolDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_NOPOL_DISTRIBUTOR))
+                val tonaseDistributor = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_TONASE_DISTRIBUTOR))
                 val timeStamp = getString(getColumnIndexOrThrow(DatabaseContract.DistributorColumns.COLUMN_TIMESTAMP))
-                distributorList.add(Distributor(alamatDistributor, distributorId, kontakDistributor, namaDistributor, timeStamp))
+                distributorList.add(Distributor(alamatDistributor, distributorId, kontakDistributor, nopolDistributor, tonaseDistributor, namaDistributor, timeStamp))
             }
         }
         return distributorList

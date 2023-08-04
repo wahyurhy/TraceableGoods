@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.databinding.FragmentProfileBinding
 import com.wahyurhy.traceablegoods.ui.activity.login.LoginActivity
 import com.wahyurhy.traceablegoods.utils.Prefs
@@ -27,9 +28,29 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initProfile()
+        initSwitchStatus()
 
+        initClickListener()
+    }
+
+    private fun initSwitchStatus() {
+        if (Prefs.autoPrint) binding.btnPrintMode.setImageResource(R.drawable.ic_switch_on)
+        else binding.btnPrintMode.setImageResource(R.drawable.ic_switch_off)
+    }
+
+    private fun initClickListener() {
         binding.btnLogout.setOnClickListener {
             logout()
+        }
+
+        binding.btnPrintMode.setOnClickListener {
+            val isAutoPrint = !Prefs.autoPrint
+            Prefs.autoPrint = isAutoPrint
+            if (isAutoPrint) {
+                binding.btnPrintMode.setImageResource(R.drawable.ic_switch_on)
+            } else {
+                binding.btnPrintMode.setImageResource(R.drawable.ic_switch_off)
+            }
         }
     }
 

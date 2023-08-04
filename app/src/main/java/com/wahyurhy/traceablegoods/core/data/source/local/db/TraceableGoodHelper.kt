@@ -281,6 +281,8 @@ class TraceableGoodHelper(context: Context) {
         namaDistributor: String,
         alamatDistributor: String,
         kontakDistributor: String,
+        nopolDistributor: String,
+        tonaseDistributor: String,
         timeStamp: String
     ): Long {
         val values = ContentValues().apply {
@@ -288,6 +290,8 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR, namaDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR, alamatDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR, kontakDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_NOPOL_DISTRIBUTOR, nopolDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_TONASE_DISTRIBUTOR, tonaseDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_TIMESTAMP, timeStamp)
         }
         return database.insert(DATABASE_TABLE_DISTRIBUTOR, null, values)
@@ -298,6 +302,8 @@ class TraceableGoodHelper(context: Context) {
         namaDistributor: String,
         alamatDistributor: String,
         kontakDistributor: String,
+        nopolDistributor: String,
+        tonaseDistributor: String,
         timeStamp: String
     ): Int {
         val values = ContentValues().apply {
@@ -305,6 +311,8 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.DistributorColumns.COLUMN_NAMA_DISTRIBUTOR, namaDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_ALAMAT_DISTRIBUTOR, alamatDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_KONTAK_DISTRIBUTOR, kontakDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_NOPOL_DISTRIBUTOR, nopolDistributor)
+            put(DatabaseContract.DistributorColumns.COLUMN_TONASE_DISTRIBUTOR, tonaseDistributor)
             put(DatabaseContract.DistributorColumns.COLUMN_TIMESTAMP, timeStamp)
         }
         return database.update(

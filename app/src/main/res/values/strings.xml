@@ -286,4 +286,10 @@
     <string name="tutup_dialog">Tutup dialog</string>
     <string name="harga_jual_produk">Harga Jual Produk</string>
     <string name="masukan_harga_jual">Masukan harga jual</string>
+    <string name="preferensi">Preferensi</string>
+    <string name="cetak_struk_otomatis">Cetak Struk Otomatis</string>
+    <string name="nopol_nomor_polisi">Nopol (Nomor Polisi)</string>
+    <string name="masukan_nopol_distributor">Masukan nopol distributor</string>
+    <string name="tonase_kendaraan">Tonase Kendaraan</string>
+    <string name="masukan_tonase_kendaraan_distributor">Masukan tonase kendaraan distributor</string>
 </resources>

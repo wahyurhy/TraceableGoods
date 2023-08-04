@@ -50,6 +50,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PENGGILING
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_PRODUSEN
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NAMA_TENGKULAK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NOPOL_DISTRIBUTOR
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NO_LOT_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_NPWP_PRODUSEN
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_PABRIK_PENGOLAHAN
@@ -68,6 +69,7 @@ import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TENGKULAK_ID
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_KADALUARSA_PRODUK
 import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TGL_PRODUKSI_PRODUK
+import com.wahyurhy.traceablegoods.utils.Utils.EXTRA_TONASE_DISTRIBUTOR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -554,6 +556,8 @@ class ListActivity : AppCompatActivity() {
                         putExtra(EXTRA_DISTRIBUTOR_ID, distributor[position].distributorId)
                         putExtra(EXTRA_NAMA_DISTRIBUTOR, distributor[position].namaDistributor)
                         putExtra(EXTRA_KONTAK_DISTRIBUTOR, distributor[position].kontakDistributor)
+                        putExtra(EXTRA_NOPOL_DISTRIBUTOR, distributor[position].nopolDistributor)
+                        putExtra(EXTRA_TONASE_DISTRIBUTOR, distributor[position].tonaseDistributor)
                         putExtra(EXTRA_ALAMAT_DISTRIBUTOR, distributor[position].alamatDistributor)
                     }
                     startActivity(intentDetailDistributor)

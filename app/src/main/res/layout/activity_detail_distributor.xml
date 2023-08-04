@@ -152,6 +152,72 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutNopolDistributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/nopol_nomor_polisi"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_nopol_distributor"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/masukan_nopol_distributor"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
+                    android:textSize="16sp"
+                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTonaseDistributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/tonase_kendaraan"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_tonase_distributor"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_outline_gray"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/masukan_tonase_kendaraan_distributor"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/edittext_disabled_text_color"
+                    android:textSize="16sp"
+                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/layoutAlamatDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

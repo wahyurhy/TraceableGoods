@@ -15,4 +15,7 @@ object Prefs : KotprefModel() {
     var filterSudahSelesai by booleanPref(false)
     var filterBelumSelesai by booleanPref(false)
 
+    // preferensi
+    var autoPrint by booleanPref(false)
+
 }

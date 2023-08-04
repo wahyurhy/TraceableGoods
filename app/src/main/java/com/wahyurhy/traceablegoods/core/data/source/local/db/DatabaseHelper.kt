@@ -10,7 +10,7 @@ internal class DatabaseHelper(context: Context) :
     companion object {
         private const val DATABASE_NAME = "dbtraceablegoodapp"
 
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
 
         private const val SQL_CREATE_TABLE_DATA_INFO =
             "CREATE TABLE ${DatabaseContract.DataInformasiColumns.TABLE_NAME}" +
@@ -162,7 +162,7 @@ internal class DatabaseHelper(context: Context) :
         db.execSQL(SQL_CREATE_TABLE_ALUR_DISTRIBUSI)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.DataInformasiColumns.TABLE_NAME}")
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.ProdukColumns.TABLE_NAME}")
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.ProdusenColumns.TABLE_NAME}")
@@ -175,7 +175,13 @@ internal class DatabaseHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.PabrikPengolahanColumns.TABLE_NAME}")
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.TransaksiColumns.TABLE_NAME}")
         db.execSQL("DROP TABLE IF EXISTS ${DatabaseContract.AlurDistribusiColumns.TABLE_NAME}")
-
-        onCreate(db)
+        if (oldVersion < newVersion) {
+            when (oldVersion) {
+                1 -> {
+                    db.execSQL("ALTER TABLE ${DatabaseContract.DistributorColumns.TABLE_NAME} ADD COLUMN ${DatabaseContract.DistributorColumns.COLUMN_NOPOL_DISTRIBUTOR} TEXT")
+                    db.execSQL("ALTER TABLE ${DatabaseContract.DistributorColumns.TABLE_NAME} ADD COLUMN ${DatabaseContract.DistributorColumns.COLUMN_TONASE_DISTRIBUTOR} TEXT")
+                }
+            }
+        }
     }
 }

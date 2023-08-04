@@ -44,6 +44,8 @@ class DetailDistributorActivity : AppCompatActivity() {
             btnUbah.setOnClickListener {
                 edtNamaDistributor.isEnabled = true
                 edtKontakDistributor.isEnabled = true
+                edtNopolDistributor.isEnabled = true
+                edtTonaseDistributor.isEnabled = true
                 edtAlamatDistributor.isEnabled = true
 
                 isEdit = !isEdit
@@ -60,6 +62,8 @@ class DetailDistributorActivity : AppCompatActivity() {
 
                 val namaDistributor = edtNamaDistributor.text.toString().trim()
                 val kontakDistributor = edtKontakDistributor.text.toString().trim()
+                val nopolDistributor = edtNopolDistributor.text.toString().trim()
+                val tonaseDistributor = edtTonaseDistributor.text.toString().trim()
                 val alamatDistributor = edtAlamatDistributor.text.toString().trim()
                 if (isEdit) {
                     val result = traceableGoodHelper.updateDistributor(
@@ -67,6 +71,8 @@ class DetailDistributorActivity : AppCompatActivity() {
                         namaDistributor,
                         alamatDistributor,
                         kontakDistributor,
+                        nopolDistributor,
+                        tonaseDistributor,
                         getCurrentDate() + " WIB"
                     )
                     if (result > 0) {
@@ -122,11 +128,15 @@ class DetailDistributorActivity : AppCompatActivity() {
         val distributorId = intent.getIntExtra(EXTRA_DISTRIBUTOR_ID, 0)
         val namaDistributor = intent.getStringExtra(Utils.EXTRA_NAMA_DISTRIBUTOR)
         val kontakDistributor = intent.getStringExtra(Utils.EXTRA_KONTAK_DISTRIBUTOR)
+        val nopolDistributor = intent.getStringExtra(Utils.EXTRA_NOPOL_DISTRIBUTOR)
+        val tonaseDistributor = intent.getStringExtra(Utils.EXTRA_TONASE_DISTRIBUTOR)
         val alamatDistributor = intent.getStringExtra(Utils.EXTRA_ALAMAT_DISTRIBUTOR)
 
         binding.idDistributor.text = getString(R.string.id_distributor, distributorId)
         binding.edtNamaDistributor.setText(namaDistributor)
         binding.edtKontakDistributor.setText(kontakDistributor)
+        binding.edtNopolDistributor.setText(nopolDistributor)
+        binding.edtTonaseDistributor.setText(tonaseDistributor)
         binding.edtAlamatDistributor.setText(alamatDistributor)
     }
 

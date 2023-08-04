@@ -152,7 +152,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         namaPenerima,
                         "",
                         "",
-                        namaProdukExtra,
+                        hargaJualRupiah,
                         "$totalYangDiterima $satuanYangDiterima",
                         kategoriPenerima,
                         "",

@@ -13,6 +13,10 @@ data class Distributor(
     val distributorId: Int,
     @SerializedName("kontak_distributor")
     val kontakDistributor: String,
+    @SerializedName("nopol_distributor")
+    val nopolDistributor: String? = null,
+    @SerializedName("tonase_distributor")
+    val tonaseDistributor: String? = null,
     @SerializedName("nama_distributor")
     val namaDistributor: String,
     @SerializedName("timestamp")

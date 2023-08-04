@@ -37,13 +37,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="3dp"
+            android:maxWidth="150dp"
+            android:lineSpacingExtra="-7dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Gudang"
+            android:text="Pabrik Pengolahan"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_icon"
             app:layout_constraintStart_toEndOf="@+id/image_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/image_icon" />
 
         <TextView
             android:id="@+id/tv_date"

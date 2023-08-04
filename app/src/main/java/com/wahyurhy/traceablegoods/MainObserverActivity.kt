@@ -28,8 +28,6 @@ class MainObserverActivity : AppCompatActivity() {
         fitStatusBar()
         initTabs()
         initClickListener()
-
-
     }
 
     private fun scanQRCode() {

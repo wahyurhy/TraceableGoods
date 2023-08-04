@@ -11,8 +11,16 @@ import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.core.data.source.model.Transaksi
 import com.wahyurhy.traceablegoods.utils.Utils.BIJIAN
 import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
-import com.wahyurhy.traceablegoods.utils.Utils.DAGING
+import com.wahyurhy.traceablegoods.utils.Utils.DAGING_SAPI
+import com.wahyurhy.traceablegoods.utils.Utils.DAGING_AYAM
+import com.wahyurhy.traceablegoods.utils.Utils.GARAM
+import com.wahyurhy.traceablegoods.utils.Utils.GULA
+import com.wahyurhy.traceablegoods.utils.Utils.MENTEGA
+import com.wahyurhy.traceablegoods.utils.Utils.MINYAK_GORENG
+import com.wahyurhy.traceablegoods.utils.Utils.MINYAK_TANAH
 import com.wahyurhy.traceablegoods.utils.Utils.SAYURAN
+import com.wahyurhy.traceablegoods.utils.Utils.SUSU
+import com.wahyurhy.traceablegoods.utils.Utils.TELUR
 
 class TransaksiAdapter : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
@@ -54,7 +62,15 @@ class TransaksiAdapter : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
             BIJIAN -> image.setImageResource(R.drawable.ic_bijian)
             BUAHAN -> image.setImageResource(R.drawable.ic_buahan)
             SAYURAN -> image.setImageResource(R.drawable.ic_sayuran)
-            DAGING -> image.setImageResource(R.drawable.ic_daging)
+            DAGING_SAPI -> image.setImageResource(R.drawable.ic_daging)
+            GULA -> image.setImageResource(R.drawable.ic_gula)
+            MINYAK_GORENG -> image.setImageResource(R.drawable.ic_minyak_goreng)
+            MENTEGA -> image.setImageResource(R.drawable.ic_mentega)
+            DAGING_AYAM -> image.setImageResource(R.drawable.ic_daging_ayam)
+            TELUR -> image.setImageResource(R.drawable.ic_telur)
+            SUSU -> image.setImageResource(R.drawable.ic_susu)
+            GARAM -> image.setImageResource(R.drawable.ic_garam)
+            MINYAK_TANAH -> image.setImageResource(R.drawable.ic_minyak_tanah)
         }
 
         holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {

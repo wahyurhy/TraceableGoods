@@ -50,6 +50,8 @@ internal class DatabaseContract {
             const val COLUMN_DATA_INFO_ID_FK = "data_info_id_fk"
             const val COLUMN_NAMA_DISTRIBUTOR = "nama_distributor"
             const val COLUMN_ALAMAT_DISTRIBUTOR = "alamat_distributor"
+            const val COLUMN_NOPOL_DISTRIBUTOR = "nopol_distributor"
+            const val COLUMN_TONASE_DISTRIBUTOR = "tonase_distributor"
             const val COLUMN_KONTAK_DISTRIBUTOR = "kontak_distributor"
             const val COLUMN_TIMESTAMP = "timestamp"
         }

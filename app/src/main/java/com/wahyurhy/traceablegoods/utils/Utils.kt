@@ -66,6 +66,8 @@ object Utils {
     const val EXTRA_DISTRIBUTOR_ID = "extra_distributor_id"
     const val EXTRA_NAMA_DISTRIBUTOR = "extra_nama_distributor"
     const val EXTRA_KONTAK_DISTRIBUTOR = "extra_kontak_distributor"
+    const val EXTRA_NOPOL_DISTRIBUTOR = "extra_nopol_distributor"
+    const val EXTRA_TONASE_DISTRIBUTOR = "extra_tonase_distributor"
     const val EXTRA_ALAMAT_DISTRIBUTOR = "extra_alamat_distributor"
     const val EXTRA_PENERIMA_ID = "extra_penerima_id"
     const val EXTRA_KATEGORI_PENERIMA = "extra_kategori_penerima"
@@ -102,6 +104,7 @@ object Utils {
     const val EXTRA_ALUR_DISTRIBUTOR = "alur_distributor_extra"
     const val EXTRA_ALUR_PENERIMA = "alur_penerima_extra"
     const val EXTRA_AFTER_TAHAP_PENERIMA = "after_tahap_penerima_extra"
+    const val REQUEST_ENABLE_BT = 158
 
     const val PRODUK_ID = 0
     const val PRODUSEN_ID = 1
