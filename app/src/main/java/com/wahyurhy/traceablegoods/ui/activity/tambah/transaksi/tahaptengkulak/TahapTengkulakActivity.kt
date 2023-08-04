@@ -22,6 +22,7 @@ import com.wahyurhy.traceablegoods.utils.Lokasi
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
+import com.wahyurhy.traceablegoods.utils.Utils.toRupiahFormat
 
 class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -42,6 +43,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuanYangDiterima = ""
     private var selectedSatuanYangDiDistribusikan = ""
+    private var selectedSatuanPerHarga = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,6 +181,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
         binding.satuanDiterimaSpinner.onItemSelectedListener = this
         binding.satuanDiDistibusikanSpinner.onItemSelectedListener = this
+        binding.satuanPerhargaSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
@@ -216,6 +219,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         binding.apply {
             val satuanYangDiterima = selectedSatuanYangDiterima
             val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
+            val satuanPerHarga = selectedSatuanPerHarga
             val status = selectedTahapSelanjutnya
             val namaTengkulak = edtNamaTengkulak.text.toString().trim()
             val tahap = getString(R.string.tengkulak)
@@ -223,6 +227,8 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 edtNamaDistributorSelanjutnya.text.toString().trim()
             val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
             val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
+            val hargaJual = edtHargaJual.text.toString().trim()
+            val hargaJualRupiah = hargaJual.toDouble().toRupiahFormat().replace(",00", "")
             val lokasiAsal = edtLokasiAsal.text.toString().trim()
             val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
 
@@ -266,6 +272,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     namaProdukExtra,
                     produkBatchExtra,
                     selectedTahapSelanjutnya,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
                 val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
@@ -282,6 +289,7 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     "$totalYangDiDistribusikan $satuanYangDiDistribusikan",
                     lokasiAsal,
                     lokasiTujuan,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
 
@@ -399,22 +407,20 @@ class TahapTengkulakActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiterima =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
-                    Toast.makeText(
-                        this,
-                        "diterima satuan: $selectedSatuanYangDiterima",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
             when (binding.satuanDiDistibusikanSpinner.selectedItem) {
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiDistribusikan =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
-                    Toast.makeText(
-                        this,
-                        "didistribusikan satuan: $selectedSatuanYangDiDistribusikan",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }
+            }
+        }
+        for (i in 0..14) {
+            when (binding.satuanPerhargaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_per_harga)[i].toString() -> {
+                    selectedSatuanPerHarga =
+                        resources.getStringArray(R.array.satuan_per_harga)[i].toString()
                 }
             }
         }

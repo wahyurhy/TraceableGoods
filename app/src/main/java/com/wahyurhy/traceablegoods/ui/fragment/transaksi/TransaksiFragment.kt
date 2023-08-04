@@ -72,10 +72,7 @@ class TransaksiFragment : Fragment(), MyDialogFilterTransaksiFragment.FilterCall
 
         batchId = arguments?.getString(EXTRA_BATCH_ID) ?: ""
 
-        if (Prefs.isLogin)
-            viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
-        else
-            viewModel.filterDataTransaksi(traceableGoodHelper, "Selesai")
+        viewModel.loadDataTransaksi(traceableGoodHelper, batchId)
 
         // Observasi mTransaksi
         viewModel.transaksiList.observe(viewLifecycleOwner) { transaksiList ->

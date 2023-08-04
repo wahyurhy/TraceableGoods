@@ -25,6 +25,7 @@ import com.wahyurhy.traceablegoods.utils.Lokasi
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
+import com.wahyurhy.traceablegoods.utils.Utils.toRupiahFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,6 +52,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuan = ""
+    private var selectedSatuanPerHarga = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -229,6 +231,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
         binding.satuanSpinner.onItemSelectedListener = this
+        binding.satuanPerhargaSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
@@ -260,6 +263,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private fun simpanData(tahapSelanjutnya: String) {
         binding.apply {
             val satuan = selectedSatuan
+            val satuanPerHarga = selectedSatuanPerHarga
             val status = selectedTahapSelanjutnya
             val namaProdusen = edtNamaProdusen.text.toString().trim()
             val namaProduk = edtNamaProduk.text.toString().trim()
@@ -269,6 +273,8 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
             val lokasiAsal = edtLokasiAsal.text.toString().trim()
             val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
+            val hargaJual = edtHargaJual.text.toString().trim()
+            val hargaJualRupiah = hargaJual.toDouble().toRupiahFormat().replace(",00", "")
             var batchId: String
             try {
                 batchId = namaProdusen.substring(
@@ -317,6 +323,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     namaProduk,
                     produkBatch,
                     selectedTahapSelanjutnya,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
                 val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
@@ -333,6 +340,7 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                     "$totalYangDiDistribusikan $satuan",
                     lokasiAsal,
                     lokasiTujuan,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
 
@@ -453,6 +461,14 @@ class TahapProdusenActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuan =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
+                }
+            }
+        }
+        for (i in 0..14) {
+            when (binding.satuanPerhargaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_per_harga)[i].toString() -> {
+                    selectedSatuanPerHarga =
+                        resources.getStringArray(R.array.satuan_per_harga)[i].toString()
                 }
             }
         }

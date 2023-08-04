@@ -32,8 +32,9 @@ object MappingHelper {
                 val penerima = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA))
                 val produk = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK))
                 val produkBatch = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH))
+                val hargaJual = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_HARGA_JUAL))
                 val status = getString(getColumnIndexOrThrow(DatabaseContract.TransaksiColumns.COLUMN_STATUS))
-                transaksiList.add(Transaksi(transaksiId, batchId, date, jenisProduk, penerima, produk, produkBatch, status))
+                transaksiList.add(Transaksi(transaksiId, batchId, date, jenisProduk, penerima, produk, produkBatch, hargaJual, status))
             }
         }
         return transaksiList
@@ -55,10 +56,11 @@ object MappingHelper {
                 val kategoriPenerima = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_KATEGORI_PENERIMA))
                 val distributor = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_DISTRIBUTOR))
                 val totalYangDiDistribusikan = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN))
+                val hargaJual = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_HARGA_JUAL))
                 val lokasiAsal = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL))
                 val lokasiTujuan = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN))
                 val date = getString(getColumnIndexOrThrow(DatabaseContract.AlurDistribusiColumns.COLUMN_DATE))
-                alurDistribusiList.add(AlurDistribusi(batchId, date, distributor, jenisProduk, kategoriPenerima, lokasiAsal, lokasiTujuan, nama, produk, produkBatch, status, tahap, totalYangDiDistribusikan, totalYangDiterima))
+                alurDistribusiList.add(AlurDistribusi(batchId, date, distributor, jenisProduk, kategoriPenerima, lokasiAsal, lokasiTujuan, nama, produk, produkBatch, status, tahap, hargaJual, totalYangDiDistribusikan, totalYangDiterima))
             }
         }
         return alurDistribusiList

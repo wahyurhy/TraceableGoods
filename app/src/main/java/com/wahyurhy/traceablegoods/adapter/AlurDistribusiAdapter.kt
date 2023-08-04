@@ -40,6 +40,8 @@ class AlurDistribusiAdapter : RecyclerView.Adapter<AlurDistribusiAdapter.ViewHol
         totalYangDiterima.text = result.totalYangDiterima
         val totalDistribusi = holder.totalDistribusi
         totalDistribusi.text = result.totalYangDidistribusikan
+        val hargaJual = holder.hargaJual
+        hargaJual.text = result.hargaJual
         val lokasiAsal = holder.lokasiAsal
         lokasiAsal.text = result.lokasiAsal
         val lokasiTujuan = holder.lokasiTujuan
@@ -55,6 +57,7 @@ class AlurDistribusiAdapter : RecyclerView.Adapter<AlurDistribusiAdapter.ViewHol
         val distributor = itemView.findViewById<TextView>(R.id.tv_distributor)
         val totalYangDiterima = itemView.findViewById<TextView>(R.id.tv_total_yang_diterima)
         val totalDistribusi = itemView.findViewById<TextView>(R.id.tv_total_yang_didistribusikan)
+        val hargaJual = itemView.findViewById<TextView>(R.id.tv_harga_jual)
         val lokasiAsal = itemView.findViewById<TextView>(R.id.tv_lokasi_asal)
         val lokasiTujuan = itemView.findViewById<TextView>(R.id.tv_lokasi_tujuan)
         val date = itemView.findViewById<TextView>(R.id.tv_date)

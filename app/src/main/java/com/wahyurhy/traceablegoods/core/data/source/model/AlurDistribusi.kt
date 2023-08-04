@@ -31,6 +31,8 @@ data class AlurDistribusi(
     val status: String,
     @SerializedName("tahap")
     val tahap: String,
+    @SerializedName("harga_jual")
+    var hargaJual: String,
     @SerializedName("total_yang_didistribusikan")
     val totalYangDidistribusikan: String,
     @SerializedName("total_yang_diterima")

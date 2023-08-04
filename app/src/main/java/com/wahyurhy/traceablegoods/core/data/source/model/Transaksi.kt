@@ -21,6 +21,8 @@ data class Transaksi(
     var produk: String,
     @SerializedName("produk_batch")
     var produkBatch: String,
+    @SerializedName("harga_jual")
+    var hargaJual: String,
     @SerializedName("status")
     var status: String
 ): Parcelable

@@ -124,6 +124,7 @@ internal class DatabaseHelper(context: Context) :
                     " ${DatabaseContract.TransaksiColumns.COLUMN_PRODUK} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_PENERIMA} TEXT NOT NULL," +
+                    " ${DatabaseContract.TransaksiColumns.COLUMN_HARGA_JUAL} TEXT NOT NULL," +
                     " ${DatabaseContract.TransaksiColumns.COLUMN_DATE} TEXT NOT NULL)"
 
         private const val SQL_CREATE_TABLE_ALUR_DISTRIBUSI =
@@ -141,6 +142,7 @@ internal class DatabaseHelper(context: Context) :
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN} TEXT NOT NULL," +
+                    " ${DatabaseContract.AlurDistribusiColumns.COLUMN_HARGA_JUAL} TEXT NOT NULL," +
                     " ${DatabaseContract.AlurDistribusiColumns.COLUMN_DATE} TEXT NOT NULL)"
 
     }

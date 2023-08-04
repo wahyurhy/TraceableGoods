@@ -9,6 +9,18 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.wahyurhy.traceablegoods.R
 import com.wahyurhy.traceablegoods.core.data.source.model.Produk
+import com.wahyurhy.traceablegoods.utils.Utils.BIJIAN
+import com.wahyurhy.traceablegoods.utils.Utils.BUAHAN
+import com.wahyurhy.traceablegoods.utils.Utils.DAGING_AYAM
+import com.wahyurhy.traceablegoods.utils.Utils.DAGING_SAPI
+import com.wahyurhy.traceablegoods.utils.Utils.GARAM
+import com.wahyurhy.traceablegoods.utils.Utils.GULA
+import com.wahyurhy.traceablegoods.utils.Utils.MENTEGA
+import com.wahyurhy.traceablegoods.utils.Utils.MINYAK_GORENG
+import com.wahyurhy.traceablegoods.utils.Utils.MINYAK_TANAH
+import com.wahyurhy.traceablegoods.utils.Utils.SAYURAN
+import com.wahyurhy.traceablegoods.utils.Utils.SUSU
+import com.wahyurhy.traceablegoods.utils.Utils.TELUR
 
 class ProdukAdapter : RecyclerView.Adapter<ProdukAdapter.ViewHolder>() {
 
@@ -45,11 +57,19 @@ class ProdukAdapter : RecyclerView.Adapter<ProdukAdapter.ViewHolder>() {
         noLot.text = holder.itemView.context.getString(R.string.no_lot, produkModel.nomorLot)
 
         val image = holder.image
-        when (produkModel.jenisProduk.lowercase()) {
-            "bijian" -> image.setImageResource(R.drawable.ic_bijian)
-            "buahan" -> image.setImageResource(R.drawable.ic_buahan)
-            "sayuran" -> image.setImageResource(R.drawable.ic_sayuran)
-            "daging" -> image.setImageResource(R.drawable.ic_daging)
+        when (produkModel.jenisProduk) {
+            BIJIAN -> image.setImageResource(R.drawable.ic_bijian)
+            BUAHAN -> image.setImageResource(R.drawable.ic_buahan)
+            SAYURAN -> image.setImageResource(R.drawable.ic_sayuran)
+            DAGING_SAPI -> image.setImageResource(R.drawable.ic_daging)
+            GULA -> image.setImageResource(R.drawable.ic_gula)
+            MINYAK_GORENG -> image.setImageResource(R.drawable.ic_minyak_goreng)
+            MENTEGA -> image.setImageResource(R.drawable.ic_mentega)
+            DAGING_AYAM -> image.setImageResource(R.drawable.ic_daging_ayam)
+            TELUR -> image.setImageResource(R.drawable.ic_telur)
+            SUSU -> image.setImageResource(R.drawable.ic_susu)
+            GARAM -> image.setImageResource(R.drawable.ic_garam)
+            MINYAK_TANAH -> image.setImageResource(R.drawable.ic_minyak_tanah)
         }
 
         holder.cardView.viewTreeObserver.addOnGlobalLayoutListener {

@@ -852,6 +852,7 @@ class TraceableGoodHelper(context: Context) {
         produk: String,
         produkBatch: String,
         penerima: String,
+        hargaJual: String,
         date: String
     ): Long {
         val values = ContentValues().apply {
@@ -861,6 +862,7 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK, produk)
             put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH, produkBatch)
             put(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA, penerima)
+            put(DatabaseContract.TransaksiColumns.COLUMN_HARGA_JUAL, hargaJual)
             put(DatabaseContract.TransaksiColumns.COLUMN_DATE, date)
         }
         return database.insert(DATABASE_TABLE_TRANSAKSI, null, values)
@@ -874,6 +876,7 @@ class TraceableGoodHelper(context: Context) {
         produk: String,
         produkBatch: String,
         penerima: String,
+        hargaJual: String,
         date: String
     ): Int {
         val values = ContentValues().apply {
@@ -883,6 +886,7 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK, produk)
             put(DatabaseContract.TransaksiColumns.COLUMN_PRODUK_BATCH, produkBatch)
             put(DatabaseContract.TransaksiColumns.COLUMN_PENERIMA, penerima)
+            put(DatabaseContract.TransaksiColumns.COLUMN_HARGA_JUAL, hargaJual)
             put(DatabaseContract.TransaksiColumns.COLUMN_DATE, date)
         }
         return database.update(
@@ -944,6 +948,7 @@ class TraceableGoodHelper(context: Context) {
         totalYangDiDistribusikan: String,
         lokasiAsal: String,
         lokasiTujuan: String,
+        hargaJual: String,
         date: String
     ): Long {
         val values = ContentValues().apply {
@@ -960,6 +965,7 @@ class TraceableGoodHelper(context: Context) {
             put(DatabaseContract.AlurDistribusiColumns.COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN, totalYangDiDistribusikan)
             put(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_ASAL, lokasiAsal)
             put(DatabaseContract.AlurDistribusiColumns.COLUMN_LOKASI_TUJUAN, lokasiTujuan)
+            put(DatabaseContract.AlurDistribusiColumns.COLUMN_HARGA_JUAL, hargaJual)
             put(DatabaseContract.AlurDistribusiColumns.COLUMN_DATE, date)
         }
         return database.insert(DATABASE_TABLE_ALUR_DISTRIBUSI, null, values)

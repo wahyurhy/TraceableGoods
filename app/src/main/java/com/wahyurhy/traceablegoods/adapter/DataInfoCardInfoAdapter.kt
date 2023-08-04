@@ -18,7 +18,7 @@ class DataInfoCardInfoAdapter : RecyclerView.Adapter<DataInfoCardInfoAdapter.Vie
         return ViewHolder(dataInfoView)
     }
 
-    override fun getItemCount(): Int = totalDataInfo
+    override fun getItemCount(): Int = 1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val infoContent = holder.infoContent

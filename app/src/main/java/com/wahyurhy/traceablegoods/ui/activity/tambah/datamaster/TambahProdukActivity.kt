@@ -88,7 +88,7 @@ class TambahProdukActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        for (i in 0..3) {
+        for (i in 0..11) {
             when (binding.jenisProdukSpinner.selectedItem) {
                 resources.getStringArray(R.array.jenis_produk_spinner)[i].toString() -> {
                     selectedJenisProduk = resources.getStringArray(R.array.jenis_produk_spinner)[i].toString()

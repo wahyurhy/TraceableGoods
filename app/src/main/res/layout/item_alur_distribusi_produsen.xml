@@ -26,7 +26,7 @@
             android:layout_width="4dp"
             android:layout_height="0dp"
             android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/linearLayoutCompat6"
+            app:layout_constraintBottom_toBottomOf="@id/linearLayoutCompat7"
             app:layout_constraintEnd_toEndOf="@id/image_icon"
             app:layout_constraintStart_toStartOf="@id/image_icon"
             app:layout_constraintTop_toBottomOf="@id/image_icon" />
@@ -208,6 +208,40 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:fontFamily="@font/poppins_regular"
+                android:text="Harga Jual Produk"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_harga_jual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:maxWidth="140dp"
+                android:text="Rp11500/Kg"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_produsen"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Lokasi Asal"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
@@ -228,14 +262,14 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat6"
+            android:id="@+id/linearLayoutCompat7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_produsen"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat6">
 
             <TextView
                 android:layout_width="0dp"

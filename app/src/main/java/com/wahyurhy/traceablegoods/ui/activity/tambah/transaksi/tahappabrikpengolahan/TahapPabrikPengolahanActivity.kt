@@ -22,6 +22,7 @@ import com.wahyurhy.traceablegoods.utils.Lokasi
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
+import com.wahyurhy.traceablegoods.utils.Utils.toRupiahFormat
 
 class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -42,6 +43,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
     private var selectedTahapSelanjutnya = ""
     private var selectedSatuanYangDiterima = ""
     private var selectedSatuanYangDiDistribusikan = ""
+    private var selectedSatuanPerHarga = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,6 +173,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
         binding.tahapSelanjutnyaSpinner.onItemSelectedListener = this
         binding.satuanDiterimaSpinner.onItemSelectedListener = this
         binding.satuanDiDistibusikanSpinner.onItemSelectedListener = this
+        binding.satuanPerhargaSpinner.onItemSelectedListener = this
 
         binding.btnLanjut.setOnClickListener {
             when (selectedTahapSelanjutnya) {
@@ -207,6 +210,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
         binding.apply {
             val satuanYangDiterima = selectedSatuanYangDiterima
             val satuanYangDiDistribusikan = selectedSatuanYangDiDistribusikan
+            val satuanPerHarga = selectedSatuanPerHarga
             val status = selectedTahapSelanjutnya
             val namaPabrikPengolahan = edtNamaPabrikPengolahan.text.toString().trim()
             val tahap = getString(R.string.pabrik_pengolahan)
@@ -214,6 +218,8 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                 edtNamaDistributorSelanjutnya.text.toString().trim()
             val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
             val totalYangDiDistribusikan = edtTotalYangDidistribusikan.text.toString().trim()
+            val hargaJual = edtHargaJual.text.toString().trim()
+            val hargaJualRupiah = hargaJual.toDouble().toRupiahFormat().replace(",00", "")
             val lokasiAsal = edtLokasiAsal.text.toString().trim()
             val lokasiTujuan = edtLokasiTujuan.text.toString().trim()
 
@@ -257,6 +263,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     namaProdukExtra,
                     produkBatchExtra,
                     selectedTahapSelanjutnya,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
                 val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
@@ -273,6 +280,7 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                     "$totalYangDiDistribusikan $satuanYangDiDistribusikan",
                     lokasiAsal,
                     lokasiTujuan,
+                    "$hargaJualRupiah/$satuanPerHarga",
                     getCurrentDate() + " WIB"
                 )
 
@@ -380,6 +388,14 @@ class TahapPabrikPengolahanActivity : AppCompatActivity(), AdapterView.OnItemSel
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiDistribusikan =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
+                }
+            }
+        }
+        for (i in 0..14) {
+            when (binding.satuanPerhargaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_per_harga)[i].toString() -> {
+                    selectedSatuanPerHarga =
+                        resources.getStringArray(R.array.satuan_per_harga)[i].toString()
                 }
             }
         }

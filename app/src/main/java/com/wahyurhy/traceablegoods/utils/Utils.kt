@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.wahyurhy.traceablegoods.databinding.ActivityTambahDataProdukBinding
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,7 +20,15 @@ object Utils {
     const val BIJIAN = "Bijian"
     const val BUAHAN = "Buahan"
     const val SAYURAN = "Sayuran"
-    const val DAGING = "Daging"
+    const val DAGING_SAPI = "Daging Sapi"
+    const val GULA = "Gula"
+    const val MINYAK_GORENG = "Minyak Goreng"
+    const val MENTEGA = "Mentega"
+    const val DAGING_AYAM = "Daging Ayam"
+    const val TELUR = "Telur"
+    const val SUSU = "Susu"
+    const val GARAM = "Garam"
+    const val MINYAK_TANAH = "Minyak Tanah"
 
     const val PRODUK = "Produk"
     const val PRODUSEN = "Produsen"
@@ -154,4 +163,20 @@ object Utils {
     fun showExitToast(context: Context) {
         Toast.makeText(context, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
     }
+
+    fun Double.toRupiahFormat(): String {
+        val localeID = Locale("id", "ID")
+        val numberFormat = NumberFormat.getCurrencyInstance(localeID)
+        return numberFormat.format(this)
+    }
+
+    fun Float.toRupiahFormat(): String {
+        return this.toDouble().toRupiahFormat()
+    }
+
+    fun Int.toRupiahFormat(): String {
+        return this.toDouble().toRupiahFormat()
+    }
+
+
 }

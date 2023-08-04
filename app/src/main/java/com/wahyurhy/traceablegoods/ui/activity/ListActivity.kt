@@ -115,7 +115,7 @@ class ListActivity : AppCompatActivity() {
         fitStatusBar()
         initExtras(nameList)
         initClickListener()
-        setSearchViewListener(nameList, traceableGoodHelper)
+        setSearchViewListener(nameList)
 
         if (savedInstanceState == null) {
             // proses ambil data
@@ -180,7 +180,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSearchViewListener(nameList: String, traceableGoodHelper: TraceableGoodHelper) {
+    private fun setSearchViewListener(nameList: String) {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

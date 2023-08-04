@@ -193,8 +193,16 @@
     <string-array name="jenis_produk_spinner">
         <item>Bijian</item>
         <item>Buahan</item>
+        <item>Daging Sapi</item>
+        <item>Daging Ayam</item>
+        <item>Garam</item>
+        <item>Gula</item>
+        <item>Minyak Goreng</item>
+        <item>Minyak Tanah</item>
+        <item>Mentega</item>
         <item>Sayuran</item>
-        <item>Daging</item>
+        <item>Susu</item>
+        <item>Telur</item>
     </string-array>
 
     <string-array name="kategori_produsen_spinner">
@@ -215,6 +223,24 @@
         <item>Kardus</item>
         <item>Kemasan</item>
         <item>Bungkus</item>
+    </string-array>
+
+    <string-array name="satuan_per_harga">
+        <item>Kg</item>
+        <item>Gram</item>
+        <item>Ons</item>
+        <item>Liter</item>
+        <item>Mililiter</item>
+        <item>Pcs</item>
+        <item>Meter</item>
+        <item>Centimeter</item>
+        <item>Inci</item>
+        <item>Kilometer</item>
+        <item>Lusin</item>
+        <item>Dozen</item>
+        <item>Botol</item>
+        <item>Buah</item>
+        <item>Kaleng</item>
     </string-array>
 
     <string-array name="kategori_penerima_spinner">
@@ -258,4 +284,6 @@
     <string name="sudah_selesai">Sudah Selesai</string>
     <string name="belum_selesai">Belum Selesai</string>
     <string name="tutup_dialog">Tutup dialog</string>
+    <string name="harga_jual_produk">Harga Jual Produk</string>
+    <string name="masukan_harga_jual">Masukan harga jual</string>
 </resources>

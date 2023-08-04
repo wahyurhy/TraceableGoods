@@ -138,6 +138,7 @@ internal class DatabaseContract {
             const val COLUMN_PRODUK = "produk"
             const val COLUMN_PRODUK_BATCH = "produk_batch"
             const val COLUMN_PENERIMA = "penerima"
+            const val COLUMN_HARGA_JUAL = "harga_jual"
             const val COLUMN_DATE = "date"
         }
     }
@@ -158,6 +159,7 @@ internal class DatabaseContract {
             const val COLUMN_TOTAL_YANG_DIDISTRIBUSIKAN = "total_yang_didistribusikan"
             const val COLUMN_LOKASI_ASAL = "lokasi_asal"
             const val COLUMN_LOKASI_TUJUAN = "lokasi_tujuan"
+            const val COLUMN_HARGA_JUAL = "harga_jual"
             const val COLUMN_DATE = "date"
         }
     }

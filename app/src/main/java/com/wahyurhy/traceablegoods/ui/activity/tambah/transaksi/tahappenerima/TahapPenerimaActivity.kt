@@ -17,6 +17,7 @@ import com.wahyurhy.traceablegoods.ui.activity.tambah.datamaster.TambahPenerimaA
 import com.wahyurhy.traceablegoods.utils.Utils
 import com.wahyurhy.traceablegoods.utils.Utils.getCurrentDate
 import com.wahyurhy.traceablegoods.utils.Utils.isEmpty
+import com.wahyurhy.traceablegoods.utils.Utils.toRupiahFormat
 
 class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -31,6 +32,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private lateinit var viewModel: TahapPenerimaViewModel
 
     private var selectedSatuanYangDiterima = ""
+    private var selectedSatuanPerHarga = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,14 +103,18 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         }
 
         binding.satuanDiterimaSpinner.onItemSelectedListener = this
+        binding.satuanPerhargaSpinner.onItemSelectedListener = this
 
         binding.btnSelesai.setOnClickListener {
             binding.apply {
                 val satuanYangDiterima = selectedSatuanYangDiterima
+                val satuanPerHarga = selectedSatuanPerHarga
                 val status = getString(R.string.selesai)
                 val namaPenerima = edtNamaPenerima.text.toString().trim()
                 val tahap = getString(R.string.penerima)
                 val totalYangDiterima = edtTotalYangDiterima.text.toString().trim()
+                val hargaJual = edtHargaJual.text.toString().trim()
+                val hargaJualRupiah = hargaJual.toDouble().toRupiahFormat().replace(",00", "")
 
                 val transaksiIdExtra = intent.getIntExtra(Utils.EXTRA_TRANSAKSI_ID, 0)
                 val batchIdExtra = intent.getStringExtra(Utils.EXTRA_BATCH_ID) ?: ""
@@ -136,6 +142,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         namaProdukExtra,
                         produkBatchExtra,
                         kategoriPenerima,
+                        "$hargaJualRupiah/$satuanPerHarga",
                         getCurrentDate() + " WIB"
                     )
                     val resultAlurTransaksi = traceableGoodHelper.insertAlurDistribusi(
@@ -152,6 +159,7 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         "",
                         "",
                         "",
+                        "$hargaJualRupiah/$satuanPerHarga",
                         getCurrentDate() + " WIB"
                     )
 
@@ -199,11 +207,14 @@ class TahapPenerimaActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 resources.getStringArray(R.array.satuan_produk_spinner)[i].toString() -> {
                     selectedSatuanYangDiterima =
                         resources.getStringArray(R.array.satuan_produk_spinner)[i].toString()
-                    Toast.makeText(
-                        this,
-                        "diterima satuan: $selectedSatuanYangDiterima",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }
+            }
+        }
+        for (i in 0..14) {
+            when (binding.satuanPerhargaSpinner.selectedItem) {
+                resources.getStringArray(R.array.satuan_per_harga)[i].toString() -> {
+                    selectedSatuanPerHarga =
+                        resources.getStringArray(R.array.satuan_per_harga)[i].toString()
                 }
             }
         }
